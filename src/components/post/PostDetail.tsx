@@ -24,11 +24,11 @@ export default function PostDetail({
   return (
     <>
       <PostDetailHeader post={post} />
-      <div className="text-lg xs:text-xl font-bold text-white mt-3 mb-2">
+      <div className="xs:text-xl font-bold text-white mt-3 mb-2">
         {post.title}
       </div>
       {post.type === "text" ? (
-        <div className="post-detail overflow-hidden break-words">
+        <div className="post-detail overflow-hidden break-words text-sm xs:text-base">
           {ReactHtmlParser(post.body)}
         </div>
       ) : post.type === "image" ? (

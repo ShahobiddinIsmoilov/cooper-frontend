@@ -41,24 +41,24 @@ export default function PostFooter({ post }: Props) {
   return (
     <div className="flex justify-between items-center mt-2">
       <div className="flex items-center justify-space gap-1 xs:gap-4">
-        <div className="flex items-center gap-1 bg-dark-900 xs:bg-transparent rounded-full">
+        <div className="flex items-center xs:gap-1 bg-dark-900 xs:bg-transparent rounded-full">
           <button
             onClick={handleUpvote}
             className={`p-2 rounded-full cursor-pointer hover:bg-dark-600 text-yellow-400 hover:text-green-400`}
           >
             {upvoted ? (
-              <BiSolidLike className={`text-xl xs:text-2xl text-green-400`} />
+              <BiSolidLike className={`text-lg xs:text-2xl text-green-400`} />
             ) : (
-              <BiLike className={`text-xl xs:text-2xl`} />
+              <BiLike className={`text-lg xs:text-2xl`} />
             )}
           </button>
           <span
             className={
               votes > 0
-                ? "text-green-400 xs:text-lg font-bold"
+                ? "text-green-400 text-sm xs:text-lg font-bold"
                 : votes === 0
                 ? "xs:text-lg font-bold"
-                : "text-red-400 xs:text-lg font-bold"
+                : "text-red-400 text-sm xs:text-lg font-bold"
             }
           >
             {votes > 0 ? "+" + votes.toLocaleString() : votes}
@@ -68,18 +68,18 @@ export default function PostFooter({ post }: Props) {
             className="p-2 rounded-full cursor-pointer hover:bg-dark-600 text-yellow-400 hover:text-red-400"
           >
             {downvoted ? (
-              <BiSolidDislike className={`text-xl xs:text-2xl text-red-400`} />
+              <BiSolidDislike className={`text-lg xs:text-2xl text-red-400`} />
             ) : (
-              <BiDislike className={`text-xl xs:text-2xl`} />
+              <BiDislike className={`text-lg xs:text-2xl`} />
             )}
           </button>
         </div>
         <Link
           to={`/c/${post.community_link}/post/${post.permalink}`}
-          className="py-[6px] px-3 rounded-full cursor-pointer flex justify-center bg-dark-900 xs:bg-transparent items-center hover:bg-dark-600 text-white gap-2"
+          className="py-[7px] px-3 rounded-full cursor-pointer flex justify-center bg-dark-900 xs:bg-transparent items-center hover:bg-dark-600 text-white gap-2"
         >
           <FaComment className="text-lg xs:text-xl" />
-          <span className="xs:text-lg text-cyan-400 font-bold">
+          <span className="text-sm xs:text-lg text-cyan-400 font-bold">
             {screenWidth < 576
               ? post?.comments.toLocaleString()
               : post?.comments === 1

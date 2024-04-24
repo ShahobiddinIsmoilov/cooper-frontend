@@ -19,7 +19,7 @@ export default function PostDetailHeader({ post }: PostDetailHeaderProps) {
     <div className="flex justify-between">
       <div className="flex items-center gap-2">
         <button
-          className="p-2 rounded-full cursor-pointer hover:bg-dark-700"
+          className="p-2 rounded-full cursor-pointer bg-dark-750 hover:bg-dark-700"
           onClick={() => navigate(-1)}
         >
           <FaArrowLeft size={22} />

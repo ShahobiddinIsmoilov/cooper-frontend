@@ -40,7 +40,10 @@ export default function CommunityLinkAvatar({
         to={`/c/${community_link}`}
         className="font-bold hover:underline text-blue-400"
       >
-        <Avatar src={`../../../../src/assets/avatar_${community_link}.jpg`} />
+        <Avatar
+          src={`../../../../src/assets/avatar_${community_link}.jpg`}
+          size={32}
+        />
       </Link>
       {showPreview && <Preview community_link={community_link} />}
     </div>

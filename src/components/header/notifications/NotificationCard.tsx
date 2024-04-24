@@ -3,6 +3,8 @@ import { NotifProps } from "../../../interfaces/notificationProps";
 import { BiCheckDouble } from "react-icons/bi";
 import { useState } from "react";
 import ReactHtmlParser from "react-html-parser";
+import exactTime from "../../../utils/exactTime";
+import readableTime from "../../../utils/readableTime";
 
 interface Props {
   notif: NotifProps;
@@ -33,9 +35,15 @@ export default function NotificationCard({ notif, markAsRead }: Props) {
               <span className="text-orange-400">{notif.username}</span> replied
               to your {notif.parent_comment === 0 ? "post" : "comment"} in{" "}
               <span className="text-blue-400">{notif.community_name}</span>
-              <span className="text-white/50 font-normal"> ∙ 8 soat oldin</span>
+              <span
+                title={exactTime(notif.created_at, "uz")}
+                className="text-white/50 font-normal"
+              >
+                {" "}
+                ∙ {readableTime(notif.created_at, "uz")}
+              </span>
             </p>
-            <div className="post-detail">
+            <div className="post-detail line-clamp-3">
               {ReactHtmlParser(notif.comment_body)}
             </div>
           </div>

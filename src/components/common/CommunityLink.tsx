@@ -38,7 +38,7 @@ export default function CommunityLink({
     <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <Link
         to={`/c/${community_link}`}
-        className="font-bold hover:underline text-blue-400"
+        className="font-bold hover:underline text-blue-400 xs:text-lg"
       >
         {community_name}
       </Link>

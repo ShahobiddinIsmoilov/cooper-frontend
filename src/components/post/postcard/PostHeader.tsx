@@ -27,16 +27,14 @@ export default function PostHeader({ post, variant }: Props) {
         {variant === "community" ? (
           <UserLink username={post.username} />
         ) : (
-          <div className="text-lg">
-            <CommunityLink
-              community_name={post.community_name}
-              community_link={post.community_link}
-            />
-          </div>
+          <CommunityLink
+            community_name={post.community_name}
+            community_link={post.community_link}
+          />
         )}
         <span
           title={exactTime(post.created_at, "uz")}
-          className="text-white/50"
+          className="text-white/50 text-sm xs:text-base"
         >
           {" "}
           ∙ {readableTime(post.created_at, "uz")}

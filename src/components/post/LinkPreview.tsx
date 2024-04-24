@@ -61,26 +61,30 @@ export default function LinkPreview({
           to={link}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center rounded-xl overflow-hidden bg-dark-700 max-h-[150px] hover:bg-dark-600 border border-white border-opacity-25"
+          className="flex items-center rounded-lg xs:rounded-xl overflow-hidden bg-dark-700 max-h-[150px] hover:bg-dark-600 border border-white border-opacity-25"
         >
           {image ? (
             <Image
               src={image}
               fallbackSrc={baseUrl + "/favicon.ico"}
-              className="bg-dark-850 w-[150px] h-[150px] max-w-[150px] max-h-[150px] min-w-[150px] min-h-[150px]"
+              className="bg-dark-850 w-[90px] h-[90px] max-w-[90px] max-h-[90px] min-w-[90px] min-h-[90px] xs:w-[150px] xs:h-[150px] xs:max-w-[150px] xs:max-h-[150px] xs:min-w-[150px] xs:min-h-[150px]"
             />
           ) : (
             <div className="flex justify-center items-center bg-dark-850 w-[150px] h-[150px] max-w-[150px] max-h-[150px] min-w-[150px] min-h-[150px]">
               <FaExternalLinkAlt size={40} />
             </div>
           )}
-          <Stack gap={2} className="px-4 py-2 text-white">
-            <p className="text-lg font-bold line-clamp-2">{metadata.title}</p>
-            <p className="line-clamp-2">{metadata.description}</p>
-            <p className="flex items-center gap-1 opacity-75">
-              <FaLink size={14} />
+          <Stack gap={0} className="mx-2 xs:mx-4 xs:my-2 text-white xs:gap-0.5">
+            <p className="xs:text-lg font-bold line-clamp-1 xs:line-clamp-2">
+              {metadata.title}
+            </p>
+            <p className="text-sm xs:text-base line-clamp-2 xs:line-clamp-2">
+              {metadata.description}
+            </p>
+            <p className="flex items-center gap-1 text-white/75 text-sm xs:text-base">
+              <FaLink className="text-xs xs:text-sm" />
               <span className="line-clamp-1">{baseUrl}</span>
-              <FaExternalLinkAlt size={14} />
+              <FaExternalLinkAlt className="text-xs xs:text-sm" />
             </p>
           </Stack>
         </Link>

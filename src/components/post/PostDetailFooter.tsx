@@ -53,12 +53,12 @@ export default function PostDetailFooter({ post }: Props) {
             className={`p-2 rounded-full cursor-pointer hover:bg-dark-700 text-yellow-400 hover:text-green-400`}
           >
             {upvoted ? (
-              <BiSolidLike className={`text-xl xs:text-2xl text-green-400`} />
+              <BiSolidLike className={`text-lg xs:text-2xl text-green-400`} />
             ) : (
-              <BiLike className={`text-xl xs:text-2xl`} />
+              <BiLike className={`text-lg xs:text-2xl`} />
             )}
           </button>
-          <span className="text-green-400 xs:text-lg font-bold">
+          <span className="text-green-400 text-sm xs:text-lg font-bold">
             {upvoteCount}
           </span>
           <button
@@ -66,18 +66,18 @@ export default function PostDetailFooter({ post }: Props) {
             className="p-2 ml-2 rounded-full cursor-pointer hover:bg-dark-700 text-yellow-400 hover:text-red-400"
           >
             {downvoted ? (
-              <BiSolidDislike className={`text-xl xs:text-2xl text-red-400`} />
+              <BiSolidDislike className={`text-lg xs:text-2xl text-red-400`} />
             ) : (
-              <BiDislike className={`text-xl xs:text-2xl`} />
+              <BiDislike className={`text-lg xs:text-2xl`} />
             )}
           </button>
-          <span className="text-red-400 xs:text-lg font-bold mr-3">
+          <span className="text-red-400 text-sm xs:text-lg font-bold mr-3">
             {downvoteCount}
           </span>
         </div>
-        <div className="py-[6px] px-3 rounded-full cursor-pointer flex bg-dark-900 xs:bg-transparent items-center hover:bg-dark-700 text-white gap-2">
-          <FaComment className="text-lg xs:text-xl" />
-          <span className="xs:text-lg text-cyan-400 font-bold">
+        <div className="py-[7px] px-3 rounded-full cursor-pointer flex bg-dark-900 xs:bg-transparent items-center hover:bg-dark-700 text-white gap-2">
+          <FaComment className="xs:text-xl" />
+          <span className="text-sm xs:text-lg text-cyan-400 font-bold">
             {screenWidth < 576
               ? post?.comments.toLocaleString()
               : post?.comments === 1
