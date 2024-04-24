@@ -27,7 +27,7 @@ export default function NotificationCard({ notif, markAsRead }: Props) {
         }`}
       >
         <button className="flex gap-2 text-start">
-          <Avatar src={`../../../../src/assets/media/${notif.user_avatar}`} />
+          <Avatar src={notif.user_avatar} />
           <div className="text-white w-[277px] break-words text-sm">
             <p className="font-bold">
               <span className="text-orange-400">{notif.username}</span> replied

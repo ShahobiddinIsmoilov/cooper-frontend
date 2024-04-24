@@ -5,6 +5,7 @@ import { FaEdit } from "react-icons/fa";
 import { useRef } from "react";
 import { Dropzone } from "@mantine/dropzone";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAuthContext } from "../../../contexts/AuthContext";
 import imageCompression from "browser-image-compression";
 import SocialIcons from "./SocialIcons";
 import useCredentials from "../../../services/useCredentials";
@@ -16,6 +17,7 @@ interface Props {
 export default function UserProfile({ user }: Props) {
   const api = useCredentials();
   const queryClient = useQueryClient();
+  const auth_user = useAuthContext().user?.user_id;
 
   const mutation = useMutation({
     mutationFn: (newAvatar: {}) =>
@@ -47,29 +49,29 @@ export default function UserProfile({ user }: Props) {
 
   const openRef = useRef<() => void>(null);
 
+  console.log(user.avatar);
+
   return (
     <Flex justify={"space-between"} mb={32}>
       <Flex align="center" gap={16}>
         <div className="relative rounded-[16px] overflow-hidden">
-          <Avatar
-            src={`../../../../src/assets/${user.avatar}`}
-            radius={16}
-            size={150}
-          />
-          <div
-            onClick={() => openRef.current?.()}
-            className={`opacity-0 hover:opacity-100 flex justify-center items-center bg-black/50 w-[150px] h-[150px] min-w-[150px] min-h-[150px] absolute top-0 left-0 cursor-pointer`}
-          >
-            <Dropzone
-              openRef={openRef}
-              onDrop={(files) => {
-                handleEdit(files[0]);
-              }}
-              className="hidden"
-            />
-            ;
-            <FaEdit size={32} color="white" />
-          </div>
+          <Avatar src={user.avatar} radius={16} size={150} />
+          {user.id === auth_user && (
+            <div
+              onClick={() => openRef.current?.()}
+              className={`opacity-0 hover:opacity-100 flex justify-center items-center bg-black/50 w-[150px] h-[150px] min-w-[150px] min-h-[150px] absolute top-0 left-0 cursor-pointer`}
+            >
+              <Dropzone
+                openRef={openRef}
+                onDrop={(files) => {
+                  handleEdit(files[0]);
+                }}
+                className="hidden"
+              />
+              ;
+              <FaEdit size={32} color="white" />
+            </div>
+          )}
         </div>
         <div>
           <p className="text-white text-3xl font-bold break-words">

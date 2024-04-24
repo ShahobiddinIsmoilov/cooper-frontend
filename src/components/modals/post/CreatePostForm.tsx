@@ -1,9 +1,9 @@
 import { Stack, Flex, Group, Avatar, Button, Text } from "@mantine/core";
+import { FileWithPath } from "@mantine/dropzone";
 import CommunityCombobox from "./CommunityCombobox";
 import FancyTextEditor from "./FancyTextEditor";
 import PostTitle from "./PostTitle";
 import ImageDrop from "./ImageDrop";
-import { FileWithPath } from "@mantine/dropzone";
 import LinkInput from "./LinkInput";
 
 interface Props {
@@ -32,11 +32,7 @@ export default function CreatePostForm(props: Props) {
       <Stack gap={0} pt="md" px="md">
         <Flex className="justify-between items-center mb-6">
           <Group>
-            <Avatar
-              src={`../../../../src/Assets/gordon.jpg`}
-              size={48}
-              maw={48}
-            />
+            <Avatar src={"none"} size={48} maw={48} />
             <Text className="text-xl font-bold">New Post</Text>
           </Group>
           <CommunityCombobox

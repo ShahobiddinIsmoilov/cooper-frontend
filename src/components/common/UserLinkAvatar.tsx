@@ -37,7 +37,7 @@ export default function UserLinkAvatar({ username, avatar }: UserLinkProps) {
           to={username === user?.username ? `/profile/` : `/user/${username}`}
           className="font-bold hover:underline text-orange-400"
         >
-          {<Avatar size={32} src={`../../../../src/assets/${avatar}`} />}
+          {<Avatar size={32} src={avatar} />}
         </Link>
         {showPreview && <Preview username={username} />}
       </div>

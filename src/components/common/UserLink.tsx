@@ -87,7 +87,7 @@ function UserPreview({ userDetail }: UserPreviewProps) {
       <div className="flex items-center gap-2 m-4">
         <Avatar
           radius={12}
-          src={`../../../../src/assets/${userDetail.avatar}`}
+          src={userDetail.avatar}
           className="w-20 h-20 min-w-20 min-h-20 object-cover rounded-lg"
         />
         <div className="mx-1 w-full">

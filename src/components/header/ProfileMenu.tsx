@@ -24,7 +24,7 @@ export default function ProfileMenu({ user }: { user: UserDetailProps }) {
           <button className="hover:bg-dark-700 rounded-full p-1">
             <Avatar
               size={avatarsize}
-              src={`../../../../src/assets/${user.avatar}`}
+              src={user.avatar}
               className="hover:border-opacity-50 cursor-pointer"
             />
           </button>
@@ -106,7 +106,7 @@ function ProfileInfoMenu({ user }: { user: UserDetailProps }) {
     <div className="gap-2 px-4 py-2 flex items-center">
       <Avatar
         radius={12}
-        src={`../../../../src/assets/${user.avatar}`}
+        src={user.avatar}
         className="rounded-lg w-14 h-14 min-w-14"
       />
       <div className="overflow-hidden">
