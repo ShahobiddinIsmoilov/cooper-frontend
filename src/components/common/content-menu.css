@@ -1,0 +1,27 @@
+/* CSS file */
+.content-menu {
+  background-color: #191919;
+  border-radius: 12px;
+  z-index: 1;
+}
+
+.content-menuitem {
+  background-color: transparent;
+  border-radius: 8px;
+}
+
+.content-menuitem:hover {
+  background-color: #333333;
+}
+
+.content-menuitem:not(:hover) {
+  background-color: transparent;
+}
+
+/* .content-menuitem:focus {
+  background-color: #333333;
+} */
+
+/* .content-menuitem:blur {
+  background-color: transparent;
+} */

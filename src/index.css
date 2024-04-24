@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  code {
+    @apply bg-dark-900 p-1 rounded-md text-sm text-emerald-400;
+  }
+}
+
+@layer components {
+  .sidebar-icon {
+    @apply relative flex items-center justify-center
+           h-16 w-16 mt-2 mb-2 mx-auto shadow-lg
+           bg-gray-800 text-green-500
+           hover:bg-green-600 hover:text-white
+           rounded-full;
+  }
+
+  .sidebar-tooltip {
+    @apply absolute w-auto p-2 m-2 min-w-max left-14
+           rounded-md shadow-md
+           text-white bg-gray-900
+           text-xs font-bold
+           transition-all duration-100 scale-0 origin-left;
+  }
+
+  .input {
+    @apply text-white placeholder-white placeholder-opacity-25
+            border border-solid border-white border-opacity-50 overflow-x-auto
+            rounded-xl mx-2 xs:mx-4 p-3 xs:p-4 bg-transparent w-64 xs:w-80;
+  }
+
+  .tiptap-editor {
+    @apply text-[rgba(256,256,256,0.8)];
+  }
+
+  .post-detail {
+    @apply text-white/75 [&_hr]:my-4 [&_p]:mt-0
+          [&_a]:text-blue-400 [&_h2]:text-2xl [&_h2]:py-2;
+  }
+
+  .post-card {
+    @apply text-white/75 [&_hr]:my-4 [&_p]:mt-0
+          [&_a]:text-blue-400 [&_h2]:text-xl [&_h2]:py-2;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+
+  .notif-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-gutter: stable;
+    scrollbar-color: #595959 rgba(0, 0, 0, 0);
+  }
+
+  .navbar-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-gutter: stable;
+    scrollbar-color: #404040 rgba(0, 0, 0, 0);
+  }
+}
