@@ -1,9 +1,11 @@
-import { Avatar, Flex } from "@mantine/core";
+import { Flex } from "@mantine/core";
 import { CommentProps } from "../../../interfaces/commentProps";
 import { BsDot } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import UserLink from "../../common/UserLink";
-import CommunityLink from "../../common/CommunityLink";
+import UserLink from "../../general/UserLink";
+import CommunityLink from "../../general/CommunityLink";
+import TimeDisplay from "../../general/TimeDisplay";
+import CommunityLinkAvatar from "../../general/CommunityLinkAvatar";
 
 interface CommentCardProps {
   comment: CommentProps;
@@ -12,9 +14,7 @@ interface CommentCardProps {
 export default function CommentHeader({ comment }: CommentCardProps) {
   return (
     <Flex gap={0} className="text-xs xs:text-base">
-      <Avatar
-        src={`../../../../src/assets/avatar_${comment.community_name}.jpg`}
-      />
+      <CommunityLinkAvatar community_link={comment.community_link} />
       <div className="mt-[6px] ml-2">
         <div className="inline-block">
           <CommunityLink
@@ -30,17 +30,22 @@ export default function CommentHeader({ comment }: CommentCardProps) {
           <span className="font-bold text-white">{comment.post_title}</span>
         </Link>
         <div className="w-[38px]" />
-        <div className="inline-block mr-2">
+        <div className="inline-block mr-1">
           <UserLink username={comment.username} />
         </div>
         <div className="inline-block">
           {comment.parent === 0 ? (
-            <span className="opacity-50">commented 15 minutes ago </span>
+            <span className="flex gap-1 text-white/50">
+              commented
+              <TimeDisplay time={comment.created_at} />
+            </span>
           ) : (
-            <Flex className="gap-2">
-              <span className="opacity-50">replied to </span>
+            <Flex className="gap-1">
+              <span className="text-white/50">replied to</span>
               <UserLink username={comment.parent_username} />
-              <span className="opacity-50">3 hours ago </span>
+              <span className="text-white/50">
+                <TimeDisplay time={comment.created_at} />{" "}
+              </span>
             </Flex>
           )}
         </div>

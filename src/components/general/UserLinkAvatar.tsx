@@ -6,7 +6,7 @@ import { Preview } from "./UserLink";
 
 interface UserLinkProps {
   username: string;
-  avatar?: string;
+  avatar: string;
 }
 
 export default function UserLinkAvatar({ username, avatar }: UserLinkProps) {
@@ -35,9 +35,10 @@ export default function UserLinkAvatar({ username, avatar }: UserLinkProps) {
       <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
         <Link
           to={username === user?.username ? `/profile/` : `/user/${username}`}
-          className="font-bold hover:underline text-orange-400"
         >
-          {<Avatar size={32} src={avatar} />}
+          <Avatar size={32} src={avatar} color="green">
+            {username[0]}
+          </Avatar>
         </Link>
         {showPreview && <Preview username={username} />}
       </div>

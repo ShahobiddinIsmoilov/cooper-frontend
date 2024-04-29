@@ -7,12 +7,12 @@ import { Avatar, Image } from "@mantine/core";
 import getCommunityDetail from "../../services/community/getCommunityDetail";
 
 interface CommunityLinkProps {
-  community_name?: string;
   community_link: string;
+  community_avatar?: string;
 }
 
-export default function CommunityLink({
-  community_name,
+export default function CommunityLinkAvatar({
+  community_avatar,
   community_link,
 }: CommunityLinkProps) {
   const [showPreview, setShowPreview] = useState(false);
@@ -38,9 +38,9 @@ export default function CommunityLink({
     <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <Link
         to={`/c/${community_link}`}
-        className="font-bold hover:underline text-blue-400 xs:text-lg"
+        className="font-bold hover:underline text-blue-400"
       >
-        {community_name}
+        <Avatar src={community_avatar} />
       </Link>
       {showPreview && <Preview community_link={community_link} />}
     </div>
@@ -88,18 +88,18 @@ function CommunityPreview({ communityDetail }: CommunityPreviewProps) {
   return (
     <div className="w-96">
       <Image
-        src={`../../../../src/assets/banner_${communityDetail.link}.jpg`}
+        src={`../../../../src/assets/banner_${communityDetail.name}.jpg`}
         className="bg-blue-400 h-24 w-96 object-cover"
       />
       <div className="flex items-center gap-2 m-4">
         <Avatar
-          src={`../../../../src/assets/avatar_${communityDetail.link}.jpg`}
+          src={`../../../../src/assets/avatar_${communityDetail.name}.jpg`}
           className="w-10 xs:w-14 h-10 xs:h-14 min-w-10 xs:min-w-14 object-cover rounded-full"
         />
         <div className="mx-1 w-full">
           <div className="flex justify-between">
             <Link
-              to={`/c/${communityDetail.link}`}
+              to={`/c/${communityDetail.name}`}
               className="text-xl text-blue-400 hover:text-blue-300 font-bold max-w-[180px] overflow-hidden break-words"
             >
               {communityDetail.name}

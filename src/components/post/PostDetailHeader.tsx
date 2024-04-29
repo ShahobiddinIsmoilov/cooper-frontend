@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { PostProps } from "../../interfaces/postProps";
 import { FaArrowLeft } from "react-icons/fa6";
-import UserLink from "../common/UserLink";
-import CommunityLinkAvatar from "../common/CommunityLinkAvatar";
-import CommunityLink from "../common/CommunityLink";
+import UserLink from "../general/UserLink";
+import CommunityLinkAvatar from "../general/CommunityLinkAvatar";
+import CommunityLink from "../general/CommunityLink";
 import readableTime from "../../utils/readableTime";
 import exactTime from "../../utils/exactTime";
-import ContentShare from "../common/ContentShare";
+import ContentShare from "../general/ContentShare";
 
 export interface PostDetailHeaderProps {
   post: PostProps;

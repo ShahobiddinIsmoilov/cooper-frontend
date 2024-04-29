@@ -7,11 +7,16 @@ import { BiCheckDouble } from "react-icons/bi";
 import NotificationCard from "./NotificationCard";
 
 interface Props {
-  markAsRead: (read_one: "read_one" | "read_all", notif_id?: number) => void;
   unreadExists: boolean;
+  markAsRead: (read_one: "read_one" | "read_all", notif_id?: number) => void;
+  closeMenu: () => void;
 }
 
-export default function NotificationList({ markAsRead, unreadExists }: Props) {
+export default function NotificationList({
+  unreadExists,
+  markAsRead,
+  closeMenu,
+}: Props) {
   function handleMarkReadAll() {
     markAsRead("read_all");
   }
@@ -20,8 +25,7 @@ export default function NotificationList({ markAsRead, unreadExists }: Props) {
 
   const { isPending, error, data } = useQuery({
     queryKey: ["notifications"],
-    queryFn: () =>
-      makeRequest(`/api/inbox/list/?filter=user&parent_user=${user}`),
+    queryFn: () => makeRequest(`/api/inbox/list/?filter=user&receiver=${user}`),
   });
 
   if (isPending)
@@ -38,6 +42,13 @@ export default function NotificationList({ markAsRead, unreadExists }: Props) {
 
   const notifs = data.data;
 
+  let newUnreadCount = 0;
+  notifs.forEach((item: NotifProps) => {
+    item["is_read"] === false && newUnreadCount++;
+  });
+
+  const readAllButtonEnabled = unreadExists && newUnreadCount > 0;
+
   return (
     <Stack
       gap={0}
@@ -46,9 +57,11 @@ export default function NotificationList({ markAsRead, unreadExists }: Props) {
       <div className="flex justify-end">
         <button
           onClick={handleMarkReadAll}
-          disabled={!unreadExists}
+          disabled={!readAllButtonEnabled}
           className={`font-bold text-sm rounded-full px-3 py-1 flex items-center gap-1 ${
-            unreadExists ? "text-yellow-400 hover:bg-dark-700" : "text-white/50"
+            readAllButtonEnabled
+              ? "text-yellow-400 hover:bg-dark-700"
+              : "text-white/50"
           }`}
         >
           <BiCheckDouble size={22} />
@@ -57,7 +70,12 @@ export default function NotificationList({ markAsRead, unreadExists }: Props) {
       </div>
       {notifs.map((item: NotifProps) => (
         <div key={item.id}>
-          <NotificationCard notif={item} markAsRead={markAsRead} />
+          <NotificationCard
+            notif={item}
+            unreadExists={unreadExists}
+            markAsRead={markAsRead}
+            closeMenu={closeMenu}
+          />
         </div>
       ))}
     </Stack>

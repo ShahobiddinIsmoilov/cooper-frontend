@@ -113,7 +113,9 @@ function ProfileInfoMenu({ user }: { user: UserDetailProps }) {
         <p className="text-orange-400 text-lg truncate">{user.username}</p>
         <p className="flex items-center gap-1">
           <BiSolidLike className="text-yellow-400" />
-          <span className="opacity-75">{(2458).toLocaleString()} likes</span>
+          <span className="opacity-75">
+            {user.votes.toLocaleString()} likes
+          </span>
         </p>
       </div>
     </div>

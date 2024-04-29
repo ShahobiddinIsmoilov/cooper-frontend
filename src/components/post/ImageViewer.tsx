@@ -2,8 +2,6 @@ import { Image, Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 
 export default function ImageViewer({ imageUrl }: { imageUrl: string }) {
-  // const baseDir = "C:/Users/Triton/Desktop/cooper/backend";
-  const sampleUrl = `../../../../src/assets/${imageUrl}`;
   const [opened, { open, close }] = useDisclosure();
 
   return (
@@ -15,21 +13,21 @@ export default function ImageViewer({ imageUrl }: { imageUrl: string }) {
         centered
         withCloseButton={false}
       >
-        <Image src={sampleUrl} fit="contain" />
+        <Image src={imageUrl} fit="contain" />
       </Modal>
       <div
         onClick={open}
         className="bg-dark-900 rounded-xl relative overflow-hidden cursor-pointer"
       >
         <Image
-          src={sampleUrl}
-          mih={50}
+          src={imageUrl}
+          mih={100}
           mah={500}
           className="blur-3xl opacity-50 border"
         />
         <Image
-          src={sampleUrl}
-          mih={50}
+          src={imageUrl}
+          mih={100}
           mah={500}
           fit="contain"
           className="absolute top-0 left-0 border border-white border-opacity-25 rounded-xl"

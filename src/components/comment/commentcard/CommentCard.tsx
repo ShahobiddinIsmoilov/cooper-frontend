@@ -16,7 +16,7 @@ export default function CommentCard({ comment, last }: CommentCardProps) {
   const { getReplies } = useComments();
   const replies = getReplies(comment.id);
   const [hidden, setHidden] = useState(false);
-  const { post_id } = useComments();
+  const { post } = useComments();
   const [showReply, setShowReply] = useState(false);
 
   // WARNING: UNINTELLIGIBLE CODE AHEAD!
@@ -57,10 +57,8 @@ export default function CommentCard({ comment, last }: CommentCardProps) {
         <div className="ml-10">
           {showReply && (
             <CommentForm
-              post={post_id}
+              post={post}
               parent={comment.id}
-              parent_user={comment.user}
-              parent_username={comment.username}
               setShowReply={setShowReply}
               autofocus={true}
             />

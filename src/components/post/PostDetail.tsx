@@ -11,16 +11,9 @@ import PostDetailFooter from "./PostDetailFooter";
 interface PostDetailProps {
   post: PostProps;
   community: number;
-  community_name: string;
-  community_link: string;
 }
 
-export default function PostDetail({
-  post,
-  community,
-  community_name,
-  community_link,
-}: PostDetailProps) {
+export default function PostDetail({ post, community }: PostDetailProps) {
   return (
     <>
       <PostDetailHeader post={post} />
@@ -40,14 +33,7 @@ export default function PostDetail({
       <div className="mt-2">
         <Line />
       </div>
-      <CommentProvider
-        post_id={post.id}
-        post_title={post.title}
-        post_user={post.user}
-        community={community}
-        community_name={community_name}
-        community_link={community_link}
-      >
+      <CommentProvider post={post.id} community={community}>
         <CommentFeed />
       </CommentProvider>
     </>

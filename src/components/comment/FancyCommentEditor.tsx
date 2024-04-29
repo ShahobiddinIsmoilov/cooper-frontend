@@ -50,7 +50,7 @@ export default function FancyCommentEditor({
       SubScript,
       Placeholder.configure({ placeholder: placeholder }),
       CharacterCount.configure({
-        limit: 10000,
+        limit: 1000,
       }),
     ],
     onUpdate({ editor }) {

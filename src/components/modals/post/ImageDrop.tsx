@@ -94,15 +94,15 @@ export default function ImageDrop({ image, setImage }: Props) {
     <div className="bg-dark-900 rounded-md relative overflow-hidden">
       <Image
         src={imageUrl}
-        mih={50}
-        mah={700}
+        mih={100}
+        mah={500}
         className="blur-3xl opacity-50 border rounded-md"
       />
       <Image
         src={imageUrl}
         onLoad={() => URL.revokeObjectURL(imageUrl)}
-        mih={50}
-        mah={700}
+        mih={100}
+        mah={500}
         fit="contain"
         className="absolute top-0 left-0 border border-white border-opacity-25 rounded-md"
       />

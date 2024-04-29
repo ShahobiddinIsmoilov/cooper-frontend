@@ -53,12 +53,7 @@ export default function PostDetailPage() {
   return (
     <Flex>
       <div className="flex-grow max-w-[768px] my-2 mx-4">
-        <PostDetail
-          post={post}
-          community={community.id}
-          community_name={community.name}
-          community_link={community.link}
-        />
+        <PostDetail post={post} community={community.id} />
       </div>
       {screenWidth >= 920 && <Infobar community={data.data.community_detail} />}
     </Flex>

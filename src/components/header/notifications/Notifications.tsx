@@ -2,12 +2,15 @@ import { Menu } from "@mantine/core";
 import { FaBell } from "react-icons/fa";
 import { useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+import { useWindowSize } from "../../../contexts/WindowSizeContext";
+import { useDisclosure } from "@mantine/hooks";
 import NotificationList from "./NotificationList";
 import useCredentials from "../../../services/useCredentials";
-import { useWindowSize } from "../../../contexts/WindowSizeContext";
 
 export default function Notifications({ count }: { count: number }) {
-  const [notifCount, setNotifCount] = useState(count);
+  const [unreadCount, setUnreadCount] = useState(count);
+  const [unreadExists, setUnreadExists] = useState(count > 0);
+  const [opened, { open, close }] = useDisclosure();
 
   const api = useCredentials();
   function markAsRead(variant: "read_one" | "read_all", notif_id?: number) {
@@ -17,18 +20,24 @@ export default function Notifications({ count }: { count: number }) {
         action: "read_one",
         id: notif_id,
       };
-      setNotifCount((notifCount) => notifCount - 1);
+      setUnreadCount((notifCount) => notifCount - 1);
     } else {
       data = {
         action: "read_all",
       };
-      setNotifCount(0);
+      setUnreadCount(0);
+      setUnreadExists(false);
     }
     api.post("/api/inbox/action/", data);
   }
 
+  function handleMenuOpen() {
+    setUnreadExists(true);
+  }
+
   const query = useQueryClient();
   function handleMenuClose() {
+    close();
     query.invalidateQueries({ queryKey: ["notifications"] });
   }
 
@@ -37,26 +46,33 @@ export default function Notifications({ count }: { count: number }) {
 
   return (
     <Menu
+      opened={opened}
       width={400}
       position="bottom-end"
       offset={4}
       radius={12}
+      onOpen={handleMenuOpen}
       onClose={handleMenuClose}
+      closeOnItemClick
     >
       <Menu.Target>
-        <button className="relative hover:bg-dark-700 border-white border-opacity-25 rounded-full p-3">
+        <button
+          onClick={open}
+          className="relative hover:bg-dark-700 border-white border-opacity-25 rounded-full p-3"
+        >
           <FaBell size={bellsize} />
-          {notifCount > 0 && (
+          {unreadCount > 0 && (
             <div className="w-5 h-5 top-1 right-1 absolute bg-red-600 text-white text-xs flex justify-center items-center rounded-full">
-              {notifCount}
+              {unreadCount}
             </div>
           )}
         </button>
       </Menu.Target>
       <Menu.Dropdown>
         <NotificationList
+          unreadExists={unreadExists}
           markAsRead={markAsRead}
-          unreadExists={notifCount > 0}
+          closeMenu={close}
         />
       </Menu.Dropdown>
     </Menu>

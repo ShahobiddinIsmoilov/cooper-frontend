@@ -1,15 +1,15 @@
+import { BsDot } from "react-icons/bs";
 import { PostProps } from "../../../interfaces/postProps";
-import exactTime from "../../../utils/exactTime";
-import readableTime from "../../../utils/readableTime";
-import CommunityLink from "../../common/CommunityLink";
-import CommunityLinkAvatar from "../../common/CommunityLinkAvatar";
-import UserLink from "../../common/UserLink";
-import UserLinkAvatar from "../../common/UserLinkAvatar";
-import ContentShare from "../../common/ContentShare";
+import CommunityLink from "../../general/CommunityLink";
+import CommunityLinkAvatar from "../../general/CommunityLinkAvatar";
+import UserLink from "../../general/UserLink";
+import UserLinkAvatar from "../../general/UserLinkAvatar";
+import ContentShare from "../../general/ContentShare";
+import TimeDisplay from "../../general/TimeDisplay";
 
 export interface Props {
   post: PostProps;
-  variant: string;
+  variant: "community" | "home";
 }
 
 export default function PostHeader({ post, variant }: Props) {
@@ -32,13 +32,10 @@ export default function PostHeader({ post, variant }: Props) {
             community_link={post.community_link}
           />
         )}
-        <span
-          title={exactTime(post.created_at, "uz")}
-          className="text-white/50 text-sm xs:text-base"
-        >
-          {" "}
-          ∙ {readableTime(post.created_at, "uz")}
-        </span>
+        <div className="-ml-2 text-white/50">
+          <BsDot className="inline-block" />
+          <TimeDisplay time={post.created_at} />
+        </div>
       </div>
       <ContentShare content="post" bg="600" />
     </div>

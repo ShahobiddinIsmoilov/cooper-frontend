@@ -50,14 +50,14 @@ export default function CommunityPage() {
   return (
     <>
       <Image
-        src={`../../../src/assets/banner_${community_link}.jpg`}
-        className="h-24 xs:h-48 bg-white w-[1088px] object-cover rounded-xl"
+        src={community.banner}
+        className="h-24 xs:h-48 bg-white w-fill object-cover rounded-xl"
       />
       <div className="flex">
         <div className="flex-grow -translate-y-10 xs:-translate-y-14">
           <div className="flex ml-4 xs:ml-8">
             <Avatar
-              src={`../../../src/assets/avatar_${community_link}.jpg`}
+              src={community.avatar}
               className="w-24 h-24 xs:w-32 xs:h-32 rounded-full object-cover border-4 xs:border-8 border-dark-800"
             />
             <div className="flex justify-between items-center mt-10 xs:mt-14 ml-2">

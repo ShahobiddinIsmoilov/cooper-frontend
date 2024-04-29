@@ -1,6 +1,5 @@
 import { Modal, Stack, Text, Group, Button } from "@mantine/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useAuthContext } from "../../../contexts/AuthContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDisclosure } from "@mantine/hooks";
@@ -30,7 +29,6 @@ export default function CreateCommunityForm() {
   const [opened, { open, close }] = useDisclosure();
 
   // initial values of form fields
-  const username = useAuthContext().user?.username;
   const [name, setName] = useState("");
   const [link, setLink] = useState("");
   const [description, setDescription] = useState("");
@@ -39,7 +37,6 @@ export default function CreateCommunityForm() {
   async function handleSubmit(e: any) {
     e.preventDefault();
     const newCommunity = {
-      username: username,
       name: name,
       link: name,
       description: description,

@@ -23,7 +23,7 @@ export default function UserActivityList({
     queryKey: [`useractivity-${username}`],
     queryFn: () =>
       getUserActivity(
-        `/api/comment/useractivity/${username}/?user=${user}&sort=${sort}`
+        `/api/user/activity/${username}/?user=${user}&sort=${sort}`
       ),
   });
 
@@ -38,7 +38,7 @@ export default function UserActivityList({
       {list.map((item: CommentProps | PostProps) =>
         "title" in item ? (
           <div key={`useractivity-post-${item.id}`}>
-            <PostCard post={item} notCommunity={true} />
+            <PostCard post={item} headerVariant="home" />
             <Line />
           </div>
         ) : (

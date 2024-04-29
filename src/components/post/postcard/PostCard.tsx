@@ -8,7 +8,7 @@ import LinkPreview from "../LinkPreview";
 
 export interface PostCardProps {
   post: PostProps;
-  headerVariant: string;
+  headerVariant: "community" | "home";
 }
 
 export default function PostCard({ post, headerVariant }: PostCardProps) {

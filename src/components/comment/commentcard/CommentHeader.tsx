@@ -1,7 +1,7 @@
 import { CiSquarePlus, CiSquareMinus } from "react-icons/ci";
 import { CommentProps } from "../../../interfaces/commentProps";
-import UserLink from "../../common/UserLink";
-import UserLinkAvatar from "../../common/UserLinkAvatar";
+import UserLink from "../../general/UserLink";
+import UserLinkAvatar from "../../general/UserLinkAvatar";
 
 interface CommentCardProps {
   comment: CommentProps;

@@ -1,17 +1,14 @@
 export interface NotifProps {
   id: number;
   type: string;
-  parent_post: number;
-  parent_comment: number;
-  user: number;
-  username: string;
+  post_permalink: string;
+  parent_permalink: string;
+  sender: number;
   community_name: string;
   community_link: string;
   created_at: string;
   is_read: boolean;
-  parent_user: number;
-  comment: number;
-  user_avatar: string;
-  community_avatar: string;
-  comment_body: string;
+  receiver: number;
+  comment: string;
+  sender_avatar: string;
 }

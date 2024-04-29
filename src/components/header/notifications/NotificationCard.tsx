@@ -1,55 +1,62 @@
-import { Avatar } from "@mantine/core";
-import { NotifProps } from "../../../interfaces/notificationProps";
-import { BiCheckDouble } from "react-icons/bi";
 import { useState } from "react";
+import { BsDot } from "react-icons/bs";
+import { Avatar } from "@mantine/core";
+import { BiCheckDouble } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
+import { NotifProps } from "../../../interfaces/notificationProps";
 import ReactHtmlParser from "react-html-parser";
-import exactTime from "../../../utils/exactTime";
-import readableTime from "../../../utils/readableTime";
+import TimeDisplay from "../../general/TimeDisplay";
 
 interface Props {
   notif: NotifProps;
+  unreadExists: boolean;
   markAsRead: (read_one: "read_one" | "read_all", notif_id?: number) => void;
+  closeMenu: () => void;
 }
 
-export default function NotificationCard({ notif, markAsRead }: Props) {
+export default function NotificationCard({
+  notif,
+  unreadExists,
+  markAsRead,
+  closeMenu,
+}: Props) {
   const [isRead, setIsRead] = useState(notif.is_read);
+  const navigate = useNavigate();
 
   function handleMarkRead() {
     setIsRead(true);
     markAsRead("read_one", notif.id);
   }
 
-  function goToComment() {}
+  function goToComment() {
+    navigate(`/c/${notif.community_link}/post/${notif.post_permalink}`);
+    closeMenu();
+  }
 
   return (
     <>
       <div
         className={`flex justify-between gap-2 px-2 py-3 rounded-xl ${
-          !isRead && "bg-dark-850"
+          !isRead && unreadExists ? "bg-dark-850" : "hover:bg-dark-700"
         }`}
       >
-        <button className="flex gap-2 text-start">
-          <Avatar src={notif.user_avatar} />
-          <div className="text-white w-[277px] break-words text-sm">
-            <p className="font-bold">
-              <span className="text-orange-400">{notif.username}</span> replied
-              to your {notif.parent_comment === 0 ? "post" : "comment"} in{" "}
-              <span className="text-blue-400">{notif.community_name}</span>
-              <span
-                title={exactTime(notif.created_at, "uz")}
-                className="text-white/50 font-normal"
-              >
-                {" "}
-                ∙ {readableTime(notif.created_at, "uz")}
-              </span>
-            </p>
-            <div className="post-detail line-clamp-3">
-              {ReactHtmlParser(notif.comment_body)}
+        <button onClick={goToComment} className="flex gap-2 text-start">
+          <Avatar src={notif.sender_avatar} />
+          <div className="w-[277px] break-words text-sm font-bold">
+            <span className="text-orange-400">{notif.sender}</span> replied to
+            your {notif.type === "post_reply" ? "post" : "comment"} in{" "}
+            <span className="text-blue-400">{notif.community_name}</span>
+            <span className="inline-block items-center text-white/50 font-normal">
+              <BsDot className="inline-block" />
+              <TimeDisplay time={notif.created_at} />
+            </span>
+            <div className="post-detail line-clamp-3 font-normal">
+              {ReactHtmlParser(notif.comment)}
             </div>
           </div>
         </button>
         <div className="flex items-center">
-          {!isRead ? (
+          {!isRead && unreadExists ? (
             <button
               onClick={handleMarkRead}
               className="hover:bg-dark-700 text-xl text-yellow-400 rounded-full p-1"
@@ -57,7 +64,9 @@ export default function NotificationCard({ notif, markAsRead }: Props) {
               <BiCheckDouble />
             </button>
           ) : (
-            <div className="h-[28px] w-[28px] min-w-[28px] min-h-[28px] max-w-[28px] max-h-[28px]" />
+            <div className="text-xl p-1 text-white/50">
+              <BiCheckDouble />
+            </div>
           )}
         </div>
       </div>

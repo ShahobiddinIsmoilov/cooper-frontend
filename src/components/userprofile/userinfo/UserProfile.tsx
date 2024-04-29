@@ -49,13 +49,13 @@ export default function UserProfile({ user }: Props) {
 
   const openRef = useRef<() => void>(null);
 
-  console.log(user.avatar);
-
   return (
     <Flex justify={"space-between"} mb={32}>
       <Flex align="center" gap={16}>
         <div className="relative rounded-[16px] overflow-hidden">
-          <Avatar src={user.avatar} radius={16} size={150} />
+          <Avatar src={user.avatar} radius={16} size={150}>
+            {user.username[0]}
+          </Avatar>
           {user.id === auth_user && (
             <div
               onClick={() => openRef.current?.()}

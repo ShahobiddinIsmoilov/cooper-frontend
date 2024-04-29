@@ -15,7 +15,6 @@ import CreatePostForm from "./CreatePostForm";
 interface Props {
   community?: number;
   community_name?: string;
-  community_link?: string;
 }
 
 export default function CreatePost(props: Props) {
@@ -39,7 +38,6 @@ export default function CreatePost(props: Props) {
   const [opened, { open, close }] = useDisclosure();
 
   // initial values of form fields
-  const username = useAuthContext().user?.username;
   const [combobox, setCombobox] = useState<string | undefined>(
     props.community_name
   );
@@ -55,10 +53,7 @@ export default function CreatePost(props: Props) {
   async function handleSubmit(e: any) {
     e.preventDefault();
     const newPost = {
-      username: username,
       community: props.community,
-      community_name: props.community_name,
-      community_link: props.community_name,
       title: title,
       body: HTMLbody,
       image: image,
