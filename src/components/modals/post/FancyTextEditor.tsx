@@ -1,12 +1,11 @@
-import { RichTextEditor, Link } from "@mantine/tiptap";
-import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
-import TextAlign from "@tiptap/extension-text-align";
 import Superscript from "@tiptap/extension-superscript";
 import SubScript from "@tiptap/extension-subscript";
 import Placeholder from "@tiptap/extension-placeholder";
 import CharacterCount from "@tiptap/extension-character-count";
+import { useEditor } from "@tiptap/react";
+import { RichTextEditor, Link } from "@mantine/tiptap";
 import { ImBold } from "react-icons/im";
 import { LuItalic } from "react-icons/lu";
 import { MdFormatUnderlined } from "react-icons/md";
@@ -20,10 +19,6 @@ import { TbSuperscript } from "react-icons/tb";
 import { BsThreeDots } from "react-icons/bs";
 import { LuLink2 } from "react-icons/lu";
 import { LuLink2Off } from "react-icons/lu";
-import { MdFormatAlignLeft } from "react-icons/md";
-import { MdOutlineFormatAlignRight } from "react-icons/md";
-import { MdOutlineFormatAlignCenter } from "react-icons/md";
-import { MdOutlineFormatAlignJustify } from "react-icons/md";
 import { GrUndo } from "react-icons/gr";
 import { GrRedo } from "react-icons/gr";
 import { RiFontSize2 } from "react-icons/ri";
@@ -48,7 +43,6 @@ export default function FancyTextEditor({
       Link,
       Superscript,
       SubScript,
-      // TextAlign.configure({ types: ["heading", "paragraph"] }),
       Placeholder.configure({ placeholder: "Text (optional)" }),
       CharacterCount.configure({
         limit: 10000,
@@ -108,31 +102,13 @@ export default function FancyTextEditor({
             icon={GoListOrdered}
             style={fancyToolStyle}
           />
-          {/* <RichTextEditor.AlignLeft
-            icon={MdFormatAlignLeft}
-            style={fancyToolStyle}
-          />
-          <RichTextEditor.AlignCenter
-            icon={MdOutlineFormatAlignCenter}
-            style={fancyToolStyle}
-          />
-          <RichTextEditor.AlignJustify
-            icon={MdOutlineFormatAlignJustify}
-            style={fancyToolStyle}
-          />
-          <RichTextEditor.AlignRight
-            icon={MdOutlineFormatAlignRight}
-            style={fancyToolStyle}
-          /> */}
+
           <RichTextEditor.Undo icon={GrUndo} style={fancyToolStyle} />
           <RichTextEditor.Redo icon={GrRedo} style={fancyToolStyle} />
         </RichTextEditor.Toolbar>
 
         <RichTextEditor.Content bg={"dark"} className="text-lg" mih={95} />
       </RichTextEditor>
-      {/* <span className={`inline-block w-full text-end opacity-75`}>
-        {content?.length}/10000
-      </span> */}
     </div>
   );
 }

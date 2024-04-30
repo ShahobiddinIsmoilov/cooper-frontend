@@ -32,7 +32,7 @@ export default function UserPostList({ sortOption }: { sortOption: string }) {
     <Stack gap={0}>
       {posts.map((post: PostProps) => (
         <div key={`userpost-${post.id}`}>
-          <PostCard post={post} notCommunity={true} />
+          <PostCard post={post} headerVariant="home" />
           <Line />
         </div>
       ))}

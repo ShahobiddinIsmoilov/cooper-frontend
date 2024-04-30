@@ -6,8 +6,6 @@ import { MdMenu } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { FaRedditAlien } from "react-icons/fa6";
 import HomePage from "./pages/HomePage";
-import LoginPage from "./pages/LoginPage";
-import LogoutPage from "./pages/LogoutPage";
 import PostDetailPage from "./pages/PostDetailPage";
 import CommunityPage from "./pages/CommunityPage";
 import Header from "./components/header/Header";
@@ -94,8 +92,6 @@ export default function Layout() {
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/explore" element={<ExplorePage />} />
                 <Route path="/all" element={<AllPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/logout" element={<LogoutPage />} />
                 <Route path="/c/:community_link" element={<CommunityPage />} />
                 <Route
                   path="/c/:community_link/post/:post_permalink"

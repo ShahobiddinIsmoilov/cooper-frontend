@@ -31,7 +31,7 @@ export default function UserUpvotedList({
     <Stack gap={0}>
       {posts.map((post: PostProps) => (
         <div key={`userupvoted-${post.id}`}>
-          <PostCard post={post} />
+          <PostCard post={post} headerVariant="home" />
           <Line />
         </div>
       ))}

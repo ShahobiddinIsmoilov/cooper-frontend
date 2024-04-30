@@ -27,7 +27,7 @@ export default function UserSavedList({ sortOption }: { sortOption: string }) {
     <Stack gap={0}>
       {posts.map((post: PostProps) => (
         <div key={`usersaved-${post.id}`}>
-          <PostCard post={post} />
+          <PostCard post={post} headerVariant="home" />
           <Line />
         </div>
       ))}

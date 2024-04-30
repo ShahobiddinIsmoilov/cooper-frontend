@@ -1,5 +1,4 @@
-import { Avatar, Flex, Stack } from "@mantine/core";
-import { BiSolidLike } from "react-icons/bi";
+import { Avatar, Flex } from "@mantine/core";
 import { UserDetailProps } from "../../../interfaces/userDetailProps";
 import { FaEdit } from "react-icons/fa";
 import { useRef } from "react";

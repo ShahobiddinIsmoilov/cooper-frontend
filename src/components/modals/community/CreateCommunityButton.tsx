@@ -30,7 +30,7 @@ export default function CreateCommunityForm() {
 
   // initial values of form fields
   const [name, setName] = useState("");
-  const [link, setLink] = useState("");
+  // const [link, setLink] = useState("");
   const [description, setDescription] = useState("");
   const [formDisabled, setFormDisabled] = useState(false);
 
@@ -49,7 +49,7 @@ export default function CreateCommunityForm() {
   function closeModal() {
     close();
     setName("");
-    setLink("");
+    // setLink("");
     setDescription("");
     setFormDisabled(false);
   }

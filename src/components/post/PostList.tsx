@@ -41,7 +41,10 @@ export default function PostList({ filter, sortOption, community }: Props) {
       </div>
       {posts.map((post: PostProps) => (
         <div key={post.id}>
-          <PostCard post={post} headerVariant={filter} />
+          <PostCard
+            post={post}
+            headerVariant={filter === "community" ? filter : "home"}
+          />
           <Line />
         </div>
       ))}
