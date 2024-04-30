@@ -1,12 +1,12 @@
-import CommentCard from "./commentcard/CommentCard";
 import { CommentProps } from "../../interfaces/commentProps";
 import { Stack } from "@mantine/core";
+import CommentCard from "./commentcard/CommentCard";
 
 interface CommentListProps {
   comments: CommentProps[];
 }
 
-function CommentList({ comments }: CommentListProps) {
+export default function CommentList({ comments }: CommentListProps) {
   const len = comments.length;
   let count = 0;
 
@@ -26,5 +26,3 @@ function CommentList({ comments }: CommentListProps) {
     </Stack>
   );
 }
-
-export default CommentList;

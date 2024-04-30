@@ -7,7 +7,7 @@ import { Avatar, Image } from "@mantine/core";
 import getCommunityDetail from "../../services/community/getCommunityDetail";
 
 interface CommunityLinkProps {
-  community_name?: string;
+  community_name: string;
   community_link: string;
 }
 
@@ -47,7 +47,7 @@ export default function CommunityLink({
   );
 }
 
-function Preview({ community_link }: CommunityLinkProps) {
+export function Preview({ community_link }: { community_link: string }) {
   const { isPending, error, data } = useQuery({
     queryKey: [`community-preview-${community_link}`],
     queryFn: () =>
@@ -88,12 +88,12 @@ function CommunityPreview({ communityDetail }: CommunityPreviewProps) {
   return (
     <div className="w-96">
       <Image
-        src={`../../../../src/assets/banner_${communityDetail.link}.jpg`}
+        src={communityDetail.banner}
         className="bg-blue-400 h-24 w-96 object-cover"
       />
       <div className="flex items-center gap-2 m-4">
         <Avatar
-          src={`../../../../src/assets/avatar_${communityDetail.link}.jpg`}
+          src={communityDetail.avatar}
           className="w-10 xs:w-14 h-10 xs:h-14 min-w-10 xs:min-w-14 object-cover rounded-full"
         />
         <div className="mx-1 w-full">

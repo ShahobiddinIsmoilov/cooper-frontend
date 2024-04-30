@@ -73,7 +73,6 @@ export default function CommunityPage() {
                 <CreatePost
                   community={community.id}
                   community_name={community.name}
-                  community_link={community.link}
                 />
               </div>
             </div>

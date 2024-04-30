@@ -76,7 +76,7 @@ export default function FancyCommentEditor({
     <div className="tiptap-editor">
       <RichTextEditor
         editor={editor}
-        className="bg-dark-850 rounded-xl overflow-hidden"
+        className="bg-dark-850 rounded-xl border-none overflow-hidden"
       >
         {toolbarVisible && (
           <RichTextEditor.Toolbar
@@ -107,7 +107,10 @@ export default function FancyCommentEditor({
             <RichTextEditor.H2 icon={RiFontSize2} style={fancyToolStyle} />
             <RichTextEditor.Link icon={LuLink2} style={fancyToolStyle} />
             <RichTextEditor.Unlink icon={LuLink2Off} style={fancyToolStyle} />
-            {/* <RichTextEditor.Blockquote icon={MdFormatQuote}style={fancyToolStyle} /> */}
+            <RichTextEditor.Blockquote
+              icon={MdFormatQuote}
+              style={fancyToolStyle}
+            />
             <RichTextEditor.BulletList
               icon={PiListBulletsBold}
               style={fancyToolStyle}

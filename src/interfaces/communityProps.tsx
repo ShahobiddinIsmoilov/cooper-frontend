@@ -3,5 +3,5 @@ export interface CommunityProps {
   link: string;
   description: string;
   members: number;
-  avatar: URL;
+  avatar: string;
 }

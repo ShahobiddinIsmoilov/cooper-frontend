@@ -59,7 +59,7 @@ export default function CommentForm({
 
   return (
     <form onSubmit={(e) => handleSubmit(e)}>
-      <Stack gap={4} className="py-2 xs:py-6">
+      <Stack gap={0} className="bg-dark-850 rounded-xl my-4 border border-line">
         <FancyCommentEditor
           setHTMLComment={setHTMLComment}
           formDisabled={formDisabled}
@@ -71,19 +71,17 @@ export default function CommentForm({
           setClearForm={setClearForm}
         />
         {controlsVisible && (
-          <div className="flex justify-between">
+          <div className="flex justify-between m-1">
             <Button
-              className="text-blue-400 hover:text-blue-300 hover:bg-transparent h-8 rounded-full px-2"
+              className="text-blue-400/75 hover:text-blue-300/75 hover:bg-transparent h-8 rounded-full px-2"
               onClick={() => setToolbarVisible(!toolbarVisible)}
             >
-              {toolbarVisible
-                ? "Hide formatting options"
-                : "Show formatting options"}
+              {toolbarVisible ? "Hide toolbar" : "Show toolbar"}
             </Button>
             <span>
               <Button
-                className="hover:bg-dark-700 h-8 w-16 rounded-full p-0 mr-2 opacity-50 hover:opacity-100"
                 onClick={handleCancel}
+                className="hover:bg-dark-700 h-8 w-16 rounded-full p-0 mr-2 opacity-50 hover:opacity-100"
               >
                 Cancel
               </Button>

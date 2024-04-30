@@ -1,6 +1,7 @@
 export interface CommentProps {
   id: number;
   user: number;
+  avatar: string;
   post_title: string;
   parent: number;
   parent_username: string;
@@ -12,6 +13,7 @@ export interface CommentProps {
   community: number;
   community_name: string;
   community_link: string;
+  community_avatar: string;
   username: string;
   body: string;
   upvoted: boolean;

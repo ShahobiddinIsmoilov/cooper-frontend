@@ -30,7 +30,7 @@ function CommentHeader({ comment, hidden, setHidden }: CommentCardProps) {
         )}
       </button>
       <div className="text-xs xs:text-base flex items-center gap-1" id="fucker">
-        <UserLinkAvatar username={comment.username} />
+        <UserLinkAvatar username={comment.username} avatar={comment.avatar} />
         <UserLink username={comment.username} />
         <span className="opacity-50 text-sm"> ∙ 15 daqiqa oldin </span>
       </div>

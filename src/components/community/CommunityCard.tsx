@@ -17,7 +17,7 @@ export default function CommunityCard({
       onClick={closeDrawer}
       className="mx-4 flex gap-3 items-center px-8 py-2 rounded-xl hover:bg-dark-750"
     >
-      <Avatar src={`../../../../src/assets/avatar_${community.name}.jpg`} />
+      <Avatar src={community.avatar} />
       <div className="truncate">
         <p className="font-bold">{community.name}</p>
         <p className="text-white/50 truncate text-sm">

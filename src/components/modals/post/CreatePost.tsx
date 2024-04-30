@@ -1,6 +1,5 @@
 import { Menu, Modal } from "@mantine/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useAuthContext } from "../../../contexts/AuthContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDisclosure } from "@mantine/hooks";

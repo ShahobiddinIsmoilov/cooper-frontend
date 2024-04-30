@@ -14,7 +14,10 @@ interface CommentCardProps {
 export default function CommentHeader({ comment }: CommentCardProps) {
   return (
     <Flex gap={0} className="text-xs xs:text-base">
-      <CommunityLinkAvatar community_link={comment.community_link} />
+      <CommunityLinkAvatar
+        community_link={comment.community_link}
+        community_avatar={comment.community_avatar}
+      />
       <div className="mt-[6px] ml-2">
         <div className="inline-block">
           <CommunityLink
