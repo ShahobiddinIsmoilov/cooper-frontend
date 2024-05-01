@@ -70,6 +70,7 @@ export default function FancyCommentEditor({
     border: "none",
     width: "32px",
     height: "32px",
+    backgroundColor: "transparent",
   };
 
   return (

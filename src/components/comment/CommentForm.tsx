@@ -73,15 +73,15 @@ export default function CommentForm({
         {controlsVisible && (
           <div className="flex justify-between m-1">
             <Button
-              className="text-blue-400/75 hover:text-blue-300/75 hover:bg-transparent h-8 rounded-full px-2"
               onClick={() => setToolbarVisible(!toolbarVisible)}
+              className="text-blue-400/75 hover:text-blue-300/75 bg-transparent hover:bg-transparent h-8 rounded-full px-2"
             >
               {toolbarVisible ? "Hide toolbar" : "Show toolbar"}
             </Button>
             <span>
               <Button
                 onClick={handleCancel}
-                className="hover:bg-dark-700 h-8 w-16 rounded-full p-0 mr-2 opacity-50 hover:opacity-100"
+                className="bg-transparent hover:bg-dark-700 h-8 w-16 rounded-full p-0 mr-2 opacity-50 hover:opacity-100"
               >
                 Cancel
               </Button>
