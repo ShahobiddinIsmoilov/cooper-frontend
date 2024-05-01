@@ -4,14 +4,23 @@ import { Menu, MenuItem, MenuButton } from "@szhsin/react-menu";
 import "./content-menu.css";
 
 interface Props {
-  content: "post" | "comment";
+  community_link: string;
+  post_permalink: string;
+  comment_permalink?: string;
   bg: string;
 }
 
-export default function ContentShare({ bg }: Props) {
+export default function ContentShare({
+  community_link,
+  post_permalink,
+  comment_permalink,
+  bg,
+}: Props) {
   async function handleCopy() {
-    const path = location.href;
-    await navigator.clipboard.writeText(path);
+    const link = comment_permalink
+      ? `/c/${community_link}/post/${post_permalink}/${comment_permalink}`
+      : `/c/${community_link}/post/${post_permalink}`;
+    await navigator.clipboard.writeText(link);
   }
 
   return (

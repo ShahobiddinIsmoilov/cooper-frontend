@@ -37,7 +37,11 @@ export default function PostHeader({ post, variant }: Props) {
           <TimeDisplay time={post.created_at} />
         </div>
       </div>
-      <ContentShare content="post" bg="600" />
+      <ContentShare
+        community_link={post.community_link}
+        post_permalink={post.permalink}
+        bg="600"
+      />
     </div>
   );
 }
