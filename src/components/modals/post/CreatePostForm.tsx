@@ -1,12 +1,14 @@
-import { Stack, Flex, Group, Avatar, Button, Text } from "@mantine/core";
+import { Stack, Flex, Group, Button, Text } from "@mantine/core";
 import { FileWithPath } from "@mantine/dropzone";
 import CommunityCombobox from "./CommunityCombobox";
 import FancyTextEditor from "./FancyTextEditor";
 import PostTitle from "./PostTitle";
 import ImageDrop from "./ImageDrop";
 import LinkInput from "./LinkInput";
+import UserAvatar from "./UserAvatar";
 
 interface Props {
+  community_avatar?: string;
   postType: string;
   combobox: string | undefined;
   title: string;
@@ -14,8 +16,8 @@ interface Props {
   formDisabled: boolean;
   image: FileWithPath | null;
   link: string;
-  setTitle: (value: string) => void;
   titleChanged: boolean;
+  setTitle: (value: string) => void;
   setBody: (value: string) => void;
   setHTMLbody: (value: string) => void;
   setCombobox: (value: string) => void;
@@ -32,11 +34,12 @@ export default function CreatePostForm(props: Props) {
       <Stack gap={0} pt="md" px="md">
         <Flex className="justify-between items-center mb-6">
           <Group>
-            <Avatar src={"none"} size={48} maw={48} />
+            <UserAvatar />
             <Text className="text-xl font-bold">New Post</Text>
           </Group>
           <CommunityCombobox
-            community={props.combobox}
+            community_name={props.combobox}
+            community_avatar={props.community_avatar}
             setCommunity={props.setCombobox}
           />
         </Flex>

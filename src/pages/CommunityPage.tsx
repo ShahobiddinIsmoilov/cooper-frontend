@@ -73,6 +73,7 @@ export default function CommunityPage() {
                 <CreatePost
                   community={community.id}
                   community_name={community.name}
+                  community_avatar={community.avatar}
                 />
               </div>
             </div>

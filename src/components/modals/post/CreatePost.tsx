@@ -14,6 +14,7 @@ import CreatePostForm from "./CreatePostForm";
 interface Props {
   community?: number;
   community_name?: string;
+  community_avatar?: string;
 }
 
 export default function CreatePost(props: Props) {
@@ -141,6 +142,7 @@ export default function CreatePost(props: Props) {
         withCloseButton={false}
       >
         <CreatePostForm
+          community_avatar={props.community_avatar}
           postType={postType}
           combobox={combobox}
           title={title}

@@ -60,6 +60,7 @@ export default function FancyTextEditor({
     border: "none",
     width: "32px",
     height: "32px",
+    backgroundColor: "transparent",
   };
 
   return (
