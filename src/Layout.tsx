@@ -4,7 +4,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { useWindowSize } from "./contexts/WindowSizeContext";
 import { MdMenu } from "react-icons/md";
 import { useEffect, useState } from "react";
-import { FaRedditAlien } from "react-icons/fa6";
+import { IoCube } from "react-icons/io5";
 import HomePage from "./pages/HomePage";
 import PostDetailPage from "./pages/PostDetailPage";
 import CommunityPage from "./pages/CommunityPage";
@@ -77,7 +77,7 @@ export default function Layout() {
                 <MdMenu size={28} />
               </button>
               <Link to="/home" onClick={closeDrawer}>
-                <FaRedditAlien size={32} />
+                <IoCube size={32} />
               </Link>
             </div>
             <Navbar closeDrawer={closeDrawer} />
