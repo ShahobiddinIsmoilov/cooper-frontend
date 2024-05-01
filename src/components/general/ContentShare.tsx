@@ -1,7 +1,6 @@
 import { FiLink } from "react-icons/fi";
 import { IoCopySharp } from "react-icons/io5";
 import { Menu, MenuItem, MenuButton } from "@szhsin/react-menu";
-import { useLocation } from "react-router-dom";
 import "./content-menu.css";
 
 interface Props {
@@ -10,9 +9,9 @@ interface Props {
 }
 
 export default function ContentShare({ bg }: Props) {
-  function handleCopy() {
-    const path = useLocation();
-    navigator.clipboard.writeText(String(path));
+  async function handleCopy() {
+    const path = location.href;
+    await navigator.clipboard.writeText(path);
   }
 
   return (
