@@ -16,10 +16,16 @@ export default function ContentShare({
   comment_permalink,
   bg,
 }: Props) {
+  const path = window.location.href;
+
   async function handleCopy() {
+    const parsedUrl = new URL(path);
+    const baseUrl = parsedUrl.protocol + "//" + parsedUrl.host;
+
     const link = comment_permalink
-      ? `/c/${community_link}/post/${post_permalink}/${comment_permalink}`
-      : `/c/${community_link}/post/${post_permalink}`;
+      ? `${baseUrl}/c/${community_link}/post/${post_permalink}/${comment_permalink}`
+      : `${baseUrl}/c/${community_link}/post/${post_permalink}`;
+
     await navigator.clipboard.writeText(link);
   }
 
