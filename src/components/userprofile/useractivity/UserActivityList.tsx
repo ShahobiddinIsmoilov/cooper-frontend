@@ -35,18 +35,24 @@ export default function UserActivityList({
 
   return (
     <Stack gap={0}>
-      {list.map((item: CommentProps | PostProps) =>
-        "title" in item ? (
-          <div key={`useractivity-post-${item.id}`}>
-            <PostCard post={item} headerVariant="home" />
-            <Line />
-          </div>
-        ) : (
-          <div key={`useractivity-comment-${item.id}`}>
-            <UserCommentCard comment={item} />
-            <Line />
-          </div>
+      {list.length > 0 ? (
+        list.map((item: CommentProps | PostProps) =>
+          "title" in item ? (
+            <div key={`useractivity-post-${item.id}`}>
+              <PostCard post={item} headerVariant="home" />
+              <Line />
+            </div>
+          ) : (
+            <div key={`useractivity-comment-${item.id}`}>
+              <UserCommentCard comment={item} />
+              <Line />
+            </div>
+          )
         )
+      ) : (
+        <p className="text-center mt-8 text-white/50">
+          This user hasn't made any posts or comments
+        </p>
       )}
     </Stack>
   );

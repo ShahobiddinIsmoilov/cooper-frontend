@@ -29,12 +29,16 @@ export default function UserUpvotedList({
 
   return (
     <Stack gap={0}>
-      {posts.map((post: PostProps) => (
-        <div key={`userupvoted-${post.id}`}>
-          <PostCard post={post} headerVariant="home" />
-          <Line />
-        </div>
-      ))}
+      {posts.length > 0 ? (
+        posts.map((post: PostProps) => (
+          <div key={`userupvoted-${post.id}`}>
+            <PostCard post={post} headerVariant="home" />
+            <Line />
+          </div>
+        ))
+      ) : (
+        <p className="text-center mt-8 text-white/50">This list is empty</p>
+      )}
     </Stack>
   );
 }

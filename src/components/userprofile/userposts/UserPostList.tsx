@@ -30,12 +30,18 @@ export default function UserPostList({ sortOption }: { sortOption: string }) {
 
   return (
     <Stack gap={0}>
-      {posts.map((post: PostProps) => (
-        <div key={`userpost-${post.id}`}>
-          <PostCard post={post} headerVariant="home" />
-          <Line />
-        </div>
-      ))}
+      {posts.length > 0 ? (
+        posts.map((post: PostProps) => (
+          <div key={`userpost-${post.id}`}>
+            <PostCard post={post} headerVariant="home" />
+            <Line />
+          </div>
+        ))
+      ) : (
+        <p className="text-center mt-8 text-white/50">
+          This user hasn't made any posts
+        </p>
+      )}
     </Stack>
   );
 }

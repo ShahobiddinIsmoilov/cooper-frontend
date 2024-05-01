@@ -34,12 +34,18 @@ export default function UserCommentList({
 
   return (
     <Stack gap={0}>
-      {comments.map((comment: CommentProps) => (
-        <div key={`usercomment-${comment.id}`}>
-          <UserCommentCard comment={comment} />
-          <Line />
-        </div>
-      ))}
+      {comments.length > 0 ? (
+        comments.map((comment: CommentProps) => (
+          <div key={`usercomment-${comment.id}`}>
+            <UserCommentCard comment={comment} />
+            <Line />
+          </div>
+        ))
+      ) : (
+        <p className="text-center mt-8 text-white/50">
+          This user hasn't made any comments
+        </p>
+      )}
     </Stack>
   );
 }
