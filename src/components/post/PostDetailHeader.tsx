@@ -45,7 +45,11 @@ export default function PostDetailHeader({ post }: PostDetailHeaderProps) {
           </div>
         </div>
       </div>
-      <ContentShare content="post" bg="700" />
+      <ContentShare
+        community_link={post.community_link}
+        post_permalink={post.permalink}
+        bg="700"
+      />
     </div>
   );
 }

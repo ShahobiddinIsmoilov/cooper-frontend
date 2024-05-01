@@ -36,12 +36,12 @@
   }
 
   .post-detail {
-    @apply text-white/75 [&_hr]:my-4 [&_p]:mt-0
-          [&_a]:text-blue-400 [&_h2]:text-2xl [&_h2]:py-2;
+    @apply text-white/75 [&_hr]:my-4 [&_p]:mb-3 [&_h2]:text-2xl [&_h2]:py-2
+        [&_a]:text-blue-400 [&_li]:ml-6 [&_li]:list-disc [&_li]:-mt-3;
   }
 
   .post-card {
-    @apply text-white/75 [&_hr]:my-4 [&_p]:mt-0
+    @apply text-white/75 [&_hr]:my-4 [&_p]:mb-0
           [&_a]:text-blue-400 [&_h2]:text-xl [&_h2]:py-2;
   }
 }
