@@ -43,17 +43,20 @@ export default function Modallion() {
         {withCloseButton && (
           <button
             onClick={handleDialogClose}
-            className="absolute top-8 right-8 p-2 bg-dark-950/50 hover:bg-dark-800 rounded-full"
+            className="absolute top-6 right-6 p-2 bg-dark-950/50 hover:bg-dark-800 rounded-full text-2xl"
           >
-            <IoMdClose size={28} />
+            <IoMdClose />
           </button>
         )}
       </div>
     </FocusTrap>
   );
 
-  if (isDialogVisible) document.body.style.overflow = "hidden";
-  else document.body.style.overflow = "auto";
+  if (isDialogVisible) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "auto";
+  }
 
   return isDialogVisible ? <Portal>{modallion}</Portal> : null;
 }

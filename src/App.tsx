@@ -6,10 +6,10 @@ import Layout from "./Layout";
 import { theme } from "./theme";
 import { MantineProvider } from "@mantine/core";
 import { BrowserRouter } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AuthProvider from "./contexts/AuthContext";
 import DialogProvider from "./contexts/DialogContext";
 import WindowSizeProvider from "./contexts/WindowSizeContext";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
 
@@ -22,7 +22,6 @@ export default function App() {
             <AuthProvider>
               <BrowserRouter>
                 <Layout />
-                <div id="portal" />
               </BrowserRouter>
             </AuthProvider>
           </DialogProvider>

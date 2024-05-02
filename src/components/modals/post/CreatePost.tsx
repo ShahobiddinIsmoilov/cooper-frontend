@@ -1,4 +1,4 @@
-import { Menu, Modal } from "@mantine/core";
+import { Button, Menu, Modal } from "@mantine/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -82,14 +82,12 @@ export default function CreatePost(props: Props) {
     <>
       <Menu radius={12}>
         <Menu.Target>
-          <button
-            className={`flex items-center gap-1 hover:bg-dark-700 border-white border-opacity-25 rounded-full ${
-              plussize === 20 ? "p-[10px]" : "p-[8px]"
-            }`}
+          <Button
+            className={`flex items-center gap-1 bg-transparent hover:bg-dark-700 rounded-full`}
           >
             <FaPlus size={plussize} />
             Create
-          </button>
+          </Button>
         </Menu.Target>
         <Menu.Dropdown w={150} className="bg-dark-850">
           <Menu.Item

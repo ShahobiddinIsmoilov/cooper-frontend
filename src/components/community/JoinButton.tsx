@@ -1,5 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import useCredentials from "../../services/useCredentials";
+import { Button } from "@mantine/core";
 
 interface Props {
   isJoined: boolean;
@@ -34,11 +35,15 @@ export default function JoinButton({
   }
 
   return (
-    <button
+    <Button
       onClick={handleClick}
-      className="text-white rounded-full px-4 py-1 border text-base ml-4 hover:bg-dark-600 h-8"
+      className={`rounded-full ${
+        isJoined
+          ? "bg-transparent border hover:bg-dark-700 border-white/50"
+          : "bg-cyan-700 hover:bg-cyan-600"
+      }`}
     >
-      {isJoined ? "Leave" : "Join"}
-    </button>
+      {isJoined ? "Joined" : "Join"}
+    </Button>
   );
 }

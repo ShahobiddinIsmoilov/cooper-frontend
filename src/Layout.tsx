@@ -27,10 +27,12 @@ export default function Layout() {
 
   function openDrawer() {
     setIsDrawerOpen(true);
+    document.body.style.overflow = "hidden";
   }
 
   function closeDrawer() {
     setIsDrawerOpen(false);
+    document.body.style.overflow = "auto";
   }
 
   useEffect(() => {
@@ -86,24 +88,22 @@ export default function Layout() {
         </div>
 
         <AppShell.Main>
-          <Flex justify={{ xs: "flex-center" }}>
-            <Container className="w-[1056px] max-w-[1056px] p-0">
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/home" element={<HomePage />} />
-                <Route path="/explore" element={<ExplorePage />} />
-                <Route path="/all" element={<AllPage />} />
-                <Route path="/c/:community_link" element={<CommunityPage />} />
-                <Route
-                  path="/c/:community_link/post/:post_permalink"
-                  element={<PostDetailPage />}
-                />
-                <Route path="/user/:username/*" element={<UserPage />} />
-                <Route path="/profile/*" element={<ProfilePage />} />
-                <Route path="*" element={<LostPage />} />
-              </Routes>
-            </Container>
-          </Flex>
+          <Container className="max-w-[1056px] p-0">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/home" element={<HomePage />} />
+              <Route path="/explore" element={<ExplorePage />} />
+              <Route path="/all" element={<AllPage />} />
+              <Route path="/c/:community_link" element={<CommunityPage />} />
+              <Route
+                path="/c/:community_link/post/:post_permalink"
+                element={<PostDetailPage />}
+              />
+              <Route path="/user/:username/*" element={<UserPage />} />
+              <Route path="/profile/*" element={<ProfilePage />} />
+              <Route path="*" element={<LostPage />} />
+            </Routes>
+          </Container>
         </AppShell.Main>
       </AppShell>
       <Modallion />

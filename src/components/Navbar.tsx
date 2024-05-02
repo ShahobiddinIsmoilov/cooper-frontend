@@ -21,69 +21,71 @@ export default function Navbar({ closeDrawer }: Props) {
 
   return (
     <div
-      className={`bg-dark-850 text-white h-full overflow-x-hidden overflow-hidden hover:overflow-y-scroll navbar-scrollbar flex flex-col justify-between border-r border-line ${
+      className={`bg-dark-850 text-white h-full overflow-x-hidden overflow-y-scroll xs:overflow-hidden xs:hover:overflow-y-scroll navbar-scrollbar border-r border-line ${
         screenWidth >= 1408 || screenWidth < 1200 ? "w-[300px]" : "w-[280px]"
       }`}
     >
-      <div>
-        <div className="mt-2">
-          <SidebarItem
-            icon={<FaHome size={24} />}
-            text="Home"
-            closeDrawer={closeDrawer}
-          />
-          <SidebarItem
-            icon={<MdOutlineExplore size={24} />}
-            text="Explore"
-            closeDrawer={closeDrawer}
-          />
-          <SidebarItem
-            icon={<FaGlobe size={24} />}
-            text="All"
-            closeDrawer={closeDrawer}
-          />
-        </div>
+      <div className="flex flex-col justify-between">
         <div>
-          {user && (
-            <>
-              <CustomLine />
-              <p className="flex justify-center">
-                <CreateCommunityButton />
-              </p>
-            </>
-          )}
-          {!user && (
-            <>
-              <CustomLine />
-              <AllCommunities closeDrawer={closeDrawer} />
-            </>
-          )}
-          {user && (
-            <>
-              <CustomLine />
-              <JoinedCommunities
-                user={user.user_id}
-                closeDrawer={closeDrawer}
-              />
-            </>
-          )}
-          {user && (
-            <>
-              <CustomLine />
-              <DiscoverCommunities
-                user={user.user_id}
-                closeDrawer={closeDrawer}
-              />
-            </>
-          )}
-          {/* <p className="text-white opacity-75 text-sm py-4 text-center">
+          <div className="mt-2">
+            <SidebarItem
+              icon={<FaHome size={24} />}
+              text="Home"
+              closeDrawer={closeDrawer}
+            />
+            <SidebarItem
+              icon={<MdOutlineExplore size={24} />}
+              text="Explore"
+              closeDrawer={closeDrawer}
+            />
+            <SidebarItem
+              icon={<FaGlobe size={24} />}
+              text="All"
+              closeDrawer={closeDrawer}
+            />
+          </div>
+          <div>
+            {user && (
+              <>
+                <CustomLine />
+                <p className="flex justify-center">
+                  <CreateCommunityButton />
+                </p>
+              </>
+            )}
+            {!user && (
+              <>
+                <CustomLine />
+                <AllCommunities closeDrawer={closeDrawer} />
+              </>
+            )}
+            {user && (
+              <>
+                <CustomLine />
+                <JoinedCommunities
+                  user={user.user_id}
+                  closeDrawer={closeDrawer}
+                />
+              </>
+            )}
+            {user && (
+              <>
+                <CustomLine />
+                <DiscoverCommunities
+                  user={user.user_id}
+                  closeDrawer={closeDrawer}
+                />
+              </>
+            )}
+            {/* <p className="text-white opacity-75 text-sm py-4 text-center">
           <span className="hover:text-cyan-300 cursor-pointer">
             ALL COMMUNITIES
           </span>
         </p> */}
+          </div>
         </div>
+        <Credits />
       </div>
-      <Credits />
     </div>
   );
 }
