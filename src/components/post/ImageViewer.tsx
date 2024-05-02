@@ -1,22 +1,31 @@
-import { Image, Modal } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import { Image } from "@mantine/core";
+import { useDialog } from "../../contexts/DialogContext";
 
 export default function ImageViewer({ imageUrl }: { imageUrl: string }) {
-  const [opened, { open, close }] = useDisclosure();
+  const {
+    setDialogContent,
+    setIsDialogVisible,
+    setWithCloseButton,
+    dialogContentRef,
+  } = useDialog();
+
+  function handleImageClick() {
+    setDialogContent(
+      <Image
+        src={imageUrl}
+        fit="contain"
+        ref={dialogContentRef}
+        className="w-full h-full"
+      />
+    );
+    setWithCloseButton(true);
+    setIsDialogVisible(true);
+  }
 
   return (
     <>
-      <Modal
-        opened={opened}
-        onClose={close}
-        size="auto"
-        centered
-        withCloseButton={false}
-      >
-        <Image src={imageUrl} fit="contain" />
-      </Modal>
       <div
-        onClick={open}
+        onClick={handleImageClick}
         className="bg-dark-900 rounded-xl relative overflow-hidden cursor-pointer"
       >
         <Image
