@@ -61,7 +61,7 @@ export default function LinkPreview({
           to={link}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center rounded-lg xs:rounded-xl overflow-hidden bg-dark-700 max-h-[150px] hover:bg-dark-600 border border-white border-opacity-25"
+          className="flex items-center rounded-lg overflow-hidden xs:rounded-xl bg-dark-700 max-h-[150px] hover:bg-dark-600 border border-white border-opacity-25"
         >
           {image ? (
             <Image
@@ -74,7 +74,10 @@ export default function LinkPreview({
               <FaExternalLinkAlt size={40} />
             </div>
           )}
-          <Stack gap={0} className="mx-2 xs:mx-4 xs:my-2 text-white xs:gap-0.5">
+          <Stack
+            gap={0}
+            className="mx-2 xs:mx-4 xs:my-2 text-white xs:gap-0.5 overflow-hidden"
+          >
             <p className="xs:text-lg font-bold line-clamp-1 xs:line-clamp-2">
               {metadata.title}
             </p>

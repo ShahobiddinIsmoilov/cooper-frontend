@@ -15,7 +15,7 @@ export default function ImageViewer({ imageUrl }: { imageUrl: string }) {
         src={imageUrl}
         fit="contain"
         ref={dialogContentRef}
-        className="w-full h-full"
+        className="w-screen h-screen"
       />
     );
     setWithCloseButton(true);
@@ -31,13 +31,13 @@ export default function ImageViewer({ imageUrl }: { imageUrl: string }) {
         <Image
           src={imageUrl}
           mih={100}
-          mah={500}
+          mah={{ base: 350, xs: 500 }}
           className="blur-3xl opacity-50 border"
         />
         <Image
           src={imageUrl}
           mih={100}
-          mah={500}
+          mah={{ base: 350, xs: 500 }}
           fit="contain"
           className="absolute top-0 left-0 border border-white border-opacity-25 rounded-xl"
         />

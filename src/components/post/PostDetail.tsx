@@ -17,11 +17,11 @@ export default function PostDetail({ post, community }: PostDetailProps) {
   return (
     <>
       <PostDetailHeader post={post} />
-      <div className="xs:text-xl font-bold text-white mt-3 mb-2">
+      <div className="text-lg xs:text-xl font-bold text-white mt-3 mb-2 leading-snug xs:leading-normal">
         {post.title}
       </div>
       {post.type === "text" ? (
-        <div className="post-detail overflow-hidden break-words text-sm xs:text-base">
+        <div className="post-detail overflow-hidden break-words leading-snug xs:leading-normal">
           {ReactHtmlParser(post.body)}
         </div>
       ) : post.type === "image" ? (

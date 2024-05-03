@@ -1,5 +1,4 @@
 import { Stack } from "@mantine/core";
-import { useWindowSize } from "../../contexts/WindowSizeContext";
 import { useState } from "react";
 import { FaFire } from "react-icons/fa";
 import { FaRegClock } from "react-icons/fa";
@@ -16,7 +15,12 @@ export default function PostFeed({ filter, community }: Props) {
   const [sortOption, setSortOption] = useState("hot");
 
   return (
-    <Stack gap={0} className="xs:p-1 max-w-3xl mt-2">
+    <Stack
+      gap={0}
+      className={`xs:m-2 max-w-3xl ${
+        filter === "community" ? "mt-4 xs:mt-4" : "mt-2"
+      }`}
+    >
       <Sortbar
         sortOption={sortOption}
         setSortOption={setSortOption}
@@ -41,15 +45,10 @@ function Sortbar({
   filter,
   community,
 }: SortbarProps) {
-  const { screenWidth } = useWindowSize();
   const query = useQueryClient();
 
-  return screenWidth < 620 ? (
-    <div className="flex justify-center gap-2 text-white">
-      <p className="opacity-50 px-2 flex items-center text-center">SORT BY:</p>
-    </div>
-  ) : (
-    <div className="flex justify-center gap-2">
+  return (
+    <div className="flex justify-center font-bold gap-2 text-sm xs:text-base">
       <button
         onClick={() => {
           query.removeQueries({
@@ -59,13 +58,13 @@ function Sortbar({
           });
           setSortOption("hot");
         }}
-        className={`text-lg py-2 px-4 rounded-full hover:bg-dark-700 ${
+        className={`py-2 px-4 rounded-full hover:bg-dark-700 ${
           sortOption === "hot" && "bg-dark-700 text-orange-400"
         }`}
       >
         <div className="flex items-center gap-2">
           <FaFire className="inline-block" />
-          <span>TRENDING</span>
+          <span>HOT</span>
         </div>
       </button>
       <button
@@ -77,13 +76,13 @@ function Sortbar({
           });
           setSortOption("new");
         }}
-        className={`text-lg py-2 px-4 rounded-full hover:bg-dark-700 ${
+        className={`py-2 px-4 rounded-full hover:bg-dark-700 ${
           sortOption === "new" && "bg-dark-700 text-orange-400"
         }`}
       >
         <div className="flex items-center gap-2">
           <FaRegClock className="inline-block" />
-          <span>NEWEST</span>
+          <span>NEW</span>
         </div>
       </button>
       <button
@@ -95,7 +94,7 @@ function Sortbar({
           });
           setSortOption("top");
         }}
-        className={`text-lg py-2 px-4 rounded-full hover:bg-dark-700 ${
+        className={`py-2 px-4 rounded-full hover:bg-dark-700 ${
           sortOption === "top" && "bg-dark-700 text-orange-400"
         }`}
       >
