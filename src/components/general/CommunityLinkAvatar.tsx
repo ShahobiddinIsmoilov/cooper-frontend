@@ -6,11 +6,13 @@ import { Preview } from "./CommunityLink";
 interface CommunityLinkProps {
   community_link: string;
   community_avatar: string;
+  size: number;
 }
 
 export default function CommunityLinkAvatar({
   community_avatar,
   community_link,
+  size,
 }: CommunityLinkProps) {
   const [showPreview, setShowPreview] = useState(false);
 
@@ -37,7 +39,7 @@ export default function CommunityLinkAvatar({
         to={`/c/${community_link}`}
         className="font-bold hover:underline text-blue-400"
       >
-        <Avatar size={32} src={community_avatar} />
+        <Avatar size={size} src={community_avatar} />
       </Link>
       {showPreview && <Preview community_link={community_link} />}
     </div>

@@ -27,6 +27,7 @@ export default function PostDetailHeader({ post }: PostDetailHeaderProps) {
         <CommunityLinkAvatar
           community_avatar={post.community_avatar}
           community_link={post.community_link}
+          size={38}
         />
         <div>
           <CommunityLink

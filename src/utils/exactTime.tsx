@@ -1,4 +1,8 @@
-export default function exactTime(time: string, lang: "uz" | "en") {
+export default function exactTime(
+  time: string,
+  lang: "uz" | "en",
+  variant?: "short"
+) {
   const MONTHS_UZ = [
     "yanvar",
     "fevral",
@@ -68,9 +72,18 @@ export default function exactTime(time: string, lang: "uz" | "en") {
 
   const fullTime = `${hour}:${minute}:${second}`;
 
-  const result =
-    lang === "uz"
-      ? `${year}-yil ${date}-${MONTHS_UZ[month]} ${DAYS_UZ[day]} kuni, soat ${fullTime} da`
-      : `${DAYS_EN[day]}, ${MONTHS_EN[month]} ${date}, ${year} at ${fullTime}`;
+  let result = "";
+  if (lang === "uz") {
+    if (variant === "short") {
+      result = `${year}-yil ${date}-${MONTHS_UZ[month]}`;
+    } else {
+      result = `${year}-yil ${date}-${MONTHS_UZ[month]} ${DAYS_UZ[day]} kuni, soat ${fullTime} da`;
+    }
+  } else if (variant === "short") {
+    result = `${MONTHS_EN[month]} ${date}, ${year}`;
+  } else {
+    result = `${DAYS_EN[day]}, ${MONTHS_EN[month]} ${date}, ${year} at ${fullTime}`;
+  }
+
   return result;
 }

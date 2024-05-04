@@ -1,9 +1,8 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { Group, Select } from "@mantine/core";
 import Line from "../../../utils/Line";
 import UserDownvotedList from "./UserDownvotedList";
 import ScrollTop from "../../ScrollTop";
+import SortOptions from "../../general/SortOptions";
 
 interface Props {
   setActive: (value: string) => void;
@@ -11,7 +10,6 @@ interface Props {
 
 export default function UserDownvoted({ setActive }: Props) {
   const [sortOption, setSortOption] = useState("NEW");
-  const query = useQueryClient();
 
   useEffect(() => {
     setActive("disliked");
@@ -19,18 +17,11 @@ export default function UserDownvoted({ setActive }: Props) {
 
   return (
     <>
-      <Group className="pb-3">
-        <span>SORT BY:</span>
-        <Select
-          w={100}
-          data={["NEW", "TOP", "BEST"]}
-          value={sortOption}
-          onOptionSubmit={(value) => {
-            query.removeQueries({ queryKey: ["user-downvoted"] });
-            setSortOption(value);
-          }}
-        />
-      </Group>
+      <SortOptions
+        sortOption={sortOption}
+        setSortOption={setSortOption}
+        queryKey={`user-downvoted`}
+      />
       <Line />
       <UserDownvotedList sortOption={sortOption} />
       <ScrollTop />

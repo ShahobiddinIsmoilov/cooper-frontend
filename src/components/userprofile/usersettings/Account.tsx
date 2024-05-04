@@ -43,7 +43,7 @@ export default function AccountSettings({
 
   return (
     <Stack>
-      <div>
+      <div className="mt-4 xs:mt-0">
         <p className="mb-2 text-xs font-bold tracking-widest">ACCOUNT</p>
         <Line />
       </div>

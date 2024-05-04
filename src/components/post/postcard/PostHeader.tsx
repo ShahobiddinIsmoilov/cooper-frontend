@@ -22,6 +22,7 @@ export default function PostHeader({ post, variant }: Props) {
           <CommunityLinkAvatar
             community_link={post.community_link}
             community_avatar={post.community_avatar}
+            size={32}
           />
         )}
         {variant === "community" ? (

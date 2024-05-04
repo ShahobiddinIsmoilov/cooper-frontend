@@ -9,7 +9,7 @@ interface Props {
 
 export default function SocialIcons({ user }: Props) {
   return (
-    <div className="flex mt-2 gap-2 text-2xl">
+    <div className="flex mt-2 gap-4 text-2xl">
       {user.telegram && (
         <Link
           to={user.telegram}

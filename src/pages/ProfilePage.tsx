@@ -34,7 +34,7 @@ export default function ProfilePage() {
   const userdetail: UserDetailProps = data.data;
 
   return (
-    <Stack p={32} gap={8}>
+    <Stack gap={8} className="xs:mx-4">
       <UserProfile user={userdetail} />
       <MyUserNavbar active={active} />
       <Line />
