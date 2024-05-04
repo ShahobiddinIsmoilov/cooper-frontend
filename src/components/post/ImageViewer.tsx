@@ -11,12 +11,7 @@ export default function ImageViewer({ imageUrl }: { imageUrl: string }) {
 
   function handleImageClick() {
     setDialogContent(
-      <Image
-        src={imageUrl}
-        fit="contain"
-        ref={dialogContentRef}
-        className="w-screen h-screen"
-      />
+      <Image src={imageUrl} fit="contain" ref={dialogContentRef} />
     );
     setWithCloseButton(true);
     setIsDialogVisible(true);
