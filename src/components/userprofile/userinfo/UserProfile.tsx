@@ -102,7 +102,7 @@ export default function UserProfile({ user }: Props) {
         </div>
         <Stack align="end" mt={8}>
           <div className="text-end">
-            <p className="text-white/50">{userinfo.date_joined[language]}</p>
+            <p className="text-white/50">{userinfo.date_joined[language]}:</p>
             <p className="text-white">
               {exactTime(user.created_at, language, "short")}
             </p>
@@ -111,7 +111,7 @@ export default function UserProfile({ user }: Props) {
             </p>
           </div>
           <div className="text-end">
-            <p className="text-white/50">{userinfo.likes[language]}</p>
+            <p className="text-white/50">{userinfo.likes[language]}:</p>
             <p className="">
               <BiSolidLike className="text-yellow-400 inline-block mr-1" />
               {user.votes.toLocaleString()}
