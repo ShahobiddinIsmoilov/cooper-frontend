@@ -5,10 +5,12 @@ import { IoMdSettings } from "react-icons/io";
 import { BiSolidLike } from "react-icons/bi";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { Avatar, Button, Group, Menu, Modal, Stack } from "@mantine/core";
+import { IoLanguage } from "react-icons/io5";
 import { useDisclosure } from "@mantine/hooks";
 import { Link } from "react-router-dom";
 import { UserDetailProps } from "../../interfaces/userDetailProps";
 import { useWindowSize } from "../../contexts/WindowSizeContext";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 export default function ProfileMenu({ user }: { user: UserDetailProps }) {
   const [opened, { open, close }] = useDisclosure();
@@ -16,6 +18,8 @@ export default function ProfileMenu({ user }: { user: UserDetailProps }) {
 
   const screenHeight = useWindowSize().screenHeight;
   const avatarsize = screenHeight > 700 ? 36 : 32;
+
+  const { language, changeLanguage } = useLanguage();
 
   return (
     <div>
@@ -40,6 +44,13 @@ export default function ProfileMenu({ user }: { user: UserDetailProps }) {
             <Link to="/profile/settings">
               <MenuItem icon={<IoMdSettings size={30} />} text="Settings" />
             </Link>
+          </Menu.Item>
+          <Menu.Item p={0}>
+            <MenuItem
+              onClick={() => changeLanguage(language === "uz" ? "en" : "uz")}
+              icon={<IoLanguage size={30} />}
+              text={language === "uz" ? "English" : "Uzbek"}
+            />
           </Menu.Item>
           <Menu.Item p={0}>
             <MenuItem

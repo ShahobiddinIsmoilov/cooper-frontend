@@ -26,22 +26,22 @@ export default function UserNavbar({ active }: { active: string }) {
           className="flex gap-1 xs:gap-2 py-2 overflow-y-scroll no-scrollbar"
         >
           <Link to={""}>
-            <UserNavbarItem value="Activity" active={active} />
+            <UserNavbarItem value="activity" active={active} />
           </Link>
           <Link to={`/profile/posts`}>
-            <UserNavbarItem value="Posts" active={active} />
+            <UserNavbarItem value="posts" active={active} />
           </Link>
           <Link to={`/profile/comments`}>
-            <UserNavbarItem value="Comments" active={active} />
+            <UserNavbarItem value="comments" active={active} />
           </Link>
           <Link to={`/profile/saved`}>
-            <UserNavbarItem value="Saved" active={active} />
+            <UserNavbarItem value="saved" active={active} />
           </Link>
           <Link to={`/profile/liked`}>
-            <UserNavbarItem value="Liked" active={active} />
+            <UserNavbarItem value="liked" active={active} />
           </Link>
           <Link to={`/profile/disliked`}>
-            <UserNavbarItem value="Disliked" active={active} />
+            <UserNavbarItem value="disliked" active={active} />
           </Link>
         </div>
         <button

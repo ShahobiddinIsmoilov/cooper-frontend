@@ -7,13 +7,13 @@ export default function UserNavbar({ active }: { active: string }) {
   return (
     <div className="flex justify-center gap-1 xs:gap-2 mt-4 mb-2">
       <Link to={`/user/${username}`}>
-        <UserNavbarItem value="Activity" active={active} />
+        <UserNavbarItem value="activity" active={active} />
       </Link>
       <Link to={`/user/${username}/posts`}>
-        <UserNavbarItem value="Posts" active={active} />
+        <UserNavbarItem value="posts" active={active} />
       </Link>
       <Link to={`/user/${username}/comments`}>
-        <UserNavbarItem value="Comments" active={active} />
+        <UserNavbarItem value="comments" active={active} />
       </Link>
     </div>
   );

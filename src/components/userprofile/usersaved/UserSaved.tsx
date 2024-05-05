@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default function UserSaved({ setActive }: Props) {
-  const [sortOption, setSortOption] = useState("NEW");
+  const [sortOption, setSortOption] = useState("new");
 
   useEffect(() => {
     setActive("saved");

@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default function UserDownvoted({ setActive }: Props) {
-  const [sortOption, setSortOption] = useState("NEW");
+  const [sortOption, setSortOption] = useState("new");
 
   useEffect(() => {
     setActive("disliked");

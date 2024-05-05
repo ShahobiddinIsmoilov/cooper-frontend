@@ -2,6 +2,9 @@ import { Stack } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { PostProps } from "../../../interfaces/postProps";
 import { useAuthContext } from "../../../contexts/AuthContext";
+import { FetchError, FetchLoading } from "../../../utils/FetchStatus";
+import { userupvoted } from "../lang_userprofile";
+import { useLanguage } from "../../../contexts/LanguageContext";
 import Line from "../../../utils/Line";
 import PostCard from "../../post/postcard/PostCard";
 import getUserPosts from "../../../services/post/getUserPosts";
@@ -12,18 +15,20 @@ export default function UserUpvotedList({
   sortOption: string;
 }) {
   const user = useAuthContext().user?.user_id;
+  const sort = sortOption;
+  const { language } = useLanguage();
 
   const { isPending, error, data } = useQuery({
     queryKey: ["user-upvoted"],
     queryFn: () =>
       getUserPosts(
-        `/api/post/privatelist/?filter=upvoted&user=${user}&sort=${sortOption.toLowerCase()}`
+        `/api/post/privatelist/?filter=upvoted&user=${user}&sort=${sort}`
       ),
   });
 
-  if (isPending) return "Loading";
+  if (isPending) return <FetchLoading />;
 
-  if (error) return "Couldn't load data";
+  if (error) return <FetchError />;
 
   const posts = data.data;
 
@@ -37,7 +42,9 @@ export default function UserUpvotedList({
           </div>
         ))
       ) : (
-        <p className="text-center mt-8 text-white/50">This list is empty</p>
+        <p className="text-center mt-8 text-white/50">
+          {userupvoted.empty_message[language]}
+        </p>
       )}
     </Stack>
   );

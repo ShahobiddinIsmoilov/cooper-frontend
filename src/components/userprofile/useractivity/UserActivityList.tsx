@@ -4,6 +4,9 @@ import { PostProps } from "../../../interfaces/postProps";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useAuthContext } from "../../../contexts/AuthContext";
+import { FetchError, FetchLoading } from "../../../utils/FetchStatus";
+import { useractivity } from "../lang_userprofile";
+import { useLanguage } from "../../../contexts/LanguageContext";
 import Line from "../../../utils/Line";
 import PostCard from "../../post/postcard/PostCard";
 import UserCommentCard from "../usercomments/UserCommentCard";
@@ -15,9 +18,15 @@ export default function UserActivityList({
   sortOption: string;
 }) {
   let { username } = useParams();
-  if (!username) username = useAuthContext().user?.username;
+  let isProfilePage = false;
+  if (!username) {
+    username = useAuthContext().user?.username;
+    isProfilePage = true;
+  }
+
   const user = useAuthContext().user?.user_id;
-  const sort = sortOption.toLowerCase();
+  const sort = sortOption;
+  const { language } = useLanguage();
 
   const { isPending, error, data } = useQuery({
     queryKey: [`useractivity-${username}`],
@@ -27,9 +36,9 @@ export default function UserActivityList({
       ),
   });
 
-  if (isPending) return "Loading";
+  if (isPending) return <FetchLoading />;
 
-  if (error) return "Couldn't load data";
+  if (error) return <FetchError />;
 
   const list = data.data;
 
@@ -51,7 +60,9 @@ export default function UserActivityList({
         )
       ) : (
         <p className="text-center mt-8 text-white/50">
-          This user hasn't made any posts or comments
+          {isProfilePage
+            ? useractivity.empty_message_self[language]
+            : useractivity.empty_message[language]}
         </p>
       )}
     </Stack>

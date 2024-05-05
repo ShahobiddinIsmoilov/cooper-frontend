@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { UserDetailProps } from "../../../interfaces/userDetailProps";
 import { FaTrashAlt } from "react-icons/fa";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { usersettings } from "./../lang_userprofile";
+import { useLanguage } from "../../../contexts/LanguageContext";
 import Account from "./Account";
 import Social from "./Social";
 import Line from "../../../utils/Line";
@@ -82,6 +84,8 @@ export default function UserComments({ setActive, user }: Props) {
     return s;
   }
 
+  const { language } = useLanguage();
+
   return (
     <Stack gap={32}>
       <div className="gap-2 flex justify-end items-center -mb-8">
@@ -92,7 +96,7 @@ export default function UserComments({ setActive, user }: Props) {
             enableButtons() && "hover:bg-dark-700"
           }`}
         >
-          Discard changes
+          {usersettings.usersettings.discard_changes[language]}
         </Button>
         <Button
           onClick={handleSave}
@@ -103,7 +107,7 @@ export default function UserComments({ setActive, user }: Props) {
               : "bg-dark-600 text-dark-900"
           }`}
         >
-          Save changes
+          {usersettings.usersettings.save_changes[language]}
         </Button>
       </div>
       <Account
@@ -129,12 +133,14 @@ export default function UserComments({ setActive, user }: Props) {
         enableButtons={enableButtons}
       />
       <div>
-        <p className="mb-2 text-xs font-bold tracking-widest">DANGER ZONE</p>
+        <p className="mb-2 text-xs font-bold tracking-widest">
+          {usersettings.usersettings.danger_zone[language]}
+        </p>
         <Line />
       </div>
       <button className="w-fit text-red-400 flex items-center gap-1">
         <FaTrashAlt />
-        Delete account
+        {usersettings.usersettings.delete_account[language]}
       </button>
     </Stack>
   );

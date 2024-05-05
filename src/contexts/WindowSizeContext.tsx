@@ -21,7 +21,9 @@ interface WindowSizeProviderProps {
   children: ReactNode;
 }
 
-function WindowSizeProvider({ children }: WindowSizeProviderProps) {
+export default function WindowSizeProvider({
+  children,
+}: WindowSizeProviderProps) {
   const [screenWidth, setScreenWidth] = useState(0);
   const [screenHeight, setScreenHeight] = useState(0);
 
@@ -38,7 +40,7 @@ function WindowSizeProvider({ children }: WindowSizeProviderProps) {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [screenWidth]);
+  }, []);
 
   let contextData = {
     screenWidth: screenWidth,
@@ -51,5 +53,3 @@ function WindowSizeProvider({ children }: WindowSizeProviderProps) {
     </WindowSizeContext.Provider>
   );
 }
-
-export default WindowSizeProvider;

@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default function UserComments({ setActive }: Props) {
-  const [sortOption, setSortOption] = useState("NEW");
+  const [sortOption, setSortOption] = useState("new");
   let { username } = useParams();
   if (!username) username = useAuthContext().user?.username;
 

@@ -1,3 +1,4 @@
+import { useLanguage } from "../../contexts/LanguageContext";
 import exactTime from "../../utils/exactTime";
 import readableTime from "../../utils/readableTime";
 
@@ -6,5 +7,11 @@ interface Props {
 }
 
 export default function TimeDisplay({ time }: Props) {
-  return <span title={exactTime(time, "en")}>{readableTime(time, "en")}</span>;
+  const { language } = useLanguage();
+
+  return (
+    <span title={exactTime(time, language)}>
+      {readableTime(time, language)}
+    </span>
+  );
 }

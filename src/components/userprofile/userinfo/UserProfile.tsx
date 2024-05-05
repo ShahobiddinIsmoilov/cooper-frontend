@@ -2,6 +2,7 @@ import { Avatar, Stack, Image } from "@mantine/core";
 import { UserDetailProps } from "../../../interfaces/userDetailProps";
 import { useDialog } from "../../../contexts/DialogContext";
 import { BiSolidLike } from "react-icons/bi";
+import { userinfo } from "./../lang_userprofile";
 // import { FaEdit } from "react-icons/fa";
 // import { useRef } from "react";
 // import { Dropzone } from "@mantine/dropzone";
@@ -12,6 +13,7 @@ import { BiSolidLike } from "react-icons/bi";
 import SocialIcons from "./SocialIcons";
 import exactTime from "../../../utils/exactTime";
 import readableTime from "../../../utils/readableTime";
+import { useLanguage } from "../../../contexts/LanguageContext";
 
 interface Props {
   user: UserDetailProps;
@@ -67,6 +69,8 @@ export default function UserProfile({ user }: Props) {
     setIsDialogVisible(true);
   }
 
+  const { language } = useLanguage();
+
   return (
     <Stack align="start" gap={0} mx={20} mt={16}>
       <div className="flex justify-between w-full gap-4">
@@ -98,16 +102,16 @@ export default function UserProfile({ user }: Props) {
         </div>
         <Stack align="end" mt={8}>
           <div className="text-end">
-            <p className="text-white/50">Date joined:</p>
+            <p className="text-white/50">{userinfo.date_joined[language]}</p>
             <p className="text-white">
-              {exactTime(user.created_at, "uz", "short")}
+              {exactTime(user.created_at, language, "short")}
             </p>
             <p className="text-white">
-              ({readableTime(user.created_at, "uz")})
+              ({readableTime(user.created_at, language)})
             </p>
           </div>
           <div className="text-end">
-            <p className="text-white/50">Likes:</p>
+            <p className="text-white/50">{userinfo.likes[language]}</p>
             <p className="">
               <BiSolidLike className="text-yellow-400 inline-block mr-1" />
               {user.votes.toLocaleString()}

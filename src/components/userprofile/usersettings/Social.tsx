@@ -2,6 +2,8 @@ import Line from "../../../utils/Line";
 import { UserDetailProps } from "../../../interfaces/userDetailProps";
 import { Grid, Stack } from "@mantine/core";
 import { span } from "./Account";
+import { usersettings } from "./../lang_userprofile";
+import { useLanguage } from "../../../contexts/LanguageContext";
 
 interface Props {
   user: UserDetailProps;
@@ -50,10 +52,14 @@ export default function Social({
     enableButtons();
   }
 
+  const { language } = useLanguage();
+
   return (
     <Stack>
       <div>
-        <p className="mb-2 text-xs font-bold tracking-widest">SOCIAL LINKS</p>
+        <p className="mb-2 text-xs font-bold tracking-widest">
+          {usersettings.social.social_links[language]}
+        </p>
         <Line />
       </div>
       <Grid>

@@ -2,6 +2,7 @@ import { Flex } from "@mantine/core";
 import { CommentProps } from "../../../interfaces/commentProps";
 import { BsDot } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { useLanguage } from "../../../contexts/LanguageContext";
 import UserLink from "../../general/UserLink";
 import CommunityLink from "../../general/CommunityLink";
 import TimeDisplay from "../../general/TimeDisplay";
@@ -12,6 +13,49 @@ interface CommentCardProps {
 }
 
 export default function CommentHeader({ comment }: CommentCardProps) {
+  const { language } = useLanguage();
+
+  let userAction;
+  if (language === "uz") {
+    if (comment.parent === 0) {
+      userAction = (
+        <span className="flex gap-1 text-white/50">
+          <TimeDisplay time={comment.created_at} />
+          fikr bildirdi
+        </span>
+      );
+    } else {
+      userAction = (
+        <Flex className="gap-1">
+          <span className="text-white/50">
+            <TimeDisplay time={comment.created_at} />{" "}
+          </span>
+          <UserLink username={comment.parent_username} />
+          <span className="text-white/50">ga javob yozdi</span>
+        </Flex>
+      );
+    }
+  } else {
+    if (comment.parent === 0) {
+      userAction = (
+        <span className="flex gap-1 text-white/50">
+          commented
+          <TimeDisplay time={comment.created_at} />
+        </span>
+      );
+    } else {
+      userAction = (
+        <Flex className="gap-1">
+          <span className="text-white/50">replied to</span>
+          <UserLink username={comment.parent_username} />
+          <span className="text-white/50">
+            <TimeDisplay time={comment.created_at} />{" "}
+          </span>
+        </Flex>
+      );
+    }
+  }
+
   return (
     <Flex gap={0} className="text-sm xs:text-base">
       <CommunityLinkAvatar
@@ -37,22 +81,7 @@ export default function CommentHeader({ comment }: CommentCardProps) {
         <div className="inline-block mr-1">
           <UserLink username={comment.username} />
         </div>
-        <div className="inline-block">
-          {comment.parent === 0 ? (
-            <span className="flex gap-1 text-white/50">
-              commented
-              <TimeDisplay time={comment.created_at} />
-            </span>
-          ) : (
-            <Flex className="gap-1">
-              <span className="text-white/50">replied to</span>
-              <UserLink username={comment.parent_username} />
-              <span className="text-white/50">
-                <TimeDisplay time={comment.created_at} />{" "}
-              </span>
-            </Flex>
-          )}
-        </div>
+        <div className="inline-block">{userAction}</div>
       </div>
     </Flex>
   );

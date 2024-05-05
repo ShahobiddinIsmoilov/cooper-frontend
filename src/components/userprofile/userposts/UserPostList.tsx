@@ -1,18 +1,26 @@
 import { Stack } from "@mantine/core";
 import { PostProps } from "../../../interfaces/postProps";
-import Line from "../../../utils/Line";
-import PostCard from "../../post/postcard/PostCard";
-import getUserPosts from "../../../services/post/getUserPosts";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { useAuthContext } from "../../../contexts/AuthContext";
+import { FetchError, FetchLoading } from "../../../utils/FetchStatus";
+import { userposts } from "../lang_userprofile";
+import { useLanguage } from "../../../contexts/LanguageContext";
+import Line from "../../../utils/Line";
+import PostCard from "../../post/postcard/PostCard";
+import getUserPosts from "../../../services/post/getUserPosts";
 
 export default function UserPostList({ sortOption }: { sortOption: string }) {
   let { username } = useParams();
+  let isProfilePage = false;
+  if (!username) {
+    username = useAuthContext().user?.username;
+    isProfilePage = true;
+  }
 
-  if (!username) username = useAuthContext().user?.username;
   const user = useAuthContext().user?.user_id;
-  const sort = sortOption.toLowerCase();
+  const sort = sortOption;
+  const { language } = useLanguage();
 
   const { isPending, error, data } = useQuery({
     queryKey: [`userposts-${username}`],
@@ -22,9 +30,9 @@ export default function UserPostList({ sortOption }: { sortOption: string }) {
       ),
   });
 
-  if (isPending) return "Loading";
+  if (isPending) return <FetchLoading />;
 
-  if (error) return "Couldn't load data";
+  if (error) return <FetchError />;
 
   const posts = data.data;
 
@@ -39,7 +47,9 @@ export default function UserPostList({ sortOption }: { sortOption: string }) {
         ))
       ) : (
         <p className="text-center mt-8 text-white/50">
-          This user hasn't made any posts
+          {isProfilePage
+            ? userposts.empty_message_self[language]
+            : userposts.empty_message[language]}
         </p>
       )}
     </Stack>

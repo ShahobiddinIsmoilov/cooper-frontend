@@ -1,5 +1,7 @@
 import { Grid, Stack } from "@mantine/core";
 import { UserDetailProps } from "../../../interfaces/userDetailProps";
+import { usersettings } from "./../lang_userprofile";
+import { useLanguage } from "../../../contexts/LanguageContext";
 import Line from "../../../utils/Line";
 
 interface Props {
@@ -41,15 +43,19 @@ export default function AccountSettings({
     enableButtons();
   }
 
+  const { language } = useLanguage();
+
   return (
     <Stack>
       <div className="mt-4 xs:mt-0">
-        <p className="mb-2 text-xs font-bold tracking-widest">ACCOUNT</p>
+        <p className="mb-2 text-xs font-bold tracking-widest">
+          {usersettings.account.account[language]}
+        </p>
         <Line />
       </div>
       <Grid>
         <Grid.Col span={span}>
-          <p className="m-1">Display name:</p>
+          <p className="m-1">{usersettings.account.display_name[language]}:</p>
           <input
             onChange={(e) => handleDisplayNameChange(e.target.value)}
             value={displayName}
@@ -63,7 +69,9 @@ export default function AccountSettings({
         </Grid.Col>
         <Grid.Col span={span}>
           <div>
-            <p className="m-1">Phone number:</p>
+            <p className="m-1">
+              {usersettings.account.phone_number[language]}:
+            </p>
             <input
               onChange={(e) => handlePhoneChange(e.target.value)}
               value={phone}

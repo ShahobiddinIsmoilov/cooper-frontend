@@ -1,4 +1,4 @@
-export default function readableTime(time: string, lang: "uz" | "en") {
+export default function readableTime(time: string, lang: "uz" | "en" | "ru") {
   const startTime = new Date(time).getTime();
   const endTime = new Date().getTime();
 

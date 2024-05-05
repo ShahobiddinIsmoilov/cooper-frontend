@@ -1,6 +1,6 @@
 export default function exactTime(
   time: string,
-  lang: "uz" | "en",
+  lang: "uz" | "en" | "ru",
   variant?: "short"
 ) {
   const MONTHS_UZ = [

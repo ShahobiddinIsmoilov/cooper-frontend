@@ -4,6 +4,9 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { getComments } from "../../../services/comment/getComments";
 import { useAuthContext } from "../../../contexts/AuthContext";
+import { FetchError, FetchLoading } from "../../../utils/FetchStatus";
+import { useLanguage } from "../../../contexts/LanguageContext";
+import { usercomments } from "../lang_userprofile";
 import UserCommentCard from "./UserCommentCard";
 import Line from "../../../utils/Line";
 
@@ -13,10 +16,15 @@ export default function UserCommentList({
   sortOption: string;
 }) {
   let { username } = useParams();
+  let isProfilePage = false;
+  if (!username) {
+    username = useAuthContext().user?.username;
+    isProfilePage = true;
+  }
 
-  if (!username) username = useAuthContext().user?.username;
   const user = useAuthContext().user?.user_id;
-  const sort = sortOption.toLowerCase();
+  const sort = sortOption;
+  const { language } = useLanguage();
 
   const { isPending, error, data } = useQuery({
     queryKey: [`usercomments-${username}`],
@@ -26,9 +34,9 @@ export default function UserCommentList({
       ),
   });
 
-  if (isPending) return "Loading";
+  if (isPending) return <FetchLoading />;
 
-  if (error) return "Couldn't load data";
+  if (error) return <FetchError />;
 
   const comments = data.data;
 
@@ -43,7 +51,9 @@ export default function UserCommentList({
         ))
       ) : (
         <p className="text-center mt-8 text-white/50">
-          This user hasn't made any comments
+          {isProfilePage
+            ? usercomments.empty_message_self[language]
+            : usercomments.empty_message[language]}
         </p>
       )}
     </Stack>
