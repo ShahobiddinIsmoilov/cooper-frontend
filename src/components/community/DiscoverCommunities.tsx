@@ -1,6 +1,8 @@
 import { Stack } from "@mantine/core";
 import { CommunityProps } from "../../interfaces/communityProps";
 import { useQuery } from "@tanstack/react-query";
+import { navbar } from "../lang_components";
+import { useLanguage } from "../../contexts/LanguageContext";
 import CommunityCard from "./CommunityCard";
 import getCommunities from "../../services/community/getCommunities";
 
@@ -10,6 +12,8 @@ interface Props {
 }
 
 export default function DiscoverCommunities({ user, closeDrawer }: Props) {
+  const { language } = useLanguage();
+
   const { isPending, error, data } = useQuery({
     queryKey: ["community-list-discover"],
     queryFn: () => getCommunities(`/api/community/list/discover/?user=${user}`),
@@ -25,7 +29,7 @@ export default function DiscoverCommunities({ user, closeDrawer }: Props) {
     communities.length > 0 && (
       <Stack gap={0}>
         <p className="my-2 text-xs font-bold tracking-widest text-center text-white/50">
-          DISCOVER NEW COMMUNITIES
+          {navbar.discover_communities[language]}
         </p>
         {communities.map((community: CommunityProps) => (
           <CommunityCard

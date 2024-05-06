@@ -34,13 +34,13 @@ export const usernavbar = {
 export const userinfo = {
   date_joined: {
     uz: "Registratsiya sanasi",
-    en: "Joined date:",
-    ru: "Joined date:",
+    en: "Joined date",
+    ru: "(неопределенный)",
   },
   likes: {
     uz: "Yoqtirishlar",
-    en: "Likes:",
-    ru: "Likes:",
+    en: "Likes",
+    ru: "(неопределенный)",
   },
 };
 

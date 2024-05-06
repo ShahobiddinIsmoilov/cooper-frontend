@@ -3,6 +3,8 @@ import { Image, Stack } from "@mantine/core";
 import { Link } from "react-router-dom";
 import { FaLink } from "react-icons/fa";
 import { FaExternalLinkAlt } from "react-icons/fa";
+import { useLanguage } from "../../contexts/LanguageContext";
+import { link_preview } from "./lang_general";
 import getLinkData from "../../services/getLinkData";
 
 interface Props {
@@ -18,6 +20,8 @@ export default function LinkPreview({
   setTitle,
   titleChanged,
 }: Props) {
+  const { language } = useLanguage();
+
   const { isPending, error, data } = useQuery({
     queryKey: [`${link}`],
     queryFn: () => getLinkData(link),
@@ -25,12 +29,12 @@ export default function LinkPreview({
   });
 
   if (isPending)
-    return <span className="text-cyan-400">Loading preview...</span>;
+    return (
+      <span className="text-cyan-400">{link_preview.loading[language]}</span>
+    );
 
   if (error)
-    return (
-      <span className="text-red-400">Something seems wrong with your link</span>
-    );
+    return <span className="text-red-400">{link_preview.error[language]}</span>;
 
   try {
     const metadata = data.data;
@@ -95,9 +99,7 @@ export default function LinkPreview({
     );
   } catch (error) {
     return (
-      <span className="text-red-400">
-        Something went wrong. Please try again
-      </span>
+      <span className="text-red-400">{link_preview.fatal_error[language]}</span>
     );
   }
 }

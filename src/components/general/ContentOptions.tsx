@@ -3,6 +3,8 @@ import { FaRegBookmark, FaBookmark, FaRegFlag } from "react-icons/fa6";
 import { useState } from "react";
 import { PostProps } from "../../interfaces/postProps";
 import { Menu, MenuItem, MenuButton } from "@szhsin/react-menu";
+import { useLanguage } from "../../contexts/LanguageContext";
+import { content_options } from "./lang_general";
 import useCredentials from "../../services/useCredentials";
 import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
@@ -11,6 +13,7 @@ import "./content-menu.css";
 export function ContentOptions({ post, bg }: { post: PostProps; bg: string }) {
   const api = useCredentials();
   const [saved, setSaved] = useState(post.saved);
+  const { language } = useLanguage();
 
   function handleClick() {
     saved
@@ -43,11 +46,15 @@ export function ContentOptions({ post, bg }: { post: PostProps; bg: string }) {
         className="content-menuitem flex gap-2 items-center cursor-pointer rounded-lg text-white"
       >
         {saved ? <FaBookmark size={20} /> : <FaRegBookmark size={20} />}
-        <span>{saved ? "Remove from Saved" : "Save"}</span>
+        <span>
+          {saved
+            ? content_options.remove_save[language]
+            : content_options.save[language]}
+        </span>
       </MenuItem>
       <MenuItem className="content-menuitem flex gap-2 items-center cursor-pointer rounded-lg text-white">
         <FaRegFlag size={20} />
-        <span>Report</span>
+        <span>{content_options.report[language]}</span>
       </MenuItem>
     </Menu>
   );

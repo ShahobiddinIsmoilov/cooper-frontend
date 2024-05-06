@@ -1,6 +1,8 @@
 import { FiLink } from "react-icons/fi";
 import { IoCopySharp } from "react-icons/io5";
 import { Menu, MenuItem, MenuButton } from "@szhsin/react-menu";
+import { content_share } from "./lang_general";
+import { useLanguage } from "../../contexts/LanguageContext";
 import "./content-menu.css";
 
 interface Props {
@@ -17,6 +19,7 @@ export default function ContentShare({
   bg,
 }: Props) {
   const path = window.location.href;
+  const { language } = useLanguage();
 
   async function handleCopy() {
     const parsedUrl = new URL(path);
@@ -50,7 +53,7 @@ export default function ContentShare({
         className="content-menuitem flex gap-2 items-center cursor-pointer rounded-lg text-white"
       >
         <IoCopySharp size={20} />
-        Copy link
+        {content_share.copy_link[language]}
       </MenuItem>
     </Menu>
   );

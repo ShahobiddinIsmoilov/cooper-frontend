@@ -3,14 +3,18 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDisclosure } from "@mantine/hooks";
+import { navbar } from "../../lang_components";
+import { useLanguage } from "../../../contexts/LanguageContext";
 import useCredentials from "../../../services/useCredentials";
 import CommunityDescription from "./CommunityDescription";
 import CommunityName from "./CommunityName";
+import { FaPlus } from "react-icons/fa6";
 
 export default function CreateCommunityForm() {
   const api = useCredentials();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const { language } = useLanguage();
 
   const mutation = useMutation({
     mutationFn: (newCommunity: {}) =>
@@ -69,7 +73,9 @@ export default function CreateCommunityForm() {
       >
         <form onSubmit={(e) => handleSubmit(e)}>
           <Stack gap="lg" pt="xs" px="md">
-            <Text className="text-xl font-bold">Create a new community</Text>
+            <Text className="text-xl font-bold">
+              {navbar.create_community[language]}
+            </Text>
             <CommunityName
               name={name}
               setName={setName}
@@ -102,9 +108,10 @@ export default function CreateCommunityForm() {
       </Modal>
       <button
         onClick={open}
-        className="text-white rounded-full px-4 py-2 border text-base hover:bg-dark-700"
+        className="flex items-center gap-1 text-white rounded-full px-4 py-2 border text-base hover:bg-dark-700"
       >
-        + Create a community
+        <FaPlus />
+        {navbar.create_community[language]}
       </button>
     </>
   );

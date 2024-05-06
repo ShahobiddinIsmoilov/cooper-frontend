@@ -1,5 +1,7 @@
 import { Stack, Flex, Group, Button, Text } from "@mantine/core";
 import { FileWithPath } from "@mantine/dropzone";
+import { post } from "../lang_modals";
+import { useLanguage } from "../../../contexts/LanguageContext";
 import CommunityCombobox from "./CommunityCombobox";
 import FancyTextEditor from "./FancyTextEditor";
 import PostTitle from "./PostTitle";
@@ -29,13 +31,15 @@ interface Props {
 }
 
 export default function CreatePostForm(props: Props) {
+  const { language } = useLanguage();
+
   return (
     <form onSubmit={(e) => props.handleSubmit(e)}>
       <Stack gap={0} pt="md" px="md">
         <Flex className="justify-between items-center mb-6">
           <Group>
             <UserAvatar />
-            <Text className="text-xl font-bold">New Post</Text>
+            <Text className="text-xl font-bold">{post.new_post[language]}</Text>
           </Group>
           <CommunityCombobox
             community_name={props.combobox}
@@ -79,7 +83,7 @@ export default function CreatePostForm(props: Props) {
             size="md"
             className="rounded-xl w-32"
           >
-            Cancel
+            {post.cancel_post[language]}
           </Button>
           <Button
             type="submit"
@@ -87,7 +91,7 @@ export default function CreatePostForm(props: Props) {
             disabled={props.title.length === 0 ? true : false}
             className={`bg-cyan-700 hover:bg-cyan-600 rounded-xl w-32`}
           >
-            Create Post
+            {post.create_post[language]}
           </Button>
         </Group>
       </Stack>

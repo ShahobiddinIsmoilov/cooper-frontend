@@ -1,4 +1,6 @@
 import { Textarea } from "@mantine/core";
+import { post } from "../lang_modals";
+import { useLanguage } from "../../../contexts/LanguageContext";
 
 interface PostTitleProps {
   title: string;
@@ -13,6 +15,8 @@ export default function PostTitle({
   formDisabled,
   setTitleChanged,
 }: PostTitleProps) {
+  const { language } = useLanguage();
+
   return (
     <div>
       <Textarea
@@ -30,7 +34,7 @@ export default function PostTitle({
         bg={"dark"}
         data-autofocus
         autosize
-        placeholder="Title"
+        placeholder={post.title[language]}
         size="lg"
         className="flex-grow border border-[#424242] rounded-[4px] px-4 read-only:"
       />

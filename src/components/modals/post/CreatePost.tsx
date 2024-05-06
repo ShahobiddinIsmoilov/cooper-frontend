@@ -1,4 +1,4 @@
-import { Button, Menu, Modal } from "@mantine/core";
+import { Menu, Modal } from "@mantine/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +8,8 @@ import { FiLink } from "react-icons/fi";
 import { FaPlus, FaRegImage } from "react-icons/fa6";
 import { FileWithPath } from "@mantine/dropzone";
 import { useWindowSize } from "../../../contexts/WindowSizeContext";
+import { post } from "../lang_modals";
+import { useLanguage } from "../../../contexts/LanguageContext";
 import useCredentials from "../../../services/useCredentials";
 import CreatePostForm from "./CreatePostForm";
 
@@ -20,6 +22,7 @@ interface Props {
 export default function CreatePost(props: Props) {
   const api = useCredentials();
   const queryClient = useQueryClient();
+  const { language } = useLanguage();
   const navigate = useNavigate();
 
   const mutation = useMutation({
@@ -73,6 +76,7 @@ export default function CreatePost(props: Props) {
     setBody("");
     setImage(null);
     setFormDisabled(false);
+    setLink("");
   }
 
   const screenHeight = useWindowSize().screenHeight;
@@ -82,12 +86,12 @@ export default function CreatePost(props: Props) {
     <>
       <Menu radius={12}>
         <Menu.Target>
-          <Button
-            className={`flex items-center gap-1 bg-transparent hover:bg-dark-700 rounded-full`}
+          <button
+            className={`flex items-center gap-1 bg-transparent hover:bg-dark-700 rounded-full text-white text-sm font-bold py-2 px-3`}
           >
             <FaPlus size={plussize} />
-            Create
-          </Button>
+            {post.create[language]}
+          </button>
         </Menu.Target>
         <Menu.Dropdown w={150} className="bg-dark-850">
           <Menu.Item
@@ -99,7 +103,7 @@ export default function CreatePost(props: Props) {
           >
             <div className="py-2 px-4 text-xl flex items-center gap-4 hover:bg-dark-700 rounded-xl font-bold">
               <GrTextAlignLeft size={24} />
-              <span>Text</span>
+              <span>{post.text[language]}</span>
             </div>
           </Menu.Item>
           <Menu.Item
@@ -111,7 +115,7 @@ export default function CreatePost(props: Props) {
           >
             <div className="py-2 px-4 text-xl flex items-center gap-4 hover:bg-dark-700 p-2 rounded-xl font-bold">
               <FaRegImage size={24} />
-              <span>Image</span>
+              <span>{post.image[language]}</span>
             </div>
           </Menu.Item>
           <Menu.Item
@@ -123,7 +127,7 @@ export default function CreatePost(props: Props) {
           >
             <div className="py-2 px-4 text-xl flex items-center gap-4 hover:bg-dark-700 p-2 rounded-xl font-bold">
               <FiLink size={24} />
-              <span>Link</span>
+              <span>{post.link[language]}</span>
             </div>
           </Menu.Item>
         </Menu.Dropdown>

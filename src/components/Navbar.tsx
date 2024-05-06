@@ -5,6 +5,8 @@ import { FaGlobe } from "react-icons/fa";
 import { MdOutlineExplore } from "react-icons/md";
 import { useAuthContext } from "../contexts/AuthContext";
 import { useWindowSize } from "../contexts/WindowSizeContext";
+import { navbar } from "./lang_components";
+import { useLanguage } from "../contexts/LanguageContext";
 import CreateCommunityButton from "./modals/community/CreateCommunityButton";
 import JoinedCommunities from "./community/JoinedCommunities";
 import DiscoverCommunities from "./community/DiscoverCommunities";
@@ -18,6 +20,7 @@ interface Props {
 export default function Navbar({ closeDrawer }: Props) {
   const user = useAuthContext().user;
   const { screenWidth } = useWindowSize();
+  const { language } = useLanguage();
 
   return (
     <div
@@ -30,17 +33,20 @@ export default function Navbar({ closeDrawer }: Props) {
           <div className="mt-2">
             <SidebarItem
               icon={<FaHome size={24} />}
-              text="Home"
+              text={navbar.home[language]}
+              value="home"
               closeDrawer={closeDrawer}
             />
             <SidebarItem
               icon={<MdOutlineExplore size={24} />}
-              text="Explore"
+              text={navbar.explore[language]}
+              value="explore"
               closeDrawer={closeDrawer}
             />
             <SidebarItem
               icon={<FaGlobe size={24} />}
-              text="All"
+              text={navbar.all[language]}
+              value="all"
               closeDrawer={closeDrawer}
             />
           </div>
@@ -93,12 +99,13 @@ export default function Navbar({ closeDrawer }: Props) {
 interface SidebarItemProps {
   icon: ReactNode;
   text: string;
+  value: string;
   closeDrawer?: () => void;
 }
 
-function SidebarItem({ text, icon, closeDrawer }: SidebarItemProps) {
+function SidebarItem({ text, value, icon, closeDrawer }: SidebarItemProps) {
   const path = useLocation().pathname;
-  const current = "/" + text.toLowerCase();
+  const current = "/" + value;
 
   return (
     <Link

@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { PostProps } from "../../interfaces/postProps";
 import { FaArrowLeft } from "react-icons/fa6";
+import { BsDot } from "react-icons/bs";
 import UserLink from "../general/UserLink";
 import CommunityLinkAvatar from "../general/CommunityLinkAvatar";
 import CommunityLink from "../general/CommunityLink";
-import readableTime from "../../utils/readableTime";
-import exactTime from "../../utils/exactTime";
 import ContentShare from "../general/ContentShare";
+import TimeDisplay from "../general/TimeDisplay";
 
 export interface PostDetailHeaderProps {
   post: PostProps;
@@ -34,15 +34,10 @@ export default function PostDetailHeader({ post }: PostDetailHeaderProps) {
             community_name={post.community_name}
             community_link={post.community_link}
           />
-          <div className="flex items-center gap-1 text-sm">
+          <div className="flex items-center text-sm text-white/50">
             <UserLink username={post.username} />
-            <span
-              title={exactTime(post.created_at, "uz")}
-              className="text-white/50"
-            >
-              {" "}
-              ∙ {readableTime(post.created_at, "uz")}
-            </span>
+            <BsDot className="inline-block mt-1" />
+            <TimeDisplay time={post.created_at} />
           </div>
         </div>
       </div>

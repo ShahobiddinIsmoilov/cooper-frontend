@@ -1,6 +1,7 @@
 import { useQueryClient } from "@tanstack/react-query";
+import { join_button } from "./lang_general";
+import { useLanguage } from "../../contexts/LanguageContext";
 import useCredentials from "../../services/useCredentials";
-import { Button } from "@mantine/core";
 
 interface Props {
   isJoined: boolean;
@@ -15,6 +16,7 @@ export default function JoinButton({
 }: Props) {
   const api = useCredentials();
   const query = useQueryClient();
+  const { language } = useLanguage();
 
   function handleClick() {
     if (isJoined) {
@@ -35,15 +37,15 @@ export default function JoinButton({
   }
 
   return (
-    <Button
+    <button
       onClick={handleClick}
-      className={`rounded-full ${
+      className={`rounded-full text-sm font-bold text-white py-2 px-3 ${
         isJoined
           ? "bg-transparent border hover:bg-dark-700 border-white/50"
           : "bg-cyan-700 hover:bg-cyan-600"
       }`}
     >
-      {isJoined ? "Joined" : "Join"}
-    </Button>
+      {isJoined ? join_button.joined[language] : join_button.join[language]}
+    </button>
   );
 }

@@ -11,7 +11,12 @@ export default function ImageViewer({ imageUrl }: { imageUrl: string }) {
 
   function handleImageClick() {
     setDialogContent(
-      <Image src={imageUrl} fit="contain" ref={dialogContentRef} />
+      <Image
+        src={imageUrl}
+        fit="contain"
+        ref={dialogContentRef}
+        className="max-w-screen max-h-screen"
+      />
     );
     setWithCloseButton(true);
     setIsDialogVisible(true);

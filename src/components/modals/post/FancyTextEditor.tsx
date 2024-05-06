@@ -22,6 +22,8 @@ import { LuLink2Off } from "react-icons/lu";
 import { GrUndo } from "react-icons/gr";
 import { GrRedo } from "react-icons/gr";
 import { RiFontSize2 } from "react-icons/ri";
+import { post } from "../lang_modals";
+import { useLanguage } from "../../../contexts/LanguageContext";
 
 interface FancyTextEditorProps {
   content: string;
@@ -36,6 +38,8 @@ export default function FancyTextEditor({
   setHTMLbody,
   formDisabled,
 }: FancyTextEditorProps) {
+  const { language } = useLanguage();
+
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -43,7 +47,9 @@ export default function FancyTextEditor({
       Link,
       Superscript,
       SubScript,
-      Placeholder.configure({ placeholder: "Text (optional)" }),
+      Placeholder.configure({
+        placeholder: post.textpost_placeholder[language],
+      }),
       CharacterCount.configure({
         limit: 10000,
       }),

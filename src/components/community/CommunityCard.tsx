@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { CommunityProps } from "../../interfaces/communityProps";
 import { Avatar } from "@mantine/core";
+import { infobar } from "../lang_components";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 interface CommunityCardProps {
   community: CommunityProps;
@@ -11,6 +13,8 @@ export default function CommunityCard({
   community,
   closeDrawer,
 }: CommunityCardProps) {
+  const { language } = useLanguage();
+
   return (
     <Link
       to={`/c/${community.name}`}
@@ -22,8 +26,8 @@ export default function CommunityCard({
         <p className="font-bold">{community.name}</p>
         <p className="text-white/50 truncate text-sm">
           {community.members === 1
-            ? "1 member"
-            : community.members.toLocaleString() + " members"}
+            ? infobar.members_one[language]
+            : community.members.toLocaleString() + infobar.members[language]}
         </p>
       </div>
     </Link>

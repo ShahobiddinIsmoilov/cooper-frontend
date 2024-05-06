@@ -4,8 +4,8 @@ import Line from "../../utils/Line";
 import CommentFeed from "../comment/CommentFeed";
 import ReactHtmlParser from "react-html-parser";
 import CommentProvider from "../../contexts/CommentContext";
-import ImageViewer from "./ImageViewer";
-import LinkPreview from "./LinkPreview";
+import ImageViewer from "../general/ImageViewer";
+import LinkPreview from "../general/LinkPreview";
 import PostDetailFooter from "./PostDetailFooter";
 
 interface PostDetailProps {

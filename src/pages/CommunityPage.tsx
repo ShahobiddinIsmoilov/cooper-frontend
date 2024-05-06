@@ -1,22 +1,24 @@
-import { ImSpinner4 } from "react-icons/im";
 import { useParams } from "react-router-dom";
 import { Avatar, Image } from "@mantine/core";
-import { IoCloudOffline } from "react-icons/io5";
 import { useQuery } from "@tanstack/react-query";
 import { useAuthContext } from "../contexts/AuthContext";
 import { useWindowSize } from "../contexts/WindowSizeContext";
 import { CommunityDetailProps } from "../interfaces/communityDetailProps";
 import { BsDot } from "react-icons/bs";
 import { useDialog } from "../contexts/DialogContext";
+import { FetchError, FetchLoading } from "../utils/FetchStatus";
+import { infobar } from "../components/lang_components";
+import { useLanguage } from "../contexts/LanguageContext";
 import Infobar from "../components/Infobar";
 import PostFeed from "../components/post/PostFeed";
-import JoinButton from "../components/community/JoinButton";
+import JoinButton from "../components/general/JoinButton";
 import CreatePost from "../components/modals/post/CreatePost";
 import getCommunityDetail from "../services/community/getCommunityDetail";
 
 export default function CommunityPage() {
   const { screenWidth } = useWindowSize();
   const { community_link } = useParams();
+  const { language } = useLanguage();
   const user = useAuthContext().user;
 
   const { isPending, error, data } = useQuery({
@@ -31,20 +33,9 @@ export default function CommunityPage() {
           ),
   });
 
-  if (isPending)
-    return (
-      <div className="flex justify-center items-center mt-16 text-white text-2xl">
-        <ImSpinner4 className="animate-spin" />
-      </div>
-    );
+  if (isPending) return <FetchLoading mt="16" />;
 
-  if (error)
-    return (
-      <div className="flex justify-center items-center mt-16 text-white gap-2">
-        <IoCloudOffline />
-        Couldn't load data
-      </div>
-    );
+  if (error) return <FetchError mt="16" />;
 
   const community: CommunityDetailProps = data.data;
 
@@ -117,8 +108,10 @@ export default function CommunityPage() {
               <div className="text-white/50 xs:text-lg">
                 c/{community.link}
                 <BsDot className="inline-block" />
-                {community.members}
-                {community.members === 1 ? " member" : " members"}
+                {community.members === 1
+                  ? infobar.members_one[language]
+                  : community.members.toLocaleString() +
+                    infobar.members[language]}
               </div>
             </div>
             <PostFeed filter="community" community={community.id} />

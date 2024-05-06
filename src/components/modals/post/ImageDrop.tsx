@@ -3,7 +3,9 @@ import { IconUpload, IconX } from "@tabler/icons-react";
 import { Dropzone, FileWithPath, IMAGE_MIME_TYPE } from "@mantine/dropzone";
 import { MdFileUpload } from "react-icons/md";
 import { useState } from "react";
+import { post } from "../lang_modals";
 import imageCompression from "browser-image-compression";
+import { useLanguage } from "../../../contexts/LanguageContext";
 
 interface Props {
   image: FileWithPath | null;
@@ -12,6 +14,7 @@ interface Props {
 
 export default function ImageDrop({ image, setImage }: Props) {
   const [imageUrl, setImageUrl] = useState("");
+  const { language } = useLanguage();
 
   async function handleDrop(file: any) {
     const options = {
@@ -25,7 +28,7 @@ export default function ImageDrop({ image, setImage }: Props) {
       setImage(compressedFile);
       setImageUrl(URL.createObjectURL(file));
     } catch (error) {
-      alert("Something went wrong during image processing");
+      alert(post.imagepost_error[language]);
     }
   }
 
@@ -80,10 +83,10 @@ export default function ImageDrop({ image, setImage }: Props) {
             />
             <div>
               <Text size="lg" inline>
-                Drag your image here or click to select
+                {post.imagepost_placeholder[language]}
               </Text>
               <Text c="dimmed" inline mt={7}>
-                File size should not exceed 5MB
+                {post.imagepost_limit[language]}
               </Text>
             </div>
           </Flex>

@@ -5,6 +5,8 @@ import { useWindowSize } from "../../../contexts/WindowSizeContext";
 import { useState } from "react";
 import { ContentOptions } from "../../general/ContentOptions";
 import { PostProps } from "../../../interfaces/postProps";
+import { postcard } from "../lang_post";
+import { useLanguage } from "../../../contexts/LanguageContext";
 import useCredentials from "../../../services/useCredentials";
 
 export interface Props {
@@ -16,6 +18,7 @@ export default function PostFooter({ post }: Props) {
   const [upvoted, setUpvoted] = useState(post.upvoted);
   const [downvoted, setDownvoted] = useState(post.downvoted);
   const [votes, setVotes] = useState(post.votes);
+  const { language } = useLanguage();
   const api = useCredentials();
 
   function handleUpvote() {
@@ -83,8 +86,9 @@ export default function PostFooter({ post }: Props) {
             {screenWidth < 576
               ? post?.comments.toLocaleString()
               : post?.comments === 1
-              ? "1 comment"
-              : post?.comments.toLocaleString() + " comments"}
+              ? postcard.post_footer.comments_one[language]
+              : post?.comments.toLocaleString() +
+                postcard.post_footer.comments[language]}
           </span>
         </Link>
       </div>

@@ -3,8 +3,8 @@ import { PostProps } from "../../../interfaces/postProps";
 import PostHeaderHome from "./PostHeader";
 import PostFooter from "./PostFooter";
 import ReactHtmlParser from "react-html-parser";
-import ImageViewer from "../ImageViewer";
-import LinkPreview from "../LinkPreview";
+import ImageViewer from "../../general/ImageViewer";
+import LinkPreview from "../../general/LinkPreview";
 
 export interface PostCardProps {
   post: PostProps;
