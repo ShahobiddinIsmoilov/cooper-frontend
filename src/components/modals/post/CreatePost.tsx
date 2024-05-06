@@ -31,7 +31,7 @@ export default function CreatePost(props: Props) {
       queryClient.invalidateQueries({
         queryKey: [`community-page-${props.community}`],
       });
-      closeModal();
+      closeForm();
       setFormDisabled(false);
       navigate(`/c/${props.community}/post/${response.data}`);
     },
@@ -67,8 +67,12 @@ export default function CreatePost(props: Props) {
     mutation.mutate(newPost);
   }
 
+  function openForm() {
+    open();
+  }
+
   // close modal and reset form values
-  function closeModal() {
+  function closeForm() {
     close();
     setCombobox(props.community_name);
     setTitle("");
@@ -99,7 +103,7 @@ export default function CreatePost(props: Props) {
             p={0}
             onClick={() => {
               setPostType("text");
-              open();
+              openForm();
             }}
           >
             <div className="py-2 px-4 text-xl flex items-center gap-4 hover:bg-dark-700 rounded-xl font-bold">
@@ -111,7 +115,7 @@ export default function CreatePost(props: Props) {
             p={0}
             onClick={() => {
               setPostType("image");
-              open();
+              openForm();
             }}
           >
             <div className="py-2 px-4 text-xl flex items-center gap-4 hover:bg-dark-700 p-2 rounded-xl font-bold">
@@ -123,7 +127,7 @@ export default function CreatePost(props: Props) {
             p={0}
             onClick={() => {
               setPostType("link");
-              open();
+              openForm();
             }}
           >
             <div className="py-2 px-4 text-xl flex items-center gap-4 hover:bg-dark-700 p-2 rounded-xl font-bold">
@@ -157,7 +161,7 @@ export default function CreatePost(props: Props) {
           setHTMLbody={setHTMLbody}
           setCombobox={setCombobox}
           handleSubmit={handleSubmit}
-          closeModal={closeModal}
+          closeForm={closeForm}
           image={image}
           setImage={setImage}
           link={link}

@@ -24,7 +24,7 @@ interface Props {
   setHTMLbody: (value: string) => void;
   setCombobox: (value: string) => void;
   handleSubmit: (value: any) => void;
-  closeModal: () => void;
+  closeForm: () => void;
   setImage: (image: FileWithPath) => void;
   setLink: (link: string) => void;
   setTitleChanged: (value: boolean) => void;
@@ -79,7 +79,7 @@ export default function CreatePostForm(props: Props) {
         <Group justify="flex-end">
           <Button
             variant="default"
-            onClick={props.closeModal}
+            onClick={props.closeForm}
             size="md"
             className="rounded-xl w-32"
           >
