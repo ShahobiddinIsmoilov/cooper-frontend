@@ -1,4 +1,6 @@
 import { Textarea } from "@mantine/core";
+import { useLanguage } from "../../../contexts/LanguageContext";
+import { community } from "../lang_modals";
 
 interface PostTitleProps {
   name: string;
@@ -11,6 +13,8 @@ export default function CommunityName({
   setName,
   formDisabled,
 }: PostTitleProps) {
+  const { language } = useLanguage();
+
   return (
     <div>
       <Textarea
@@ -24,7 +28,7 @@ export default function CommunityName({
         bg={"dark"}
         data-autofocus
         autosize
-        placeholder="Name"
+        placeholder={community.name[language]}
         size="lg"
         className="flex-grow border border-line rounded-[4px] px-4"
       />

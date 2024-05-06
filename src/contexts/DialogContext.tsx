@@ -4,11 +4,13 @@ interface DialogProps {
   isDialogVisible: boolean;
   setIsDialogVisible: (e: boolean) => void;
   withCloseButton: boolean;
-  setWithCloseButton: (e: boolean) => void;
   handleDialogClose: () => void;
   dialogContent: ReactNode;
   setDialogContent: (e: ReactNode) => void;
+  dialogBgColor: string;
+  setDialogBgColor: (color: string) => void;
   dialogContentRef: any;
+  setWithCloseButton: (e: boolean) => void;
 }
 
 const DialogContext = createContext<DialogProps | null>(null);
@@ -26,6 +28,7 @@ export default function DialogProvider({ children }: DialogProviderProps) {
   const [isDialogVisible, setIsDialogVisible] = useState(false);
   const [withCloseButton, setWithCloseButton] = useState(false);
   const [dialogContent, setDialogContent] = useState<ReactNode | null>(null);
+  const [dialogBgColor, setDialogBgColor] = useState("transparent");
 
   function handleDialogClose() {
     setIsDialogVisible(false);
@@ -35,11 +38,13 @@ export default function DialogProvider({ children }: DialogProviderProps) {
     isDialogVisible: isDialogVisible,
     setIsDialogVisible: setIsDialogVisible,
     withCloseButton: withCloseButton,
-    setWithCloseButton: setWithCloseButton,
     handleDialogClose: handleDialogClose,
     dialogContent: dialogContent,
     setDialogContent: setDialogContent,
+    dialogBgColor: dialogBgColor,
+    setDialogBgColor: setDialogBgColor,
     dialogContentRef: dialogContentRef,
+    setWithCloseButton: setWithCloseButton,
   };
 
   return (

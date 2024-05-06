@@ -70,3 +70,31 @@ export const post = {
     ru: "(неопределенный)",
   },
 };
+
+export const community = {
+  new_community: {
+    uz: "Yangi hamjamiyat",
+    en: "New community",
+    ru: "(неопределенный)",
+  },
+  name: {
+    uz: "Nom tanlang",
+    en: "Name",
+    ru: "(неопределенный)",
+  },
+  description: {
+    uz: "Qisqacha tavsif yozing",
+    en: "Description",
+    ru: "(неопределенный)",
+  },
+  cancel: {
+    uz: "Bekor qilish",
+    en: "Cancel",
+    ru: "(неопределенный)",
+  },
+  create: {
+    uz: "Yaratish",
+    en: "Create",
+    ru: "(неопределенный)",
+  },
+};

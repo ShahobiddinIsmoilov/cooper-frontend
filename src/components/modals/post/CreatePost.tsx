@@ -2,7 +2,7 @@ import { Menu, Modal } from "@mantine/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { GrTextAlignLeft } from "react-icons/gr";
 import { FiLink } from "react-icons/fi";
 import { FaPlus, FaRegImage } from "react-icons/fa6";
@@ -81,6 +81,7 @@ export default function CreatePost(props: Props) {
 
   const screenHeight = useWindowSize().screenHeight;
   const plussize = screenHeight > 700 ? 20 : 16;
+  const isMobile = useMediaQuery("(max-width: 50em)");
 
   return (
     <>
@@ -142,6 +143,7 @@ export default function CreatePost(props: Props) {
         closeOnClickOutside={false}
         closeOnEscape={false}
         withCloseButton={false}
+        fullScreen={isMobile}
       >
         <CreatePostForm
           community_avatar={props.community_avatar}

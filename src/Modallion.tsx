@@ -8,8 +8,9 @@ export default function Modallion() {
     isDialogVisible,
     withCloseButton,
     dialogContent,
-    handleDialogClose,
     dialogContentRef,
+    dialogBgColor,
+    handleDialogClose,
   } = useDialog();
 
   useEffect(() => {
@@ -38,7 +39,9 @@ export default function Modallion() {
 
   const modallion = (
     <FocusTrap>
-      <div className="fixed top-0 left-0 z-[101] w-screen h-screen bg-black/75">
+      <div
+        className={`fixed top-0 left-0 z-[101] w-screen h-screen bg-${dialogBgColor}`}
+      >
         <div className="w-full h-full flex justify-center items-center">
           {dialogContent}
         </div>

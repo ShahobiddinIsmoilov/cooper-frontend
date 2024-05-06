@@ -2,13 +2,14 @@ import { Modal, Stack, Text, Group, Button } from "@mantine/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { navbar } from "../../lang_components";
 import { useLanguage } from "../../../contexts/LanguageContext";
+import { FaPlus } from "react-icons/fa6";
+import { community } from "../lang_modals";
 import useCredentials from "../../../services/useCredentials";
 import CommunityDescription from "./CommunityDescription";
 import CommunityName from "./CommunityName";
-import { FaPlus } from "react-icons/fa6";
 
 export default function CreateCommunityForm() {
   const api = useCredentials();
@@ -37,6 +38,7 @@ export default function CreateCommunityForm() {
   // const [link, setLink] = useState("");
   const [description, setDescription] = useState("");
   const [formDisabled, setFormDisabled] = useState(false);
+  const isMobile = useMediaQuery("(max-width: 50em)");
 
   async function handleSubmit(e: any) {
     e.preventDefault();
@@ -70,11 +72,12 @@ export default function CreateCommunityForm() {
         closeOnClickOutside={false}
         closeOnEscape={false}
         withCloseButton={false}
+        fullScreen={isMobile}
       >
         <form onSubmit={(e) => handleSubmit(e)}>
           <Stack gap="lg" pt="xs" px="md">
             <Text className="text-xl font-bold">
-              {navbar.create_community[language]}
+              {community.new_community[language]}
             </Text>
             <CommunityName
               name={name}
@@ -91,16 +94,16 @@ export default function CreateCommunityForm() {
                 variant="default"
                 onClick={closeModal}
                 size="md"
-                className="rounded-xl w-32"
+                className="rounded-xl"
               >
-                Cancel
+                {community.cancel[language]}
               </Button>
               <Button
                 type="submit"
                 size="md"
-                className="bg-cyan-700 hover:bg-cyan-600 rounded-xl w-32"
+                className="bg-cyan-700 hover:bg-cyan-600 rounded-xl"
               >
-                Create
+                {community.create[language]}
               </Button>
             </Group>
           </Stack>

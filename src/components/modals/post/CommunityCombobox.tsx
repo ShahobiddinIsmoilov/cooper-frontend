@@ -52,7 +52,7 @@ export default function CommunityCombobox({
           rightSection={<Combobox.Chevron />}
           rightSectionPointerEvents="none"
           onClick={() => combobox.toggleDropdown()}
-          w="300px"
+          w={{ base: "auto", xs: "300px" }}
           bg={"dark"}
           className="overflow-hidden border border-[#424242] rounded-[4px] pl-4"
         >

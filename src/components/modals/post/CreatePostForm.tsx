@@ -1,4 +1,4 @@
-import { Stack, Flex, Group, Button, Text } from "@mantine/core";
+import { Stack, Group, Button, Text } from "@mantine/core";
 import { FileWithPath } from "@mantine/dropzone";
 import { post } from "../lang_modals";
 import { useLanguage } from "../../../contexts/LanguageContext";
@@ -34,10 +34,10 @@ export default function CreatePostForm(props: Props) {
   const { language } = useLanguage();
 
   return (
-    <form onSubmit={(e) => props.handleSubmit(e)}>
+    <form onSubmit={(e) => props.handleSubmit(e)} className="bg-modal p-4">
       <Stack gap={0} pt="md" px="md">
-        <Flex className="justify-between items-center mb-6">
-          <Group>
+        <div className="xs:flex justify-between items-center mb-6">
+          <Group mb={{ base: 24, xs: 0 }}>
             <UserAvatar />
             <Text className="text-xl font-bold">{post.new_post[language]}</Text>
           </Group>
@@ -46,7 +46,7 @@ export default function CreatePostForm(props: Props) {
             community_avatar={props.community_avatar}
             setCommunity={props.setCombobox}
           />
-        </Flex>
+        </div>
         <div className="mb-4">
           <PostTitle
             title={props.title}
