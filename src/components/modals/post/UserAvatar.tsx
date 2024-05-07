@@ -4,7 +4,7 @@ import { useAuthContext } from "../../../contexts/AuthContext";
 import { UserDetailProps } from "../../../interfaces/userDetailProps";
 import { Avatar } from "@mantine/core";
 
-export default function UserAvatar() {
+export default function UserAvatar({ size }: { size: number }) {
   const username = useAuthContext().user?.username;
 
   const { isPending, error, data } = useQuery({
@@ -12,11 +12,11 @@ export default function UserAvatar() {
     queryFn: () => makeRequest(`/api/user/detail/${username}`),
   });
 
-  if (isPending) return <Avatar size={48} maw={48} />;
+  if (isPending) return <Avatar size={size} miw={size} />;
 
-  if (error) return <Avatar size={48} maw={48} />;
+  if (error) return <Avatar size={size} miw={size} />;
 
   const userdetails: UserDetailProps = data.data;
 
-  return <Avatar src={userdetails.avatar} size={48} maw={48} />;
+  return <Avatar src={userdetails.avatar} size={size} miw={size} />;
 }

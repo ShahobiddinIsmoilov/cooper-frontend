@@ -24,6 +24,7 @@ import { GrRedo } from "react-icons/gr";
 import { RiFontSize2 } from "react-icons/ri";
 import { post } from "../lang_modals";
 import { useLanguage } from "../../../contexts/LanguageContext";
+import { useMediaQuery } from "@mantine/hooks";
 
 interface FancyTextEditorProps {
   content: string;
@@ -39,6 +40,7 @@ export default function FancyTextEditor({
   formDisabled,
 }: FancyTextEditorProps) {
   const { language } = useLanguage();
+  const isMobile = useMediaQuery("(max-width: 50em)");
 
   const editor = useEditor({
     extensions: [
@@ -64,8 +66,8 @@ export default function FancyTextEditor({
 
   const fancyToolStyle = {
     border: "none",
-    width: "32px",
-    height: "32px",
+    width: isMobile ? "26px" : "32px",
+    height: isMobile ? "26px" : "32px",
     backgroundColor: "transparent",
   };
 
@@ -75,7 +77,7 @@ export default function FancyTextEditor({
         <RichTextEditor.Toolbar
           sticky
           p={0}
-          className="h-fit m-2 -mb-2 border-none bg-inherit"
+          className="m-2 -mb-2 border-none bg-inherit"
         >
           <RichTextEditor.Bold icon={ImBold} style={fancyToolStyle} />
           <RichTextEditor.Italic icon={LuItalic} style={fancyToolStyle} />
@@ -114,7 +116,7 @@ export default function FancyTextEditor({
           <RichTextEditor.Redo icon={GrRedo} style={fancyToolStyle} />
         </RichTextEditor.Toolbar>
 
-        <RichTextEditor.Content bg={"dark"} className="text-lg" mih={95} />
+        <RichTextEditor.Content bg={"dark"} className="sm:text-lg" mih={95} />
       </RichTextEditor>
     </div>
   );

@@ -36,7 +36,7 @@ export default function PostDetailHeader({ post }: PostDetailHeaderProps) {
           />
           <div className="flex items-center text-sm text-white/50">
             <UserLink username={post.username} />
-            <BsDot className="inline-block mt-1" />
+            <BsDot className="inline-block sm:mt-1" />
             <TimeDisplay time={post.created_at} />
           </div>
         </div>

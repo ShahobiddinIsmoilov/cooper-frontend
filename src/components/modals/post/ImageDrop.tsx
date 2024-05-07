@@ -1,11 +1,12 @@
-import { Flex, Group, Text, Image, rem } from "@mantine/core";
+import { Group, Image, rem } from "@mantine/core";
 import { IconUpload, IconX } from "@tabler/icons-react";
 import { Dropzone, FileWithPath, IMAGE_MIME_TYPE } from "@mantine/dropzone";
-import { MdFileUpload } from "react-icons/md";
+import { IoMdCloudUpload } from "react-icons/io";
 import { useState } from "react";
 import { post } from "../lang_modals";
-import imageCompression from "browser-image-compression";
 import { useLanguage } from "../../../contexts/LanguageContext";
+import { useMediaQuery } from "@mantine/hooks";
+import imageCompression from "browser-image-compression";
 
 interface Props {
   image: FileWithPath | null;
@@ -15,6 +16,7 @@ interface Props {
 export default function ImageDrop({ image, setImage }: Props) {
   const [imageUrl, setImageUrl] = useState("");
   const { language } = useLanguage();
+  const isMobile = useMediaQuery("(max-width: 50em)");
 
   async function handleDrop(file: any) {
     const options = {
@@ -42,14 +44,14 @@ export default function ImageDrop({ image, setImage }: Props) {
       //   setImageUrl(URL.createObjectURL(files[0]));
       // }}
       onReject={(files) => console.log("rejected files", files)}
-      maxSize={5 * 1024 ** 2}
+      maxSize={15 * 1024 ** 2}
       accept={IMAGE_MIME_TYPE}
       p={12}
     >
       <Group
         justify="center"
         gap="xl"
-        mih={100}
+        mih={isMobile ? 50 : 100}
         style={{ pointerEvents: "none" }}
       >
         <Dropzone.Accept>
@@ -73,23 +75,25 @@ export default function ImageDrop({ image, setImage }: Props) {
           />
         </Dropzone.Reject>
         <Dropzone.Idle>
-          <Flex className="items-center gap-2">
-            <MdFileUpload
-              style={{
-                width: rem(55),
-                height: rem(55),
-                color: "var(--mantine-color-dimmed)",
-              }}
-            />
-            <div>
-              <Text size="lg" inline>
-                {post.imagepost_placeholder[language]}
-              </Text>
-              <Text c="dimmed" inline mt={7}>
+          <div
+            className={`${
+              isMobile
+                ? "flex flex-col items-center"
+                : "flex justify-center items-center gap-3"
+            }`}
+          >
+            <IoMdCloudUpload size={isMobile ? 40 : 60} opacity={0.5} />
+            <div className="text-center sm:text-left">
+              <p className="sm:text-lg">
+                {isMobile
+                  ? post.imagepost_placeholder_mobile[language]
+                  : post.imagepost_placeholder[language]}
+              </p>
+              <p className="text-white/50 -mt-1 text-sm sm:text-base">
                 {post.imagepost_limit[language]}
-              </Text>
+              </p>
             </div>
-          </Flex>
+          </div>
         </Dropzone.Idle>
       </Group>
     </Dropzone>
@@ -98,14 +102,14 @@ export default function ImageDrop({ image, setImage }: Props) {
       <Image
         src={imageUrl}
         mih={100}
-        mah={500}
+        mah={{ base: 350, xs: 500 }}
         className="blur-3xl opacity-50 border rounded-md"
       />
       <Image
         src={imageUrl}
         onLoad={() => URL.revokeObjectURL(imageUrl)}
         mih={100}
-        mah={500}
+        mah={{ base: 350, xs: 500 }}
         fit="contain"
         className="absolute top-0 left-0 border border-white border-opacity-25 rounded-md"
       />

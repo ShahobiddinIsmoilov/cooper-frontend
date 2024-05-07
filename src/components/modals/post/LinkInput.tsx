@@ -2,6 +2,7 @@ import { Textarea } from "@mantine/core";
 import { useState } from "react";
 import { post } from "../lang_modals";
 import { useLanguage } from "../../../contexts/LanguageContext";
+import { useMediaQuery } from "@mantine/hooks";
 import validator from "validator";
 import LinkPreview from "../../general/LinkPreview";
 
@@ -25,6 +26,7 @@ export default function LinkInput({
   const [isUrl, setIsUrl] = useState(false);
   const [showIncorrectUrlError, setShowIncorrectUrlError] = useState(false);
   const { language } = useLanguage();
+  const isMobile = useMediaQuery("(max-width: 50em)");
 
   function validateUrl(url: string) {
     if (validator.isURL(url)) {
@@ -56,8 +58,8 @@ export default function LinkInput({
         data-autofocus
         autosize
         placeholder={post.linkpost_placeholder[language]}
-        size="lg"
-        className="flex-grow border border-[#424242] rounded-[4px] px-4 read-only:"
+        size={isMobile ? "md" : "lg"}
+        className="border border-[#424242] rounded-[4px] px-4 read-only:"
       />
       {isUrl ? (
         <LinkPreview
@@ -68,7 +70,7 @@ export default function LinkInput({
         />
       ) : (
         showIncorrectUrlError && (
-          <span className="text-red-400">
+          <span className="text-red-400 text-sm sm:text-base">
             {post.linkpost_incorrect_url[language]}
           </span>
         )

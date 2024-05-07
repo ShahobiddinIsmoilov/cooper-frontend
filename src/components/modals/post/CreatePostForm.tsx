@@ -2,6 +2,8 @@ import { Stack, Group, Button, Text } from "@mantine/core";
 import { FileWithPath } from "@mantine/dropzone";
 import { post } from "../lang_modals";
 import { useLanguage } from "../../../contexts/LanguageContext";
+import { useMediaQuery } from "@mantine/hooks";
+import { IoMdClose } from "react-icons/io";
 import CommunityCombobox from "./CommunityCombobox";
 import FancyTextEditor from "./FancyTextEditor";
 import PostTitle from "./PostTitle";
@@ -32,22 +34,41 @@ interface Props {
 
 export default function CreatePostForm(props: Props) {
   const { language } = useLanguage();
+  const isMobile = useMediaQuery("(max-width: 50em)");
 
   return (
-    <form onSubmit={(e) => props.handleSubmit(e)} className="bg-modal p-4">
-      <Stack gap={0} pt="md" px="md">
-        <div className="xs:flex justify-between items-center mb-6">
-          <Group mb={{ base: 24, xs: 0 }}>
-            <UserAvatar />
-            <Text className="text-xl font-bold">{post.new_post[language]}</Text>
-          </Group>
+    <form onSubmit={(e) => props.handleSubmit(e)}>
+      <Stack
+        gap={0}
+        pt={isMobile ? 4 : "md"}
+        px={isMobile ? 0 : "md"}
+        className="h-screen sm:h-fit mb-1"
+      >
+        <div className="xs:flex justify-between items-center mb-4 xs:mb-6">
+          <div className="flex justify-between items-center mb-6 xs:mb-0">
+            <div className="flex items-center gap-3">
+              <UserAvatar size={isMobile ? 32 : 48} />
+              <Text className="text-lg sm:text-xl font-bold">
+                {post.new_post[language]}
+              </Text>
+            </div>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                props.closeForm();
+              }}
+              className="p-2 bg-dark-750 rounded-full xs:hidden"
+            >
+              <IoMdClose size={20} />
+            </button>
+          </div>
           <CommunityCombobox
             community_name={props.combobox}
             community_avatar={props.community_avatar}
             setCommunity={props.setCombobox}
           />
         </div>
-        <div className="mb-4">
+        <div className="mb-3 sm:mb-4">
           <PostTitle
             title={props.title}
             setTitle={props.setTitle}
@@ -80,16 +101,21 @@ export default function CreatePostForm(props: Props) {
           <Button
             variant="default"
             onClick={props.closeForm}
-            size="md"
-            className="rounded-xl w-32"
+            size={isMobile ? "sm" : "md"}
+            radius={12}
           >
             {post.cancel_post[language]}
           </Button>
           <Button
             type="submit"
-            size="md"
+            size={isMobile ? "sm" : "md"}
+            radius={12}
             disabled={props.title.length === 0 ? true : false}
-            className={`bg-cyan-700 hover:bg-cyan-600 rounded-xl w-32`}
+            className={
+              props.title.length === 0
+                ? "bg-dark-700"
+                : "bg-cyan-700 hover:bg-cyan-600"
+            }
           >
             {post.create_post[language]}
           </Button>

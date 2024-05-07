@@ -1,6 +1,7 @@
 import { Textarea } from "@mantine/core";
 import { useLanguage } from "../../../contexts/LanguageContext";
 import { community } from "../lang_modals";
+import { useMediaQuery } from "@mantine/hooks";
 
 interface PostTitleProps {
   name: string;
@@ -14,6 +15,7 @@ export default function CommunityName({
   formDisabled,
 }: PostTitleProps) {
   const { language } = useLanguage();
+  const isMobile = useMediaQuery("(max-width: 50em)");
 
   return (
     <div>
@@ -29,10 +31,12 @@ export default function CommunityName({
         data-autofocus
         autosize
         placeholder={community.name[language]}
-        size="lg"
-        className="flex-grow border border-line rounded-[4px] px-4"
+        size={isMobile ? "md" : "lg"}
+        className="flex-grow border border-line rounded-[4px] px-3 sm:px-4"
       />
-      <span className={`opacity-75 inline-block w-full text-end`}>
+      <span
+        className={`opacity-75 inline-block w-full text-end text-sm sm:text-base`}
+      >
         {name.length}/32
       </span>
     </div>

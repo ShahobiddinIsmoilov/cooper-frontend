@@ -1,6 +1,7 @@
 import { Textarea } from "@mantine/core";
 import { post } from "../lang_modals";
 import { useLanguage } from "../../../contexts/LanguageContext";
+import { useMediaQuery } from "@mantine/hooks";
 
 interface PostTitleProps {
   title: string;
@@ -16,6 +17,7 @@ export default function PostTitle({
   setTitleChanged,
 }: PostTitleProps) {
   const { language } = useLanguage();
+  const isMobile = useMediaQuery("(max-width: 50em)");
 
   return (
     <div>
@@ -35,10 +37,12 @@ export default function PostTitle({
         data-autofocus
         autosize
         placeholder={post.title[language]}
-        size="lg"
-        className="flex-grow border border-[#424242] rounded-[4px] px-4 read-only:"
+        size={isMobile ? "md" : "lg"}
+        className={`border border-line rounded-[4px] px-3 sm:px-4`}
       />
-      <span className={`opacity-75 inline-block w-full text-end`}>
+      <span
+        className={`text-white/50 inline-block w-full text-end text-sm sm:text-base`}
+      >
         {title.length}/200
       </span>
     </div>

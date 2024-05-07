@@ -75,8 +75,13 @@ export default function CreateCommunityForm() {
         fullScreen={isMobile}
       >
         <form onSubmit={(e) => handleSubmit(e)}>
-          <Stack gap="lg" pt="xs" px="md">
-            <Text className="text-xl font-bold">
+          <Stack
+            gap={isMobile ? 10 : 16}
+            pt={isMobile ? 4 : "md"}
+            px={isMobile ? 0 : "md"}
+            className="h-screen sm:h-fit mb-1"
+          >
+            <Text className="text-lg sm:text-xl font-bold mb-2">
               {community.new_community[language]}
             </Text>
             <CommunityName
@@ -93,14 +98,14 @@ export default function CreateCommunityForm() {
               <Button
                 variant="default"
                 onClick={closeModal}
-                size="md"
+                size={isMobile ? "sm" : "md"}
                 className="rounded-xl"
               >
                 {community.cancel[language]}
               </Button>
               <Button
                 type="submit"
-                size="md"
+                size={isMobile ? "sm" : "md"}
                 className="bg-cyan-700 hover:bg-cyan-600 rounded-xl"
               >
                 {community.create[language]}

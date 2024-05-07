@@ -30,11 +30,17 @@ export default function LinkPreview({
 
   if (isPending)
     return (
-      <span className="text-cyan-400">{link_preview.loading[language]}</span>
+      <span className="text-cyan-400 text-sm sm:text-base">
+        {link_preview.loading[language]}
+      </span>
     );
 
   if (error)
-    return <span className="text-red-400">{link_preview.error[language]}</span>;
+    return (
+      <span className="text-red-400 text-sm sm:text-base">
+        {link_preview.error[language]}
+      </span>
+    );
 
   try {
     const metadata = data.data;

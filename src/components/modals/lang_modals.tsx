@@ -39,9 +39,14 @@ export const post = {
     en: "Drag your image here or click to select",
     ru: "(неопределенный)",
   },
+  imagepost_placeholder_mobile: {
+    uz: "Rasmn tanlash uchun bosing",
+    en: "Click to select an image",
+    ru: "(неопределенный)",
+  },
   imagepost_limit: {
-    uz: "Fayl o'lchami 5MB dan katta bo'lmasligi lozim",
-    en: "File size should not exceed 5MB",
+    uz: "Fayl o'lchami 15mb dan katta bo'lmasligi lozim",
+    en: "File size should not exceed 15mb",
     ru: "(неопределенный)",
   },
   imagepost_error: {
