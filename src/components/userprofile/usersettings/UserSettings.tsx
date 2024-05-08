@@ -5,6 +5,7 @@ import { FaTrashAlt } from "react-icons/fa";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { usersettings } from "./../lang_userprofile";
 import { useLanguage } from "../../../contexts/LanguageContext";
+import { useWindowSize } from "../../../contexts/WindowSizeContext";
 import Account from "./Account";
 import Social from "./Social";
 import Line from "../../../utils/Line";
@@ -35,6 +36,16 @@ export default function UserComments({ setActive, user }: Props) {
   const [twitter, setTwitter] = useState(initialTwitter);
 
   function enableButtons() {
+    if (displayName !== initialDisplayName) return true;
+    if (phone !== initialPhone) return true;
+    if (telegram !== initialTelegram) return true;
+    if (instagram !== initialInstagram) return true;
+    if (facebook !== initialFacebook) return true;
+    if (twitter !== initialTwitter) return true;
+    return false;
+  }
+
+  function safeToSave() {
     if (displayName.trim() !== initialDisplayName) return true;
     if (phone !== initialPhone) return true;
     if (telegram !== initialTelegram) return true;
@@ -53,6 +64,7 @@ export default function UserComments({ setActive, user }: Props) {
     setTwitter(initialTwitter);
   }
 
+  const isExtraSmall = useWindowSize().screenWidth < 576;
   const api = useCredentials();
   const queryClient = useQueryClient();
 
@@ -87,22 +99,24 @@ export default function UserComments({ setActive, user }: Props) {
   const { language } = useLanguage();
 
   return (
-    <Stack gap={32}>
+    <Stack gap={32} mx={isExtraSmall ? 16 : 0} mb={100}>
       <div className="gap-2 flex justify-end items-center -mb-8">
         <Button
+          size={isExtraSmall ? "sm" : "md"}
           onClick={discard}
           disabled={!enableButtons()}
-          className={`px-3 rounded-xl bg-transparent border border-line ${
+          className={`rounded-xl bg-transparent border border-line ${
             enableButtons() && "hover:bg-dark-700"
           }`}
         >
           {usersettings.usersettings.discard_changes[language]}
         </Button>
         <Button
+          size={isExtraSmall ? "sm" : "md"}
           onClick={handleSave}
-          disabled={!enableButtons()}
-          className={`px-3 rounded-xl ${
-            enableButtons()
+          disabled={!safeToSave()}
+          className={`rounded-xl ${
+            safeToSave()
               ? "bg-cyan-600 hover:bg-cyan-500"
               : "bg-dark-600 text-dark-900"
           }`}
@@ -117,7 +131,6 @@ export default function UserComments({ setActive, user }: Props) {
         setDisplayName={setDisplayName}
         setPhone={setPhone}
         removeSpaces={removeSpaces}
-        enableButtons={enableButtons}
       />
       <Social
         user={user}
@@ -130,18 +143,17 @@ export default function UserComments({ setActive, user }: Props) {
         setFacebook={setFacebook}
         setTwitter={setTwitter}
         removeSpaces={removeSpaces}
-        enableButtons={enableButtons}
       />
       <div>
         <p className="mb-2 text-xs font-bold tracking-widest">
           {usersettings.usersettings.danger_zone[language]}
         </p>
         <Line />
+        <button className="w-fit text-red-400 flex items-center gap-2 mt-4">
+          <FaTrashAlt />
+          {usersettings.usersettings.delete_account[language]}
+        </button>
       </div>
-      <button className="w-fit text-red-400 flex items-center gap-1">
-        <FaTrashAlt />
-        {usersettings.usersettings.delete_account[language]}
-      </button>
     </Stack>
   );
 }

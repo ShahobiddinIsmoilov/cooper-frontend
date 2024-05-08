@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { PostProps } from "../../../interfaces/postProps";
-import PostHeaderHome from "./PostHeader";
+import PostHeader from "./PostHeader";
 import PostFooter from "./PostFooter";
 import ReactHtmlParser from "react-html-parser";
 import ImageViewer from "../../general/ImageViewer";
@@ -15,7 +15,7 @@ export default function PostCard({ post, headerVariant }: PostCardProps) {
   return (
     <div className="text-white xs:rounded-xl my-[6px] py-[6px] hover:bg-dark-750">
       <div className="mx-4">
-        <PostHeaderHome post={post} variant={headerVariant} />
+        <PostHeader post={post} variant={headerVariant} />
       </div>
       <Link to={`/c/${post.community_link}/post/${post.permalink}`}>
         <p className="text-lg xs:text-xl font-bold pt-2 pb-1 px-4 hover:text-indigo-400 leading-snug xs:leading-normal">

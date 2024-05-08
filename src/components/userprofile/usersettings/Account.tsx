@@ -11,7 +11,6 @@ interface Props {
   setDisplayName: (value: string) => void;
   setPhone: (value: string) => void;
   removeSpaces: (s: string) => string;
-  enableButtons: () => boolean;
 }
 
 export const span = {
@@ -26,11 +25,9 @@ export default function AccountSettings({
   setDisplayName,
   setPhone,
   removeSpaces,
-  enableButtons,
 }: Props) {
   function handleDisplayNameChange(value: string) {
     setDisplayName(handleSpaces(value));
-    enableButtons();
   }
 
   function handleSpaces(s: string) {
@@ -40,7 +37,6 @@ export default function AccountSettings({
 
   function handlePhoneChange(value: string) {
     setPhone(removeSpaces(value));
-    enableButtons();
   }
 
   const { language } = useLanguage();

@@ -2,6 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { join_button } from "./lang_general";
 import { useLanguage } from "../../contexts/LanguageContext";
 import useCredentials from "../../services/useCredentials";
+import { Button } from "@mantine/core";
 
 interface Props {
   isJoined: boolean;
@@ -37,15 +38,15 @@ export default function JoinButton({
   }
 
   return (
-    <button
+    <Button
       onClick={handleClick}
-      className={`rounded-full text-sm font-bold text-white py-2 px-3 ${
+      className={`rounded-full px-3 ${
         isJoined
           ? "bg-transparent border hover:bg-dark-700 border-white/50"
           : "bg-cyan-700 hover:bg-cyan-600"
       }`}
     >
       {isJoined ? join_button.joined[language] : join_button.join[language]}
-    </button>
+    </Button>
   );
 }

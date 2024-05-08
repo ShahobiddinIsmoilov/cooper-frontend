@@ -8,6 +8,7 @@ import { IoCube } from "react-icons/io5";
 import HomePage from "./pages/HomePage";
 import PostDetailPage from "./pages/PostDetailPage";
 import CommunityPage from "./pages/CommunityPage";
+import ManagePage from "./pages/ManagePage";
 import Header from "./components/header/Header";
 import Navbar from "./components/Navbar";
 import UserPage from "./pages/UserPage";
@@ -94,7 +95,11 @@ export default function Layout() {
               <Route path="/home" element={<HomePage />} />
               <Route path="/explore" element={<ExplorePage />} />
               <Route path="/all" element={<AllPage />} />
-              <Route path="/c/:community_link" element={<CommunityPage />} />
+              <Route path="/c/:community_link/*" element={<CommunityPage />} />
+              <Route
+                path="/c/:community_link/manage"
+                element={<ManagePage />}
+              />
               <Route
                 path="/c/:community_link/post/:post_permalink"
                 element={<PostDetailPage />}

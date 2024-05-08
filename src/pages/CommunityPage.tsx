@@ -19,6 +19,7 @@ export default function CommunityPage() {
   const { screenWidth } = useWindowSize();
   const { community_link } = useParams();
   const { language } = useLanguage();
+  const isHeaderSmaller = useWindowSize().screenHeight <= 700;
   const user = useAuthContext().user;
 
   const { isPending, error, data } = useQuery({
@@ -79,7 +80,13 @@ export default function CommunityPage() {
             screenWidth >= 920 ? "max-w-[calc(100%-288px)]" : "w-screen"
           }`}
         >
-          <div className="absolute top-[102px] xs:top-[174px] mx-4 xs:mx-8">
+          <div
+            className={`absolute ${
+              isHeaderSmaller
+                ? "top-[92px] xs:top-[164px]"
+                : "top-[102px] xs:top-[174px] "
+            } mx-4 xs:mx-8`}
+          >
             <Avatar
               onClick={handleAvatarClick}
               src={community.avatar}

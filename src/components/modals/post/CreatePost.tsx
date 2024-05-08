@@ -1,4 +1,4 @@
-import { Menu, Modal } from "@mantine/core";
+import { Button, Menu, Modal } from "@mantine/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +7,6 @@ import { GrTextAlignLeft } from "react-icons/gr";
 import { FiLink } from "react-icons/fi";
 import { FaPlus, FaRegImage } from "react-icons/fa6";
 import { FileWithPath } from "@mantine/dropzone";
-import { useWindowSize } from "../../../contexts/WindowSizeContext";
 import { post } from "../lang_modals";
 import { useLanguage } from "../../../contexts/LanguageContext";
 import useCredentials from "../../../services/useCredentials";
@@ -83,20 +82,18 @@ export default function CreatePost(props: Props) {
     setLink("");
   }
 
-  const screenHeight = useWindowSize().screenHeight;
-  const plussize = screenHeight > 700 ? 20 : 16;
   const isMobile = useMediaQuery("(max-width: 50em)");
 
   return (
     <>
       <Menu radius={12}>
         <Menu.Target>
-          <button
-            className={`flex items-center gap-1 bg-transparent hover:bg-dark-700 rounded-full text-white text-sm font-bold py-2 px-3`}
+          <Button
+            className={`flex items-center bg-transparent hover:bg-dark-700 rounded-full text-white px-3`}
           >
-            <FaPlus size={plussize} />
+            <FaPlus />
             {post.create[language]}
-          </button>
+          </Button>
         </Menu.Target>
         <Menu.Dropdown w={150} className="bg-dark-850">
           <Menu.Item

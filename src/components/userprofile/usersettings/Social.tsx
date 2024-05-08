@@ -16,7 +16,6 @@ interface Props {
   setFacebook: (value: string) => void;
   setTwitter: (value: string) => void;
   removeSpaces: (s: string) => string;
-  enableButtons: () => boolean;
 }
 
 export default function Social({
@@ -30,26 +29,21 @@ export default function Social({
   setFacebook,
   setTwitter,
   removeSpaces,
-  enableButtons,
 }: Props) {
   function handleTelegramChange(value: string) {
     setTelegram(removeSpaces(value));
-    enableButtons();
   }
 
   function handleInstagramChange(value: string) {
     setInstagram(removeSpaces(value));
-    enableButtons();
   }
 
   function handleFacebookChange(value: string) {
     setFacebook(removeSpaces(value));
-    enableButtons();
   }
 
   function handleTwitterChange(value: string) {
     setTwitter(removeSpaces(value));
-    enableButtons();
   }
 
   const { language } = useLanguage();

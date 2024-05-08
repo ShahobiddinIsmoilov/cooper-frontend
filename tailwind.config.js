@@ -20,6 +20,7 @@ export default {
         },
         line: "#424242",
         modal: "#242424",
+        default: "#c9c9c9",
       },
       screens: {
         xs: "576px",

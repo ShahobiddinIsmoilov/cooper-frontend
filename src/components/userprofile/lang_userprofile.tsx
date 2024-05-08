@@ -33,13 +33,18 @@ export const usernavbar = {
 
 export const userinfo = {
   date_joined: {
-    uz: "Registratsiya sanasi",
-    en: "Joined date",
+    uz: "Saytga qo'shilgan",
+    en: "Date joined",
     ru: "(неопределенный)",
   },
   likes: {
     uz: "Yoqtirishlar",
     en: "Likes",
+    ru: "(неопределенный)",
+  },
+  settings: {
+    uz: "Sozlamalar",
+    en: "Settings",
     ru: "(неопределенный)",
   },
 };
@@ -62,7 +67,7 @@ export const usersettings = {
       ru: "(неопределенный)",
     },
     delete_account: {
-      uz: "Shaxsiy hisobni o'chirish",
+      uz: "Hisobni o'chirish",
       en: "Delete account",
       ru: "(неопределенный)",
     },
