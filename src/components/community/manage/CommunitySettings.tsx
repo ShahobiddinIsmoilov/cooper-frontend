@@ -111,7 +111,7 @@ export default function CommunitySettings({ community }: Props) {
         newAvatar={newAvatar}
         setNewAvatar={setNewAvatar}
         newBanner={newAvatar}
-        setNewBanner={setNewAvatar}
+        setNewBanner={setNewBanner}
         newAvatarUrl={newAvatarUrl}
         setNewAvatarUrl={setNewAvatarUrl}
         newBannerUrl={newBannerUrl}

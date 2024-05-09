@@ -12,11 +12,8 @@ import { MdFormatUnderlined } from "react-icons/md";
 import { RiStrikethrough } from "react-icons/ri";
 import { FaCode } from "react-icons/fa6";
 import { MdFormatQuote } from "react-icons/md";
-import { PiListBulletsBold } from "react-icons/pi";
-import { GoListOrdered } from "react-icons/go";
 import { TbSubscript } from "react-icons/tb";
 import { TbSuperscript } from "react-icons/tb";
-import { BsThreeDots } from "react-icons/bs";
 import { LuLink2 } from "react-icons/lu";
 import { LuLink2Off } from "react-icons/lu";
 import { GrUndo } from "react-icons/gr";
@@ -24,7 +21,7 @@ import { GrRedo } from "react-icons/gr";
 import { RiFontSize2 } from "react-icons/ri";
 import { post } from "../lang_modals";
 import { useLanguage } from "../../../contexts/LanguageContext";
-import { useMediaQuery } from "@mantine/hooks";
+import { useWindowSize } from "../../../contexts/WindowSizeContext";
 
 interface FancyTextEditorProps {
   content: string;
@@ -40,7 +37,7 @@ export default function FancyTextEditor({
   formDisabled,
 }: FancyTextEditorProps) {
   const { language } = useLanguage();
-  const isMobile = useMediaQuery("(max-width: 50em)");
+  const isSmall = useWindowSize().screenWidth < 768;
 
   const editor = useEditor({
     extensions: [
@@ -66,8 +63,8 @@ export default function FancyTextEditor({
 
   const fancyToolStyle = {
     border: "none",
-    width: isMobile ? "26px" : "32px",
-    height: isMobile ? "26px" : "32px",
+    width: isSmall ? "26px" : "32px",
+    height: isSmall ? "26px" : "32px",
     backgroundColor: "transparent",
   };
 
@@ -100,15 +97,6 @@ export default function FancyTextEditor({
           <RichTextEditor.Unlink icon={LuLink2Off} style={fancyToolStyle} />
           <RichTextEditor.Blockquote
             icon={MdFormatQuote}
-            style={fancyToolStyle}
-          />
-          <RichTextEditor.Hr icon={BsThreeDots} style={fancyToolStyle} />
-          <RichTextEditor.BulletList
-            icon={PiListBulletsBold}
-            style={fancyToolStyle}
-          />
-          <RichTextEditor.OrderedList
-            icon={GoListOrdered}
             style={fancyToolStyle}
           />
 

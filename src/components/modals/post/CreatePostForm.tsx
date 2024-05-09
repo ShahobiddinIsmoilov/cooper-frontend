@@ -2,8 +2,8 @@ import { Stack, Group, Button, Text } from "@mantine/core";
 import { FileWithPath } from "@mantine/dropzone";
 import { post } from "../lang_modals";
 import { useLanguage } from "../../../contexts/LanguageContext";
-import { useMediaQuery } from "@mantine/hooks";
 import { IoMdClose } from "react-icons/io";
+import { useWindowSize } from "../../../contexts/WindowSizeContext";
 import CommunityCombobox from "./CommunityCombobox";
 import FancyTextEditor from "./FancyTextEditor";
 import PostTitle from "./PostTitle";
@@ -34,20 +34,20 @@ interface Props {
 
 export default function CreatePostForm(props: Props) {
   const { language } = useLanguage();
-  const isMobile = useMediaQuery("(max-width: 50em)");
+  const isSmall = useWindowSize().screenWidth < 768;
 
   return (
     <form onSubmit={(e) => props.handleSubmit(e)}>
       <Stack
         gap={0}
-        pt={isMobile ? 4 : "md"}
-        px={isMobile ? 0 : "md"}
+        pt={isSmall ? 4 : "md"}
+        px={isSmall ? 0 : "md"}
         className="h-screen sm:h-fit mb-1"
       >
         <div className="xs:flex justify-between items-center mb-4 xs:mb-6">
           <div className="flex justify-between items-center mb-6 xs:mb-0">
             <div className="flex items-center gap-3">
-              <UserAvatar size={isMobile ? 32 : 48} />
+              <UserAvatar size={isSmall ? 32 : 48} />
               <Text className="text-lg sm:text-xl font-bold">
                 {post.new_post[language]}
               </Text>
@@ -101,14 +101,14 @@ export default function CreatePostForm(props: Props) {
           <Button
             variant="default"
             onClick={props.closeForm}
-            size={isMobile ? "sm" : "md"}
+            size={isSmall ? "sm" : "md"}
             radius={12}
           >
             {post.cancel_post[language]}
           </Button>
           <Button
             type="submit"
-            size={isMobile ? "sm" : "md"}
+            size={isSmall ? "sm" : "md"}
             radius={12}
             disabled={props.title.length === 0 ? true : false}
             className={

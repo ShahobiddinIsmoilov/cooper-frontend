@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Route, Routes, useParams } from "react-router-dom";
 import { Avatar, Image } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { useAuthContext } from "../contexts/AuthContext";
@@ -13,6 +13,7 @@ import Infobar from "../components/Infobar";
 import PostFeed from "../components/post/PostFeed";
 import JoinButton from "../components/general/JoinButton";
 import CreatePost from "../components/modals/post/CreatePost";
+import AboutCommunity from "../components/AboutCommunity";
 import getCommunityDetail from "../services/community/getCommunityDetail";
 
 export default function CommunityPage() {
@@ -52,7 +53,7 @@ export default function CommunityPage() {
       <Image
         src={community.avatar}
         ref={dialogContentRef}
-        className="w-72 h-72 xs:w-[500px] xs:h-[500px] rounded-full"
+        className="w-72 min-w-72 h-72 min-h-72 xs:w-[500px] xs:min-w-[500px] xs:h-[500px] xs:min-h-[500px] rounded-full"
       />
     );
     setWithCloseButton(true);
@@ -61,7 +62,12 @@ export default function CommunityPage() {
 
   function handleBannerClick() {
     setDialogContent(
-      <Image src={community.banner} fit="contain" ref={dialogContentRef} />
+      <Image
+        src={community.banner}
+        fit="contain"
+        ref={dialogContentRef}
+        className="w-screen"
+      />
     );
     setWithCloseButton(true);
     setIsDialogVisible(true);
@@ -83,8 +89,8 @@ export default function CommunityPage() {
           <div
             className={`absolute ${
               isHeaderSmaller
-                ? "top-[92px] xs:top-[164px]"
-                : "top-[102px] xs:top-[174px] "
+                ? "top-[102px] xs:top-[164px]"
+                : "top-[112px] xs:top-[174px] "
             } mx-4 xs:mx-8`}
           >
             <Avatar
@@ -121,11 +127,22 @@ export default function CommunityPage() {
                     infobar.members[language]}
               </div>
             </div>
-            <PostFeed filter="community" community={community.id} />
+            <Routes>
+              <Route
+                path=""
+                element={
+                  <PostFeed filter="community" community={community.id} />
+                }
+              />
+              <Route
+                path="/about"
+                element={<AboutCommunity community={community} />}
+              />
+            </Routes>
           </div>
         </div>
         <div className="mt-4">
-          {screenWidth >= 920 && <Infobar community={community} />}
+          {screenWidth >= 820 && <Infobar community={community} />}
         </div>
       </div>
     </>

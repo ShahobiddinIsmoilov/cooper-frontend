@@ -45,7 +45,7 @@ export default function ManageVisuals(props: Props) {
 
   async function handleBannerChange(file: any) {
     const compressedBanner = await compressImage(file);
-    props.setNewAvatar(compressedBanner);
+    props.setNewBanner(compressedBanner);
     props.setNewBannerUrl(URL.createObjectURL(file));
   }
 

@@ -1,10 +1,10 @@
 import { BiLike, BiDislike, BiSolidLike, BiSolidDislike } from "react-icons/bi";
 import { FaComment } from "react-icons/fa";
-import { useWindowSize } from "../../contexts/WindowSizeContext";
+import { useWindowSize } from "../../../contexts/WindowSizeContext";
 import { useState } from "react";
-import { ContentOptions } from "../general/ContentOptions";
-import { PostProps } from "../../interfaces/postProps";
-import useCredentials from "../../services/useCredentials";
+import { ContentOptions } from "../../general/ContentOptions";
+import { PostProps } from "../../../interfaces/postProps";
+import useCredentials from "../../../services/useCredentials";
 
 interface Props {
   post: PostProps;

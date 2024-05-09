@@ -1,11 +1,11 @@
-import { PostProps } from "../../interfaces/postProps";
+import { PostProps } from "../../../interfaces/postProps";
 import PostDetailHeader from "./PostDetailHeader";
-import Line from "../../utils/Line";
-import CommentFeed from "../comment/CommentFeed";
+import Line from "../../../utils/Line";
+import CommentFeed from "../../comment/CommentFeed";
 import ReactHtmlParser from "react-html-parser";
-import CommentProvider from "../../contexts/CommentContext";
-import ImageViewer from "../general/ImageViewer";
-import LinkPreview from "../general/LinkPreview";
+import CommentProvider from "../../../contexts/CommentContext";
+import ImageViewer from "../../general/ImageViewer";
+import LinkPreview from "../../general/LinkPreview";
 import PostDetailFooter from "./PostDetailFooter";
 
 interface PostDetailProps {

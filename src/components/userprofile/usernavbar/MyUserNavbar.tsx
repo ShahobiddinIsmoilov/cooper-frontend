@@ -4,11 +4,11 @@ import UserNavbarItem from "./UserNavbarItem";
 
 export default function UserNavbar({ active }: { active: string }) {
   function handleLeftScroll() {
-    document.getElementById("userpagenavbar")!.scrollLeft -= 50;
+    document.getElementById("profilepagenavbar")!.scrollLeft -= 50;
   }
 
   function handleRightScroll() {
-    document.getElementById("userpagenavbar")!.scrollLeft += 50;
+    document.getElementById("profilepagenavbar")!.scrollLeft += 50;
   }
 
   return (
@@ -20,7 +20,7 @@ export default function UserNavbar({ active }: { active: string }) {
         <FaChevronLeft />
       </button>
       <div
-        id="userpagenavbar"
+        id="profilepagenavbar"
         className="flex gap-1 xs:gap-2 py-2 overflow-y-scroll no-scrollbar"
       >
         <Link to={""}>

@@ -2,13 +2,14 @@ import { Button, Menu, Modal } from "@mantine/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDisclosure, useMediaQuery } from "@mantine/hooks";
+import { useDisclosure } from "@mantine/hooks";
 import { GrTextAlignLeft } from "react-icons/gr";
 import { FiLink } from "react-icons/fi";
 import { FaPlus, FaRegImage } from "react-icons/fa6";
 import { FileWithPath } from "@mantine/dropzone";
 import { post } from "../lang_modals";
 import { useLanguage } from "../../../contexts/LanguageContext";
+import { useWindowSize } from "../../../contexts/WindowSizeContext";
 import useCredentials from "../../../services/useCredentials";
 import CreatePostForm from "./CreatePostForm";
 
@@ -82,7 +83,7 @@ export default function CreatePost(props: Props) {
     setLink("");
   }
 
-  const isMobile = useMediaQuery("(max-width: 50em)");
+  const isSmall = useWindowSize().screenWidth < 768;
 
   return (
     <>
@@ -144,7 +145,7 @@ export default function CreatePost(props: Props) {
         closeOnClickOutside={false}
         closeOnEscape={false}
         withCloseButton={false}
-        fullScreen={isMobile}
+        fullScreen={isSmall}
       >
         <CreatePostForm
           community_avatar={props.community_avatar}

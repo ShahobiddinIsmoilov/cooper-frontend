@@ -6,7 +6,7 @@ import {
   InputBase,
   useCombobox,
 } from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks";
+import { useWindowSize } from "../../../contexts/WindowSizeContext";
 import ComboboxDropdown from "./ComboboxDropdown";
 
 interface CommunityComboboxProps {
@@ -21,7 +21,7 @@ export default function CommunityCombobox({
   community_avatar,
   setCommunity,
 }: CommunityComboboxProps) {
-  const isMobile = useMediaQuery("(max-width: 50em)");
+  const isSmall = useWindowSize().screenWidth < 768;
 
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
@@ -48,7 +48,7 @@ export default function CommunityCombobox({
       <Combobox.Target targetType="button">
         <InputBase
           variant="unstyled"
-          size={isMobile ? "md" : "lg"}
+          size={isSmall ? "md" : "lg"}
           component="button"
           type="button"
           pointer
@@ -64,8 +64,8 @@ export default function CommunityCombobox({
               <Flex gap="xs" className="overflow-hidden items-center">
                 <Avatar
                   src={community_avatar}
-                  size={isMobile ? 24 : 28}
-                  miw={isMobile ? 24 : 28}
+                  size={isSmall ? 24 : 28}
+                  miw={isSmall ? 24 : 28}
                 />
                 <span className="truncate">{community_name}</span>
               </Flex>

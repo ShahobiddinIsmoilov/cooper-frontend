@@ -25,6 +25,22 @@
            transition-all duration-100 scale-0 origin-left;
   }
 
+  .button-primary {
+    @apply text-white bg-cyan-700 hover:bg-cyan-600;
+  }
+
+  .button-primary-disabled {
+    @apply bg-dark-700;
+  }
+
+  .button-secondary {
+    @apply bg-transparent border border-white/50 hover:bg-dark-700 text-white;
+  }
+
+  .button-secondary-disabled {
+    @apply bg-transparent border border-line;
+  }
+
   .input {
     @apply text-white placeholder-white placeholder-opacity-25
             border border-solid border-white border-opacity-50 overflow-x-auto

@@ -5,7 +5,7 @@ import { IoMdCloudUpload } from "react-icons/io";
 import { useState } from "react";
 import { post } from "../lang_modals";
 import { useLanguage } from "../../../contexts/LanguageContext";
-import { useMediaQuery } from "@mantine/hooks";
+import { useWindowSize } from "../../../contexts/WindowSizeContext";
 import imageCompression from "browser-image-compression";
 
 interface Props {
@@ -16,7 +16,7 @@ interface Props {
 export default function ImageDrop({ image, setImage }: Props) {
   const [imageUrl, setImageUrl] = useState("");
   const { language } = useLanguage();
-  const isMobile = useMediaQuery("(max-width: 50em)");
+  const isSmall = useWindowSize().screenWidth < 768;
 
   async function handleDrop(file: any) {
     const options = {
@@ -51,7 +51,7 @@ export default function ImageDrop({ image, setImage }: Props) {
       <Group
         justify="center"
         gap="xl"
-        mih={isMobile ? 50 : 100}
+        mih={isSmall ? 50 : 100}
         style={{ pointerEvents: "none" }}
       >
         <Dropzone.Accept>
@@ -77,15 +77,15 @@ export default function ImageDrop({ image, setImage }: Props) {
         <Dropzone.Idle>
           <div
             className={`${
-              isMobile
+              isSmall
                 ? "flex flex-col items-center"
                 : "flex justify-center items-center gap-3"
             }`}
           >
-            <IoMdCloudUpload size={isMobile ? 40 : 60} opacity={0.5} />
+            <IoMdCloudUpload size={isSmall ? 40 : 60} opacity={0.5} />
             <div className="text-center sm:text-left">
               <p className="sm:text-lg">
-                {isMobile
+                {isSmall
                   ? post.imagepost_placeholder_mobile[language]
                   : post.imagepost_placeholder[language]}
               </p>

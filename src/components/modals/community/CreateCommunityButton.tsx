@@ -2,11 +2,12 @@ import { Modal, Stack, Text, Group, Button } from "@mantine/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDisclosure, useMediaQuery } from "@mantine/hooks";
+import { useDisclosure } from "@mantine/hooks";
 import { navbar } from "../../lang_components";
 import { useLanguage } from "../../../contexts/LanguageContext";
 import { FaPlus } from "react-icons/fa6";
 import { community } from "../lang_modals";
+import { useWindowSize } from "../../../contexts/WindowSizeContext";
 import useCredentials from "../../../services/useCredentials";
 import CommunityDescription from "./CommunityDescription";
 import CommunityName from "./CommunityName";
@@ -38,7 +39,7 @@ export default function CreateCommunityForm() {
   // const [link, setLink] = useState("");
   const [description, setDescription] = useState("");
   const [formDisabled, setFormDisabled] = useState(false);
-  const isMobile = useMediaQuery("(max-width: 50em)");
+  const isSmall = useWindowSize().screenWidth < 768;
 
   async function handleSubmit(e: any) {
     e.preventDefault();
@@ -72,13 +73,13 @@ export default function CreateCommunityForm() {
         closeOnClickOutside={false}
         closeOnEscape={false}
         withCloseButton={false}
-        fullScreen={isMobile}
+        fullScreen={isSmall}
       >
         <form onSubmit={(e) => handleSubmit(e)}>
           <Stack
-            gap={isMobile ? 10 : 16}
-            pt={isMobile ? 4 : "md"}
-            px={isMobile ? 0 : "md"}
+            gap={isSmall ? 10 : 16}
+            pt={isSmall ? 4 : "md"}
+            px={isSmall ? 0 : "md"}
             className="h-screen sm:h-fit mb-1"
           >
             <Text className="text-lg sm:text-xl font-bold mb-2">
@@ -98,14 +99,14 @@ export default function CreateCommunityForm() {
               <Button
                 variant="default"
                 onClick={closeModal}
-                size={isMobile ? "sm" : "md"}
+                size={isSmall ? "sm" : "md"}
                 className="rounded-xl"
               >
                 {community.cancel[language]}
               </Button>
               <Button
                 type="submit"
-                size={isMobile ? "sm" : "md"}
+                size={isSmall ? "sm" : "md"}
                 className="bg-cyan-700 hover:bg-cyan-600 rounded-xl"
               >
                 {community.create[language]}

@@ -2,7 +2,7 @@ import { Textarea } from "@mantine/core";
 import { useState } from "react";
 import { post } from "../lang_modals";
 import { useLanguage } from "../../../contexts/LanguageContext";
-import { useMediaQuery } from "@mantine/hooks";
+import { useWindowSize } from "../../../contexts/WindowSizeContext";
 import validator from "validator";
 import LinkPreview from "../../general/LinkPreview";
 
@@ -26,7 +26,7 @@ export default function LinkInput({
   const [isUrl, setIsUrl] = useState(false);
   const [showIncorrectUrlError, setShowIncorrectUrlError] = useState(false);
   const { language } = useLanguage();
-  const isMobile = useMediaQuery("(max-width: 50em)");
+  const isSmall = useWindowSize().screenWidth < 768;
 
   function validateUrl(url: string) {
     if (validator.isURL(url)) {
@@ -58,7 +58,7 @@ export default function LinkInput({
         data-autofocus
         autosize
         placeholder={post.linkpost_placeholder[language]}
-        size={isMobile ? "md" : "lg"}
+        size={isSmall ? "md" : "lg"}
         className="border border-[#424242] rounded-[4px] px-4 read-only:"
       />
       {isUrl ? (

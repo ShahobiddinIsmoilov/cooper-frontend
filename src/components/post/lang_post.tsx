@@ -29,4 +29,14 @@ export const sortbar = {
     en: ["TOP", "top"],
     ru: ["(неопределенный)", "top"],
   },
+  feed: {
+    uz: "Postlar",
+    en: "Feed",
+    ru: "(неопределенный)",
+  },
+  about: {
+    uz: "Hamjamiyat",
+    en: "About",
+    ru: "(неопределенный)",
+  },
 };

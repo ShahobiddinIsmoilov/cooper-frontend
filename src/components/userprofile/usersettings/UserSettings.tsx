@@ -105,8 +105,8 @@ export default function UserComments({ setActive, user }: Props) {
           size={isExtraSmall ? "sm" : "md"}
           onClick={discard}
           disabled={!enableButtons()}
-          className={`rounded-xl bg-transparent border border-line ${
-            enableButtons() && "hover:bg-dark-700"
+          className={`rounded-xl ${
+            enableButtons() ? "button-secondary" : "button-secondary-disabled"
           }`}
         >
           {usersettings.usersettings.discard_changes[language]}
@@ -116,9 +116,7 @@ export default function UserComments({ setActive, user }: Props) {
           onClick={handleSave}
           disabled={!safeToSave()}
           className={`rounded-xl ${
-            safeToSave()
-              ? "bg-cyan-600 hover:bg-cyan-500"
-              : "bg-dark-600 text-dark-900"
+            safeToSave() ? "button-primary" : "button-primary-disabled"
           }`}
         >
           {usersettings.usersettings.save_changes[language]}

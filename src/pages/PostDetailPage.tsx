@@ -8,7 +8,7 @@ import { PostProps } from "../interfaces/postProps";
 import { CommunityDetailProps } from "../interfaces/communityDetailProps";
 import { makeRequest } from "../services/makeRequest";
 import { useAuthContext } from "../contexts/AuthContext";
-import PostDetail from "../components/post/PostDetail";
+import PostDetail from "../components/post/postdetail/PostDetail";
 import Infobar from "../components/Infobar";
 
 export default function PostDetailPage() {

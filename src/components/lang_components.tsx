@@ -47,4 +47,29 @@ export const infobar = {
     en: "1 member",
     ru: "(неопределенный)",
   },
+  settings: {
+    uz: "Hamjamiyat sozlamalari",
+    en: "Community settings",
+    ru: "(неопределенный)",
+  },
+  about_community: {
+    uz: "Hamjamiyat haqida",
+    en: "About this community",
+    ru: "(неопределенный)",
+  },
+  number_of_members: {
+    uz: "A'zolar soni",
+    en: "Number of members",
+    ru: "(неопределенный)",
+  },
+  number_of_posts: {
+    uz: "Postlar soni",
+    en: "Number of posts",
+    ru: "(неопределенный)",
+  },
+  number_of_comments: {
+    uz: "Fikrlar soni",
+    en: "Number of comments",
+    ru: "(неопределенный)",
+  },
 };
