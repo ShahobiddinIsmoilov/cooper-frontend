@@ -1,6 +1,8 @@
 import { Stack } from "@mantine/core";
 import { useState } from "react";
 import { FaQuestionCircle } from "react-icons/fa";
+import { auth } from "../lang_modals";
+import { useLanguage } from "../../../contexts/LanguageContext";
 
 interface Props {
   setUsername: (username: string) => void;
@@ -8,6 +10,7 @@ interface Props {
 
 export default function UsernameRegister({ setUsername }: Props) {
   const [validationError, setValidationError] = useState(false);
+  const { language } = useLanguage();
 
   function handleChange(e: any) {
     const value = e.target.value;
@@ -23,7 +26,7 @@ export default function UsernameRegister({ setUsername }: Props) {
   return (
     <Stack gap={0}>
       <p className="ml-2 flex gap-1 text-lg items-center">
-        Username:
+        {auth.username[language]}
         <FaQuestionCircle size={14} opacity={0.5} />
       </p>
       <input
@@ -34,7 +37,7 @@ export default function UsernameRegister({ setUsername }: Props) {
         maxLength={32}
         id="username"
         name="username"
-        placeholder="Username"
+        placeholder={auth.username[language]}
         className={`py-3 px-4 text-lg rounded-xl bg-dark-850 outline-none placeholder-white placeholder-opacity-25 ${
           validationError ? "border border-red-400" : "border border-line "
         }`}

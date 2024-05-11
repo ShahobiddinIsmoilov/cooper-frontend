@@ -103,3 +103,16 @@ export const community = {
     ru: "(неопределенный)",
   },
 };
+
+export const auth = {
+  username: {
+    uz: "Foydalanuvchi nomi",
+    en: "Username",
+    ru: "(неопределенный)",
+  },
+  password: {
+    uz: "Parol",
+    en: "Password",
+    ru: "(неопределенный)",
+  },
+};

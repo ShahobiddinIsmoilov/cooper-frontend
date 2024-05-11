@@ -3,8 +3,9 @@ import { useDisclosure } from "@mantine/hooks";
 import { Modal, Stack } from "@mantine/core";
 import { useState } from "react";
 import { IoClose } from "react-icons/io5";
-import { FaPlus } from "react-icons/fa6";
 import { useWindowSize } from "../../contexts/WindowSizeContext";
+import { auth } from "./lang_header";
+import { useLanguage } from "../../contexts/LanguageContext";
 import UsernameLogin from "../modals/auth/UsernameLogin";
 import PasswordLogin from "../modals/auth/PasswordLogin";
 import UsernameRegister from "../modals/auth/UsernameRegister";
@@ -23,6 +24,7 @@ export function Authentication() {
     setShowRegisterButton,
   } = useAuthContext();
   const user = useAuthContext().user;
+  const { language } = useLanguage();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [validate, setValidate] = useState(false);
@@ -57,7 +59,9 @@ export function Authentication() {
 
   function handleOpen() {
     setShowLogin(true);
-    setLoginMessage(<p className="text-2xl text-center">Welcome back</p>);
+    setLoginMessage(
+      <p className="text-2xl text-center">{auth.login_text[language]}</p>
+    );
     setShowRegisterButton(true);
     open();
   }
@@ -100,17 +104,17 @@ export function Authentication() {
               <PasswordLogin setPassword={setPassword} />
               <input
                 type="submit"
-                value="Log in"
+                value={auth.login_button[language]}
                 className="text-white bg-cyan-700 hover:bg-cyan-600 p-3 rounded-xl text-lg h-12 font-bold cursor-pointer"
               />
               {showRegisterButton && (
                 <div className="text-center">
-                  Don't have an account yet?{" "}
+                  {auth.not_registered[language]}{" "}
                   <button
                     onClick={(e) => handleSwitch(e)}
                     className="text-blue-400 hover:text-blue-300"
                   >
-                    REGISTER
+                    {auth.register_capital[language]}
                   </button>
                 </div>
               )}
@@ -118,22 +122,24 @@ export function Authentication() {
           </form>
         ) : (
           <form onSubmit={handleRegister}>
-            <p className="text-2xl text-center">Create your account</p>
+            <p className="text-2xl text-center">
+              {auth.register_text[language]}
+            </p>
             <Stack gap="sm" p="md">
               <UsernameRegister setUsername={setUsername} />
               <PasswordRegister setPassword={setPassword} />
               <input
                 type="submit"
-                value="Create Account"
+                value={auth.register_button[language]}
                 className="mt-2 text-white bg-cyan-700 hover:bg-cyan-600 p-3 rounded-xl text-lg h-12 font-bold cursor-pointer"
               />
               <div className="text-center">
-                Already have an account?{" "}
+                {auth.already_registered[language]}{" "}
                 <button
                   onClick={(e) => handleSwitch(e)}
                   className="text-blue-400 hover:text-blue-300"
                 >
-                  LOG IN
+                  {auth.login_capital[language]}
                 </button>
               </div>
             </Stack>
@@ -142,20 +148,19 @@ export function Authentication() {
       </Modal>
       <button
         onClick={handleOpen}
-        className={`flex items-center gap-1 hover:bg-dark-700 border-white border-opacity-25 rounded-full px-3 ${
+        className={`rounded-full px-3 button-primary ${
           plussize === 20 ? "py-[8px]" : "py-[6px]"
         }`}
       >
-        <FaPlus size={plussize} />
-        Create
+        {auth.create_account_button[language]}
       </button>
       <button
         onClick={handleOpen}
-        className={`bg-cyan-700 hover:bg-cyan-600 rounded-full px-3 ${
+        className={`rounded-full px-3 button-secondary ${
           plussize === 20 ? "py-[8px]" : "py-[6px]"
         }`}
       >
-        Log in
+        {auth.login_button[language]}
       </button>
     </>
   );

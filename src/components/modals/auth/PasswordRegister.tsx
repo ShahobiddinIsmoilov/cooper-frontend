@@ -1,6 +1,8 @@
 import { Stack } from "@mantine/core";
 import { useState } from "react";
 import { FaQuestionCircle } from "react-icons/fa";
+import { auth } from "../lang_modals";
+import { useLanguage } from "../../../contexts/LanguageContext";
 
 interface Props {
   setPassword: (username: string) => void;
@@ -8,6 +10,7 @@ interface Props {
 
 export default function PasswordRegister({ setPassword }: Props) {
   const [validationError, setValidationError] = useState(false);
+  const { language } = useLanguage();
 
   function handleChange(e: any) {
     const value = e.target.value;
@@ -23,7 +26,7 @@ export default function PasswordRegister({ setPassword }: Props) {
   return (
     <Stack gap={0}>
       <p className="ml-2 flex gap-1 text-lg items-center">
-        Password:
+        {auth.password[language]}
         <FaQuestionCircle size={14} opacity={0.5} />
       </p>
       <input
@@ -32,7 +35,7 @@ export default function PasswordRegister({ setPassword }: Props) {
         type="password"
         id="password"
         name="password"
-        placeholder="Password"
+        placeholder={auth.password[language]}
         className="outline-none py-3 px-4 text-lg border border-line rounded-xl bg-dark-850 placeholder-white placeholder-opacity-25"
       />
       {validationError && (
