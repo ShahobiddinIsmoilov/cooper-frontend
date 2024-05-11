@@ -1,11 +1,12 @@
-import { Button, Stack } from "@mantine/core";
-import { useEffect, useState } from "react";
-import { UserDetailProps } from "../../../interfaces/userDetailProps";
+import { useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
+import { Button, Stack } from "@mantine/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { usersettings } from "./../lang_userprofile";
-import { useLanguage } from "../../../contexts/LanguageContext";
+import { UserDetailProps } from "../../../interfaces/userDetailProps";
 import { useWindowSize } from "../../../contexts/WindowSizeContext";
+import { useLanguage } from "../../../contexts/LanguageContext";
+import { usersettings } from "./../lang_userprofile";
+import { FileWithPath } from "@mantine/dropzone";
 import Account from "./Account";
 import Social from "./Social";
 import Line from "../../../utils/Line";
@@ -13,14 +14,9 @@ import useCredentials from "../../../services/useCredentials";
 
 interface Props {
   user: UserDetailProps;
-  setActive: (value: string) => void;
 }
 
-export default function UserComments({ setActive, user }: Props) {
-  useEffect(() => {
-    setActive("settings");
-  }, []);
-
+export default function UserComments({ user }: Props) {
   const initialDisplayName = user.display_name ? user.display_name : "";
   const initialPhone = user.phone ? user.phone : "";
   const initialTelegram = user.telegram ? user.telegram : "";
@@ -28,6 +24,8 @@ export default function UserComments({ setActive, user }: Props) {
   const initialFacebook = user.facebook ? user.facebook : "";
   const initialTwitter = user.twitter ? user.twitter : "";
 
+  const [newAvatar, setNewAvatar] = useState<FileWithPath | undefined>();
+  const [newAvatarUrl, setNewAvatarUrl] = useState("");
   const [displayName, setDisplayName] = useState(initialDisplayName);
   const [phone, setPhone] = useState(initialPhone);
   const [telegram, setTelegram] = useState(initialTelegram);
@@ -35,7 +33,8 @@ export default function UserComments({ setActive, user }: Props) {
   const [facebook, setFacebook] = useState(initialFacebook);
   const [twitter, setTwitter] = useState(initialTwitter);
 
-  function enableButtons() {
+  function itemChanged() {
+    if (newAvatar) return true;
     if (displayName !== initialDisplayName) return true;
     if (phone !== initialPhone) return true;
     if (telegram !== initialTelegram) return true;
@@ -46,6 +45,7 @@ export default function UserComments({ setActive, user }: Props) {
   }
 
   function safeToSave() {
+    if (newAvatar) return true;
     if (displayName.trim() !== initialDisplayName) return true;
     if (phone !== initialPhone) return true;
     if (telegram !== initialTelegram) return true;
@@ -55,7 +55,9 @@ export default function UserComments({ setActive, user }: Props) {
     return false;
   }
 
-  function discard() {
+  function discardChanges() {
+    setNewAvatar(undefined);
+    setNewAvatarUrl("");
     setDisplayName(initialDisplayName);
     setPhone(initialPhone);
     setTelegram(initialTelegram);
@@ -67,20 +69,25 @@ export default function UserComments({ setActive, user }: Props) {
   const isExtraSmall = useWindowSize().screenWidth < 576;
   const api = useCredentials();
   const queryClient = useQueryClient();
+  const { language } = useLanguage();
 
   const mutation = useMutation({
     mutationFn: (newSettings: {}) =>
       api.put(`/api/user/update/${user.id}/`, newSettings),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["profile-page"],
+        queryKey: ["usersettings"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["dashboard"],
       });
     },
   });
 
-  function handleSave() {
+  function saveChanges() {
     setDisplayName(displayName.trim() === "" ? user.username : displayName);
     const newSettings = {
+      avatar: newAvatar,
       display_name: displayName.trim() === "" ? user.username : displayName,
       phone: phone,
       telegram: telegram,
@@ -96,24 +103,22 @@ export default function UserComments({ setActive, user }: Props) {
     return s;
   }
 
-  const { language } = useLanguage();
-
   return (
-    <Stack gap={32} mx={isExtraSmall ? 16 : 0} mb={100}>
+    <Stack gap={32} mb={100}>
       <div className="gap-2 flex justify-end items-center -mb-8">
         <Button
           size={isExtraSmall ? "sm" : "md"}
-          onClick={discard}
-          disabled={!enableButtons()}
+          onClick={discardChanges}
+          disabled={!itemChanged()}
           className={`rounded-xl ${
-            enableButtons() ? "button-secondary" : "button-secondary-disabled"
+            itemChanged() ? "button-secondary" : "button-secondary-disabled"
           }`}
         >
           {usersettings.usersettings.discard_changes[language]}
         </Button>
         <Button
           size={isExtraSmall ? "sm" : "md"}
-          onClick={handleSave}
+          onClick={saveChanges}
           disabled={!safeToSave()}
           className={`rounded-xl ${
             safeToSave() ? "button-primary" : "button-primary-disabled"
@@ -123,7 +128,11 @@ export default function UserComments({ setActive, user }: Props) {
         </Button>
       </div>
       <Account
-        user={user}
+        avatar={user.avatar}
+        setNewAvatar={setNewAvatar}
+        newAvatarUrl={newAvatarUrl}
+        setNewAvatarUrl={setNewAvatarUrl}
+        username={user.username}
         displayName={displayName}
         phone={phone}
         setDisplayName={setDisplayName}
@@ -131,7 +140,7 @@ export default function UserComments({ setActive, user }: Props) {
         removeSpaces={removeSpaces}
       />
       <Social
-        user={user}
+        username={user.username}
         telegram={telegram}
         instagram={instagram}
         facebook={facebook}

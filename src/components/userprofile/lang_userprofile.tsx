@@ -72,11 +72,10 @@ export const usersettings = {
       ru: "(неопределенный)",
     },
   },
-
   account: {
-    account: {
-      uz: "SHAXSIY HISOB",
-      en: "ACCOUNT",
+    profile: {
+      uz: "PROFIL",
+      en: "PROFILE",
       ru: "(неопределенный)",
     },
     display_name: {
@@ -90,7 +89,6 @@ export const usersettings = {
       ru: "(неопределенный)",
     },
   },
-
   social: {
     social_links: {
       uz: "IJTIMOIY TARMOQLARDAGI HISOBLAR",

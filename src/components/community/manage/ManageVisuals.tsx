@@ -4,38 +4,21 @@ import { Avatar, Image } from "@mantine/core";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { Dropzone, FileWithPath, IMAGE_MIME_TYPE } from "@mantine/dropzone";
 import { useWindowSize } from "../../../contexts/WindowSizeContext";
-import imageCompression from "browser-image-compression";
+import compressImage from "../../../utils/compressImage";
 
 interface Props {
   avatar: string;
   banner: string;
-  newAvatar: FileWithPath | undefined;
-  setNewAvatar: (file: FileWithPath | undefined) => void;
-  newBanner: FileWithPath | undefined;
-  setNewBanner: (file: FileWithPath | undefined) => void;
   newAvatarUrl: string;
-  setNewAvatarUrl: (url: string) => void;
   newBannerUrl: string;
+  setNewAvatar: (file: FileWithPath | undefined) => void;
+  setNewBanner: (file: FileWithPath | undefined) => void;
+  setNewAvatarUrl: (url: string) => void;
   setNewBannerUrl: (url: string) => void;
 }
 
 export default function ManageVisuals(props: Props) {
   const isExtraSmall = useWindowSize().screenWidth < 576;
-
-  async function compressImage(file: any) {
-    const options = {
-      maxSizeMB: 1,
-      maxWidthOrHeight: 1400,
-      useWebWorker: true,
-    };
-    try {
-      const compressedBlob = await imageCompression(file, options);
-      const compressedFile = new File([compressedBlob], compressedBlob.name);
-      return compressedFile;
-    } catch (error) {
-      alert("Something went wrong during image processing");
-    }
-  }
 
   async function handleAvatarChange(file: any) {
     const compressedAvatar = await compressImage(file);

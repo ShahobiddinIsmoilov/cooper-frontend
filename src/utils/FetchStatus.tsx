@@ -3,23 +3,23 @@ import { lang_misc } from "../lang_misc";
 import { useLanguage } from "../contexts/LanguageContext";
 
 interface FetchStatusProps {
-  size?: string;
-  mt?: string;
+  size?: number;
+  mt?: number;
 }
 
-export function FetchLoading({ size, mt }: FetchStatusProps) {
+export function FetchLoading({ mt, size }: FetchStatusProps) {
   return (
-    <div className={`flex justify-center mt-${mt} text-${size} text-white/75`}>
-      <ImSpinner4 size={20} className="animate-spin" />
+    <div className={`flex justify-center mt-${mt} text-white/75 max-w-3xl`}>
+      <ImSpinner4 size={size} className="animate-spin" />
     </div>
   );
 }
 
-export function FetchError({ size, mt }: FetchStatusProps) {
+export function FetchError({ mt }: FetchStatusProps) {
   const { language } = useLanguage();
 
   return (
-    <div className={`flex justify-center mt-${mt} text-${size} text-white/50`}>
+    <div className={`flex justify-center mt-${mt} text-white/50 max-w-3xl`}>
       {lang_misc.fetching_error[language]}
     </div>
   );

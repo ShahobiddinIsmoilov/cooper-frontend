@@ -28,7 +28,7 @@ export default function Navbar({ closeDrawer }: Props) {
         screenWidth >= 1408 || screenWidth < 1200 ? "w-[300px]" : "w-[280px]"
       }`}
     >
-      <div className="flex flex-col justify-between">
+      <div className="flex flex-col justify-between gap-8 mb-48">
         <div>
           <div className="mt-2">
             <SidebarItem

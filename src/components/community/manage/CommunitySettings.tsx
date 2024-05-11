@@ -54,7 +54,7 @@ export default function CommunitySettings({ community }: Props) {
     return false;
   }
 
-  function cancelChanges() {
+  function discardChanges() {
     setNewAvatar(undefined);
     setNewAvatarUrl("");
     setNewBanner(undefined);
@@ -80,11 +80,11 @@ export default function CommunitySettings({ community }: Props) {
           size={isExtraSmall ? "sm" : "md"}
           onClick={(e) => {
             e.preventDefault();
-            cancelChanges();
+            discardChanges();
           }}
           disabled={itemChanged() ? false : true}
-          className={`rounded-xl bg-transparent border border-line ${
-            itemChanged() && "hover:bg-dark-700"
+          className={`rounded-xl ${
+            itemChanged() ? "button-secondary" : "button-secondary-disabled"
           }`}
         >
           Bekor qilish
@@ -97,9 +97,7 @@ export default function CommunitySettings({ community }: Props) {
           }}
           disabled={safeToSave() ? false : true}
           className={`rounded-xl ${
-            safeToSave()
-              ? "bg-cyan-700 hover:bg-cyan-600"
-              : "bg-dark-600 text-dark-900"
+            safeToSave() ? "button-primary" : "button-primary-disabled"
           }`}
         >
           O'zgarishlarni saqlash
@@ -108,9 +106,7 @@ export default function CommunitySettings({ community }: Props) {
       <ManageVisuals
         avatar={community.avatar}
         banner={community.banner}
-        newAvatar={newAvatar}
         setNewAvatar={setNewAvatar}
-        newBanner={newAvatar}
         setNewBanner={setNewBanner}
         newAvatarUrl={newAvatarUrl}
         setNewAvatarUrl={setNewAvatarUrl}

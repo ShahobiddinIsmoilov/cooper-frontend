@@ -13,6 +13,7 @@ import Header from "./components/header/Header";
 import Navbar from "./components/Navbar";
 import UserPage from "./pages/UserPage";
 import ProfilePage from "./pages/ProfilePage";
+import SettingsPage from "./pages/SettingsPage";
 import ExplorePage from "./pages/ExplorePage";
 import AllPage from "./pages/AllPage";
 import LostPage from "./pages/LostPage";
@@ -106,6 +107,7 @@ export default function Layout() {
               />
               <Route path="/user/:username/*" element={<UserPage />} />
               <Route path="/profile/*" element={<ProfilePage />} />
+              <Route path="/profile/settings" element={<SettingsPage />} />
               <Route path="*" element={<LostPage />} />
             </Routes>
           </Container>

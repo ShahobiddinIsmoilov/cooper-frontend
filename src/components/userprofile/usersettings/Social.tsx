@@ -1,12 +1,10 @@
-import Line from "../../../utils/Line";
-import { UserDetailProps } from "../../../interfaces/userDetailProps";
 import { Grid, Stack } from "@mantine/core";
-import { span } from "./Account";
 import { usersettings } from "./../lang_userprofile";
 import { useLanguage } from "../../../contexts/LanguageContext";
+import Line from "../../../utils/Line";
 
 interface Props {
-  user: UserDetailProps;
+  username: string;
   telegram: string;
   instagram: string;
   facebook: string;
@@ -19,7 +17,7 @@ interface Props {
 }
 
 export default function Social({
-  user,
+  username,
   telegram,
   instagram,
   facebook,
@@ -66,7 +64,7 @@ export default function Social({
             maxLength={200}
             id="telegram"
             name="telegram"
-            placeholder={`https://t.me/${user.username}`}
+            placeholder={`https://t.me/${username}`}
             className="w-full py-3 px-4 text-lg rounded-xl bg-dark-850 outline-none placeholder-white placeholder-opacity-25 border border-line"
           />
         </Grid.Col>
@@ -79,7 +77,7 @@ export default function Social({
             maxLength={200}
             id="instagram"
             name="instagram"
-            placeholder={`https://www.instagram.com/${user.username}`}
+            placeholder={`https://www.instagram.com/${username}`}
             className="w-full py-3 px-4 text-lg rounded-xl bg-dark-850 outline-none placeholder-white placeholder-opacity-25 border border-line"
           />
         </Grid.Col>
@@ -92,7 +90,7 @@ export default function Social({
             maxLength={200}
             id="facebook"
             name="facebook"
-            placeholder={`https://www.facebook.com/${user.username}`}
+            placeholder={`https://www.facebook.com/${username}`}
             className="w-full py-3 px-4 text-lg rounded-xl bg-dark-850 outline-none placeholder-white placeholder-opacity-25 border border-line"
           />
         </Grid.Col>
@@ -105,7 +103,7 @@ export default function Social({
             maxLength={200}
             id="twitter"
             name="twitter"
-            placeholder={`https://twitter.com/${user.username}`}
+            placeholder={`https://twitter.com/${username}`}
             className="w-full py-3 px-4 text-lg rounded-xl bg-dark-850 outline-none placeholder-white placeholder-opacity-25 border border-line"
           />
         </Grid.Col>
@@ -113,3 +111,8 @@ export default function Social({
     </Stack>
   );
 }
+
+const span = {
+  base: 12,
+  xs: 6,
+};

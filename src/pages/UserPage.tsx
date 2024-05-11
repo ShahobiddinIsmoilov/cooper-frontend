@@ -1,7 +1,9 @@
 import { Stack } from "@mantine/core";
-import UserActivity from "../components/userprofile/useractivity/UserActivity";
-import UserPosts from "../components/userprofile/userposts/UserPosts";
-import UserComments from "../components/userprofile/usercomments/UserComments";
+import { useAuthContext } from "../contexts/AuthContext";
+import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { makeRequest } from "../services/makeRequest";
+import { UserDetailProps } from "../interfaces/userDetailProps";
 import {
   Navigate,
   Route,
@@ -10,13 +12,11 @@ import {
   useNavigate,
   useParams,
 } from "react-router-dom";
+import UserActivity from "../components/userprofile/useractivity/UserActivity";
+import UserPosts from "../components/userprofile/userposts/UserPosts";
+import UserComments from "../components/userprofile/usercomments/UserComments";
 import Line from "../utils/Line";
 import UserNavbar from "../components/userprofile/usernavbar/UserNavbar";
-import { useAuthContext } from "../contexts/AuthContext";
-import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { makeRequest } from "../services/makeRequest";
-import { UserDetailProps } from "../interfaces/userDetailProps";
 import UserProfile from "../components/userprofile/userinfo/UserProfile";
 
 export default function UserPage() {

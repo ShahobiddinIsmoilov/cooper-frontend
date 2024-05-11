@@ -10,7 +10,6 @@ import MyUserNavbar from "../components/userprofile/usernavbar/MyUserNavbar";
 import UserActivity from "../components/userprofile/useractivity/UserActivity";
 import UserPosts from "../components/userprofile/userposts/UserPosts";
 import UserComments from "../components/userprofile/usercomments/UserComments";
-import UserSettings from "../components/userprofile/usersettings/UserSettings";
 import UserSaved from "../components/userprofile/usersaved/UserSaved";
 import UserUpvoted from "../components/userprofile/userupvoted/UserUpvoted";
 import UserDownvoted from "../components/userprofile/userdownvoted/UserDownvoted";
@@ -61,10 +60,6 @@ export default function ProfilePage() {
             <Route
               path="/disliked"
               element={<UserDownvoted setActive={setActive} />}
-            />
-            <Route
-              path="/settings"
-              element={<UserSettings setActive={setActive} user={userdetail} />}
             />
             <Route path="*" element={<Navigate to="" replace />} />
           </Routes>
