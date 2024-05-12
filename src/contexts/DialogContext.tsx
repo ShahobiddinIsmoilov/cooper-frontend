@@ -1,13 +1,12 @@
-import { ReactNode, createContext, useContext, useRef, useState } from "react";
+import { ReactNode, createContext, useContext, useState } from "react";
 
 interface DialogProps {
-  isDialogVisible: boolean;
-  setIsDialogVisible: (e: boolean) => void;
-  withCloseButton: boolean;
-  handleDialogClose: () => void;
+  isDialogOpen: boolean;
   dialogContent: ReactNode;
+  withCloseButton: boolean;
+  openDialog: () => void;
+  closeDialog: () => void;
   setDialogContent: (e: ReactNode) => void;
-  dialogContentRef: any;
   setWithCloseButton: (e: boolean) => void;
 }
 
@@ -22,23 +21,25 @@ interface DialogProviderProps {
 }
 
 export default function DialogProvider({ children }: DialogProviderProps) {
-  const dialogContentRef = useRef<HTMLElement>(null);
-  const [isDialogVisible, setIsDialogVisible] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [withCloseButton, setWithCloseButton] = useState(false);
   const [dialogContent, setDialogContent] = useState<ReactNode | null>(null);
 
-  function handleDialogClose() {
-    setIsDialogVisible(false);
+  function openDialog() {
+    setIsDialogOpen(true);
+  }
+
+  function closeDialog() {
+    setIsDialogOpen(false);
   }
 
   let contextData = {
-    isDialogVisible: isDialogVisible,
-    setIsDialogVisible: setIsDialogVisible,
-    withCloseButton: withCloseButton,
-    handleDialogClose: handleDialogClose,
+    isDialogOpen: isDialogOpen,
     dialogContent: dialogContent,
+    withCloseButton: withCloseButton,
+    openDialog: openDialog,
+    closeDialog: closeDialog,
     setDialogContent: setDialogContent,
-    dialogContentRef: dialogContentRef,
     setWithCloseButton: setWithCloseButton,
   };
 

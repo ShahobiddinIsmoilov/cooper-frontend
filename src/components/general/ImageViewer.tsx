@@ -1,25 +1,20 @@
 import { Image } from "@mantine/core";
-import { useDialog } from "../../contexts/DialogContext";
+import { useCustomModal } from "../../contexts/CustomModalContext";
 
 export default function ImageViewer({ imageUrl }: { imageUrl: string }) {
-  const {
-    setDialogContent,
-    setIsDialogVisible,
-    setWithCloseButton,
-    dialogContentRef,
-  } = useDialog();
+  const { openCustomModal, setCustomModalContent, customModalContentRef } =
+    useCustomModal();
 
   function handleImageClick() {
-    setDialogContent(
+    setCustomModalContent(
       <Image
         src={imageUrl}
         fit="contain"
-        ref={dialogContentRef}
+        ref={customModalContentRef}
         className="w-screen max-w-screen max-h-screen"
       />
     );
-    setWithCloseButton(true);
-    setIsDialogVisible(true);
+    openCustomModal();
   }
 
   return (

@@ -1,31 +1,30 @@
 import { useEffect } from "react";
 import { FocusTrap, Portal } from "@mantine/core";
 import { IoMdClose } from "react-icons/io";
-import { useDialog } from "./contexts/DialogContext";
+import { useCustomModal } from "./contexts/CustomModalContext";
 
 export default function Modallion() {
   const {
-    isDialogVisible,
-    withCloseButton,
-    dialogContent,
-    dialogContentRef,
-    handleDialogClose,
-  } = useDialog();
+    isCustomModalOpen,
+    customModalContent,
+    customModalContentRef,
+    closeCustomModal,
+  } = useCustomModal();
 
   useEffect(() => {
     function handleEscape(event: any) {
       if (event.key === "Escape") {
-        handleDialogClose();
+        closeCustomModal();
       }
     }
     window.addEventListener("keydown", handleEscape);
 
     function handleOutsideClick(e: any) {
       if (
-        dialogContentRef.current &&
-        !dialogContentRef.current.contains(e.target)
+        customModalContentRef.current &&
+        !customModalContentRef.current.contains(e.target)
       ) {
-        handleDialogClose();
+        closeCustomModal();
       }
     }
     document.addEventListener("mousedown", handleOutsideClick);
@@ -42,25 +41,24 @@ export default function Modallion() {
         className={`fixed top-0 left-0 z-[101] w-screen h-screen bg-black/85`}
       >
         <div className="w-full h-full flex justify-center items-center">
-          {dialogContent}
+          {customModalContent}
         </div>
-        {withCloseButton && (
-          <button
-            onClick={handleDialogClose}
-            className="absolute top-6 right-6 p-2 bg-dark-950/50 hover:bg-dark-800 rounded-full text-2xl"
-          >
-            <IoMdClose />
-          </button>
-        )}
+
+        <button
+          onClick={closeCustomModal}
+          className="absolute top-6 right-6 p-2 bg-dark-950/50 hover:bg-dark-800 rounded-full text-2xl"
+        >
+          <IoMdClose />
+        </button>
       </div>
     </FocusTrap>
   );
 
-  if (isDialogVisible) {
+  if (isCustomModalOpen) {
     document.body.style.overflow = "hidden";
   } else {
     document.body.style.overflow = "auto";
   }
 
-  return isDialogVisible ? <Portal>{modallion}</Portal> : null;
+  return isCustomModalOpen ? <Portal>{modallion}</Portal> : null;
 }

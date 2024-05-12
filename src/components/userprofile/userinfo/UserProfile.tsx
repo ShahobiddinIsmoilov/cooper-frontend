@@ -1,6 +1,6 @@
 import { Avatar, Stack, Image, Button } from "@mantine/core";
 import { UserDetailProps } from "../../../interfaces/userDetailProps";
-import { useDialog } from "../../../contexts/DialogContext";
+import { useCustomModal } from "../../../contexts/CustomModalContext";
 import { BiSolidLike } from "react-icons/bi";
 import { userinfo } from "./../lang_userprofile";
 import { Link } from "react-router-dom";
@@ -16,19 +16,14 @@ interface Props {
 }
 
 export default function UserProfile({ user }: Props) {
-  const {
-    setDialogContent,
-    setIsDialogVisible,
-    setWithCloseButton,
-    dialogContentRef,
-  } = useDialog();
+  const { setCustomModalContent, openCustomModal, customModalContentRef } =
+    useCustomModal();
 
   function handleAvatarClick() {
-    setDialogContent(
-      <Image src={user.avatar} fit="contain" ref={dialogContentRef} />
+    setCustomModalContent(
+      <Image src={user.avatar} fit="contain" ref={customModalContentRef} />
     );
-    setWithCloseButton(true);
-    setIsDialogVisible(true);
+    openCustomModal();
   }
 
   return (

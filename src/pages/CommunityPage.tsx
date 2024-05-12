@@ -5,7 +5,7 @@ import { useAuthContext } from "../contexts/AuthContext";
 import { useWindowSize } from "../contexts/WindowSizeContext";
 import { CommunityDetailProps } from "../interfaces/communityDetailProps";
 import { BsDot } from "react-icons/bs";
-import { useDialog } from "../contexts/DialogContext";
+import { useCustomModal } from "../contexts/CustomModalContext";
 import { FetchError, FetchLoading } from "../utils/FetchStatus";
 import { infobar } from "../components/lang_components";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -41,36 +41,30 @@ export default function CommunityPage() {
 
   const community: CommunityDetailProps = data.data;
 
-  const {
-    setDialogContent,
-    setIsDialogVisible,
-    setWithCloseButton,
-    dialogContentRef,
-  } = useDialog();
+  const { openCustomModal, setCustomModalContent, customModalContentRef } =
+    useCustomModal();
 
   function handleAvatarClick() {
-    setDialogContent(
+    setCustomModalContent(
       <Image
         src={community.avatar}
-        ref={dialogContentRef}
+        ref={customModalContentRef}
         className="w-72 min-w-72 h-72 min-h-72 xs:w-[500px] xs:min-w-[500px] xs:h-[500px] xs:min-h-[500px] rounded-full"
       />
     );
-    setWithCloseButton(true);
-    setIsDialogVisible(true);
+    openCustomModal();
   }
 
   function handleBannerClick() {
-    setDialogContent(
+    setCustomModalContent(
       <Image
         src={community.banner}
         fit="contain"
-        ref={dialogContentRef}
+        ref={customModalContentRef}
         className="w-screen"
       />
     );
-    setWithCloseButton(true);
-    setIsDialogVisible(true);
+    openCustomModal();
   }
 
   return (

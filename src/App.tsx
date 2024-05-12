@@ -11,6 +11,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import LanguageProvider from "./contexts/LanguageContext";
 import AuthProvider from "./contexts/AuthContext";
 import DialogProvider from "./contexts/DialogContext";
+import CustomModalProvider from "./contexts/CustomModalContext";
 import WindowSizeProvider from "./contexts/WindowSizeContext";
 
 const queryClient = new QueryClient();
@@ -19,17 +20,19 @@ export default function App() {
   return (
     <MantineProvider defaultColorScheme="dark" theme={theme}>
       <QueryClientProvider client={queryClient}>
-        <LanguageProvider>
-          <WindowSizeProvider>
+        <AuthProvider>
+          <BrowserRouter>
             <DialogProvider>
-              <AuthProvider>
-                <BrowserRouter>
-                  <Layout />
-                </BrowserRouter>
-              </AuthProvider>
+              <LanguageProvider>
+                <WindowSizeProvider>
+                  <CustomModalProvider>
+                    <Layout />
+                  </CustomModalProvider>
+                </WindowSizeProvider>
+              </LanguageProvider>
             </DialogProvider>
-          </WindowSizeProvider>
-        </LanguageProvider>
+          </BrowserRouter>
+        </AuthProvider>
       </QueryClientProvider>
     </MantineProvider>
   );

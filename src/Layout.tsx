@@ -18,6 +18,7 @@ import ExplorePage from "./pages/ExplorePage";
 import AllPage from "./pages/AllPage";
 import LostPage from "./pages/LostPage";
 import Drawer from "react-modern-drawer";
+import Dialog from "./Dialog";
 import Modallion from "./Modallion";
 import "react-modern-drawer/dist/index.css";
 
@@ -113,6 +114,7 @@ export default function Layout() {
           </Container>
         </AppShell.Main>
       </AppShell>
+      <Dialog />
       <Modallion />
     </>
   );
