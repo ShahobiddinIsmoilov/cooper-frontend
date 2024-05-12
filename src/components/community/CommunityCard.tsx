@@ -17,7 +17,7 @@ export default function CommunityCard({
 
   return (
     <Link
-      to={`/c/${community.name}`}
+      to={`/c/${community.link}`}
       onClick={closeDrawer}
       className="mx-4 flex gap-3 items-center px-8 py-2 rounded-xl hover:bg-dark-750"
     >
