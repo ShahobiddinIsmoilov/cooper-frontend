@@ -6,29 +6,24 @@ import {
   useState,
 } from "react";
 
-interface WindowSizeProps {
+interface UtilityContextProps {
   screenWidth: number;
   screenHeight: number;
-  unreadCount: number;
-  setUnreadCount: (e: any) => void;
 }
 
-const WindowSizeContext = createContext<WindowSizeProps | null>(null);
+const UtilityContext = createContext<UtilityContextProps | null>(null);
 
 export function useWindowSize() {
-  return useContext(WindowSizeContext) as WindowSizeProps;
+  return useContext(UtilityContext) as UtilityContextProps;
 }
 
-interface WindowSizeProviderProps {
+interface UtilityProviderProps {
   children: ReactNode;
 }
 
-export default function WindowSizeProvider({
-  children,
-}: WindowSizeProviderProps) {
+export default function UtilityProvider(props: UtilityProviderProps) {
   const [screenWidth, setScreenWidth] = useState(0);
   const [screenHeight, setScreenHeight] = useState(0);
-  const [unreadCount, setUnreadCount] = useState(0);
 
   useEffect(() => {
     const handleResize = () => {
@@ -48,13 +43,11 @@ export default function WindowSizeProvider({
   let contextData = {
     screenWidth: screenWidth,
     screenHeight: screenHeight,
-    unreadCount: unreadCount,
-    setUnreadCount: setUnreadCount,
   };
 
   return (
-    <WindowSizeContext.Provider value={contextData}>
-      {children}
-    </WindowSizeContext.Provider>
+    <UtilityContext.Provider value={contextData}>
+      {props.children}
+    </UtilityContext.Provider>
   );
 }

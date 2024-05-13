@@ -1,16 +1,22 @@
 import { Menu } from "@mantine/core";
 import { FaBell } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useWindowSize } from "../../../contexts/WindowSizeContext";
 import { useDisclosure } from "@mantine/hooks";
+import { useNavigate } from "react-router-dom";
 import NotificationList from "./NotificationList";
 import useCredentials from "../../../services/useCredentials";
 
 export default function Notifications({ count }: { count: number }) {
-  const [unreadCount, setUnreadCount] = useState(count);
+  const { unreadCount, setUnreadCount } = useWindowSize();
   const [unreadExists, setUnreadExists] = useState(count > 0);
   const [opened, { open, close }] = useDisclosure();
+  const isExtraSmall = useWindowSize().screenWidth < 576;
+
+  useEffect(() => {
+    setUnreadCount(count);
+  }, []);
 
   const api = useCredentials();
   function markAsRead(variant: "read_one" | "read_all", notif_id?: number) {
@@ -20,7 +26,7 @@ export default function Notifications({ count }: { count: number }) {
         action: "read_one",
         id: notif_id,
       };
-      setUnreadCount((notifCount) => notifCount - 1);
+      setUnreadCount((prevCount: number) => prevCount - 1);
     } else {
       data = {
         action: "read_all",
@@ -41,10 +47,23 @@ export default function Notifications({ count }: { count: number }) {
     query.invalidateQueries({ queryKey: ["notifications"] });
   }
 
+  const navigate = useNavigate();
   const screenHeight = useWindowSize().screenHeight;
   const bellsize = screenHeight > 700 ? 20 : 16;
 
-  return (
+  return isExtraSmall ? (
+    <button
+      onClick={() => navigate("/notifications")}
+      className="relative hover:bg-dark-700 border-white border-opacity-25 rounded-full p-3"
+    >
+      <FaBell size={bellsize} />
+      {unreadCount > 0 && (
+        <div className="w-5 h-5 top-1 right-1 absolute bg-red-600 text-white text-xs flex justify-center items-center rounded-full">
+          {unreadCount}
+        </div>
+      )}
+    </button>
+  ) : (
     <Menu
       opened={opened}
       width={400}

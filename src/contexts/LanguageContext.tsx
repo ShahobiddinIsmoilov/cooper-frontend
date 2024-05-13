@@ -15,9 +15,7 @@ interface LanguageProviderProps {
   children: ReactNode;
 }
 
-export default function WindowSizeProvider({
-  children,
-}: LanguageProviderProps) {
+export default function LanguageProvider({ children }: LanguageProviderProps) {
   const LANGUAGE_KEY = "language";
 
   function getLanguage(): "uz" | "en" | "ru" {

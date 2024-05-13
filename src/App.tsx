@@ -20,8 +20,8 @@ export default function App() {
   return (
     <MantineProvider defaultColorScheme="dark" theme={theme}>
       <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <BrowserRouter>
+        <BrowserRouter>
+          <AuthProvider>
             <DialogProvider>
               <LanguageProvider>
                 <WindowSizeProvider>
@@ -31,8 +31,8 @@ export default function App() {
                 </WindowSizeProvider>
               </LanguageProvider>
             </DialogProvider>
-          </BrowserRouter>
-        </AuthProvider>
+          </AuthProvider>
+        </BrowserRouter>
       </QueryClientProvider>
     </MantineProvider>
   );

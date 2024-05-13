@@ -20,6 +20,7 @@ import LostPage from "./pages/LostPage";
 import Drawer from "react-modern-drawer";
 import Dialog from "./Dialog";
 import Modallion from "./Modallion";
+import NotificationPage from "./pages/NotificationPage";
 import "react-modern-drawer/dist/index.css";
 
 export default function Layout() {
@@ -97,6 +98,7 @@ export default function Layout() {
               <Route path="/home" element={<HomePage />} />
               <Route path="/explore" element={<ExplorePage />} />
               <Route path="/all" element={<AllPage />} />
+              <Route path="/notifications" element={<NotificationPage />} />
               <Route path="/c/:community_link/*" element={<CommunityPage />} />
               <Route
                 path="/c/:community_link/manage"

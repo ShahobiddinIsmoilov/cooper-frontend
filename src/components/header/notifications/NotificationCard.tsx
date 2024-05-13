@@ -11,7 +11,7 @@ interface Props {
   notif: NotifProps;
   unreadExists: boolean;
   markAsRead: (read_one: "read_one" | "read_all", notif_id?: number) => void;
-  closeMenu: () => void;
+  closeMenu?: () => void;
 }
 
 export default function NotificationCard({
@@ -30,7 +30,7 @@ export default function NotificationCard({
 
   function goToComment() {
     navigate(`/c/${notif.community_link}/post/${notif.post_permalink}`);
-    closeMenu();
+    closeMenu && closeMenu();
   }
 
   return (
@@ -42,7 +42,11 @@ export default function NotificationCard({
       >
         <button onClick={goToComment} className="flex gap-2 text-start">
           <Avatar src={notif.sender_avatar} />
-          <div className="w-[277px] break-words text-sm font-bold">
+          <div
+            className={`break-words text-sm font-bold ${
+              closeMenu && "w-[277px]"
+            } `}
+          >
             <span className="text-orange-400">{notif.sender}</span> replied to
             your {notif.type === "post_reply" ? "post" : "comment"} in{" "}
             <span className="text-blue-400">{notif.community_name}</span>

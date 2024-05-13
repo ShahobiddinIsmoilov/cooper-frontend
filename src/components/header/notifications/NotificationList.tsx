@@ -9,7 +9,7 @@ import NotificationCard from "./NotificationCard";
 interface Props {
   unreadExists: boolean;
   markAsRead: (read_one: "read_one" | "read_all", notif_id?: number) => void;
-  closeMenu: () => void;
+  closeMenu?: () => void;
 }
 
 export default function NotificationList({
@@ -52,7 +52,9 @@ export default function NotificationList({
   return (
     <Stack
       gap={0}
-      className="my-1 max-h-96 rounded-xl overflow-hidden hover:overflow-y-scroll notif-scrollbar"
+      className={`my-1 rounded-xl overflow-hidden hover:overflow-y-scroll notif-scrollbar ${
+        closeMenu && "max-h-96"
+      }`}
     >
       <div className="flex justify-end">
         <button
