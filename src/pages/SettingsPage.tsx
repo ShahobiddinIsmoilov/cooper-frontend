@@ -24,7 +24,7 @@ export default function SettingsPage() {
   const user = data.data;
 
   return (
-    <Stack mx={16} mt={8} mb={100} className="max-w-3xl">
+    <Stack mx={16} mt={12} mb={100} className="max-w-3xl">
       <BackButtonHeader header={settings_page.header[language]} />
       <UserSettings user={user} />
     </Stack>

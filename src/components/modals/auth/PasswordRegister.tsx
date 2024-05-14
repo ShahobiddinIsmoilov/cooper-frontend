@@ -1,5 +1,5 @@
 import { Stack } from "@mantine/core";
-import { useState } from "react";
+// import { useState } from "react";
 import { FaQuestionCircle } from "react-icons/fa";
 import { auth } from "../lang_modals";
 import { useLanguage } from "../../../contexts/LanguageContext";
@@ -9,17 +9,18 @@ interface Props {
 }
 
 export default function PasswordRegister({ setPassword }: Props) {
-  const [validationError, setValidationError] = useState(false);
+  // const [validationError, setValidationError] = useState(false);
   const { language } = useLanguage();
 
   function handleChange(e: any) {
-    const value = e.target.value;
-    const regex = /^[a-zA-Z0-9_-]+$/;
-    if (value != "" && !regex.test(value)) {
-      setValidationError(true);
-    } else {
-      setValidationError(false);
-    }
+    // const value = e.target.value;
+    // const regex = /^[a-zA-Z0-9_-]+$/;
+
+    // if (value != "" && !regex.test(value)) {
+    //   setValidationError(true);
+    // } else {
+    //   setValidationError(false);
+    // }
     setPassword(e.target.value);
   }
 
@@ -38,12 +39,11 @@ export default function PasswordRegister({ setPassword }: Props) {
         placeholder={auth.password[language]}
         className="outline-none py-3 px-4 text-lg border border-line rounded-xl bg-dark-850 placeholder-white placeholder-opacity-25"
       />
-      {validationError && (
-        <p className="text-red-400 text-sm">
-          Username can only include uppercase (A-Z) and lowercase (a-z) letters,
-          numbers (0-9), hyphens (-) and underscores (_)
-        </p>
-      )}
+
+      <p className="text-yellow-400 text-sm">
+        Password must be at least 6 characters long and must not include your
+        username
+      </p>
     </Stack>
   );
 }

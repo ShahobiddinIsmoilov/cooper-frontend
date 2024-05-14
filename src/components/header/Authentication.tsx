@@ -30,15 +30,6 @@ export function Authentication() {
   const [validate, setValidate] = useState(false);
   const [opened, { open, close }] = useDisclosure();
 
-  function handleLogin(e: any) {
-    e.preventDefault();
-    const userData = {
-      username: username,
-      password: password,
-    };
-    loginUser(userData);
-  }
-
   function handleRegister(e: any) {
     e.preventDefault();
     const userData = {
@@ -49,15 +40,37 @@ export function Authentication() {
     registerUser(userData);
   }
 
+  function handleLogin(e: any) {
+    e.preventDefault();
+    const userData = {
+      username: username,
+      password: password,
+    };
+    loginUser(userData);
+  }
+
   function handleSwitch(e: any) {
     e.preventDefault();
     setUsername("");
     setPassword("");
     setValidate(!validate);
     setShowLogin(!showLogin);
+    setShowRegisterButton(!showRegisterButton);
+    setLoginMessage(
+      <p className="text-2xl text-center">{auth.login_text[language]}</p>
+    );
   }
 
-  function handleOpen() {
+  function handleOpenRegister() {
+    setShowLogin(false);
+    setLoginMessage(
+      <p className="text-2xl text-center">{auth.register_text[language]}</p>
+    );
+    setShowRegisterButton(false);
+    open();
+  }
+
+  function handleOpenLogin() {
     setShowLogin(true);
     setLoginMessage(
       <p className="text-2xl text-center">{auth.login_text[language]}</p>
@@ -147,7 +160,7 @@ export function Authentication() {
         )}
       </Modal>
       <button
-        onClick={handleOpen}
+        onClick={handleOpenRegister}
         className={`rounded-full px-3 button-primary ${
           plussize === 20 ? "py-[8px]" : "py-[6px]"
         }`}
@@ -155,7 +168,7 @@ export function Authentication() {
         {auth.create_account_button[language]}
       </button>
       <button
-        onClick={handleOpen}
+        onClick={handleOpenLogin}
         className={`rounded-full px-3 button-secondary ${
           plussize === 20 ? "py-[8px]" : "py-[6px]"
         }`}

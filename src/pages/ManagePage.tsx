@@ -25,7 +25,7 @@ export default function ManagePage() {
   const community: CommunityDetailProps = data.data;
 
   return (
-    <Stack gap={16} mx={16} mt={8} mb={100} className="max-w-3xl">
+    <Stack gap={16} mx={16} mt={12} mb={100} className="max-w-3xl">
       <BackButtonHeader header={manage_page.header[language]} />
       <CommunitySettings community={community} />
     </Stack>
