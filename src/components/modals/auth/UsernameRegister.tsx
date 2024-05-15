@@ -32,7 +32,6 @@ export default function UsernameRegister({ setUsername }: Props) {
       <input
         onChange={(e) => handleChange(e)}
         onFocus={(e) => handleChange(e)}
-        data-autofocus
         type="text"
         maxLength={32}
         id="username"

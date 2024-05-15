@@ -29,6 +29,7 @@ export function Authentication() {
   const [password, setPassword] = useState("");
   const [validate, setValidate] = useState(false);
   const [opened, { open, close }] = useDisclosure();
+  const isExtraSmall = useWindowSize().screenWidth < 576;
 
   function handleRegister(e: any) {
     e.preventDefault();
@@ -100,64 +101,68 @@ export function Authentication() {
         shadow="xs"
         keepMounted={false}
         withCloseButton={false}
+        overlayProps={{ backgroundOpacity: 0.9 }}
+        fullScreen={isExtraSmall}
       >
-        <div className="text-end">
-          <button
-            onClick={handleClose}
-            className="p-1 hover:bg-dark-750 rounded-full hover:text-white"
-          >
-            <IoClose size={30} />
-          </button>
-        </div>
-        {showLogin ? (
-          <form onSubmit={handleLogin}>
-            {loginMessage}
-            <Stack gap="md" p="md">
-              <UsernameLogin setUsername={setUsername} />
-              <PasswordLogin setPassword={setPassword} />
-              <input
-                type="submit"
-                value={auth.login_button[language]}
-                className="text-white bg-cyan-700 hover:bg-cyan-600 p-3 rounded-xl text-lg h-12 font-bold cursor-pointer"
-              />
-              {showRegisterButton && (
+        <div className="h-screen xs:h-fit">
+          <div className="text-end">
+            <button
+              onClick={handleClose}
+              className="p-1 hover:bg-dark-750 rounded-full hover:text-white"
+            >
+              <IoClose size={30} />
+            </button>
+          </div>
+          {showLogin ? (
+            <form onSubmit={handleLogin}>
+              {loginMessage}
+              <Stack gap="md" p="md">
+                <UsernameLogin setUsername={setUsername} />
+                <PasswordLogin setPassword={setPassword} />
+                <input
+                  type="submit"
+                  value={auth.login_button[language]}
+                  className="text-white bg-cyan-700 hover:bg-cyan-600 p-3 rounded-xl text-lg h-12 font-bold cursor-pointer"
+                />
+                {showRegisterButton && (
+                  <div className="text-center">
+                    {auth.not_registered[language]}{" "}
+                    <button
+                      onClick={(e) => handleSwitch(e)}
+                      className="text-blue-400 hover:text-blue-300"
+                    >
+                      {auth.register_capital[language]}
+                    </button>
+                  </div>
+                )}
+              </Stack>
+            </form>
+          ) : (
+            <form onSubmit={handleRegister}>
+              <p className="text-2xl text-center">
+                {auth.register_text[language]}
+              </p>
+              <Stack gap="sm" p="md">
+                <UsernameRegister setUsername={setUsername} />
+                <PasswordRegister setPassword={setPassword} />
+                <input
+                  type="submit"
+                  value={auth.register_button[language]}
+                  className="mt-2 text-white bg-cyan-700 hover:bg-cyan-600 p-3 rounded-xl text-lg h-12 font-bold cursor-pointer"
+                />
                 <div className="text-center">
-                  {auth.not_registered[language]}{" "}
+                  {auth.already_registered[language]}{" "}
                   <button
                     onClick={(e) => handleSwitch(e)}
                     className="text-blue-400 hover:text-blue-300"
                   >
-                    {auth.register_capital[language]}
+                    {auth.login_capital[language]}
                   </button>
                 </div>
-              )}
-            </Stack>
-          </form>
-        ) : (
-          <form onSubmit={handleRegister}>
-            <p className="text-2xl text-center">
-              {auth.register_text[language]}
-            </p>
-            <Stack gap="sm" p="md">
-              <UsernameRegister setUsername={setUsername} />
-              <PasswordRegister setPassword={setPassword} />
-              <input
-                type="submit"
-                value={auth.register_button[language]}
-                className="mt-2 text-white bg-cyan-700 hover:bg-cyan-600 p-3 rounded-xl text-lg h-12 font-bold cursor-pointer"
-              />
-              <div className="text-center">
-                {auth.already_registered[language]}{" "}
-                <button
-                  onClick={(e) => handleSwitch(e)}
-                  className="text-blue-400 hover:text-blue-300"
-                >
-                  {auth.login_capital[language]}
-                </button>
-              </div>
-            </Stack>
-          </form>
-        )}
+              </Stack>
+            </form>
+          )}
+        </div>
       </Modal>
       <button
         onClick={handleOpenRegister}
