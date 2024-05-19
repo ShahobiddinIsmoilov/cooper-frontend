@@ -36,17 +36,19 @@ export default function Register({
         method: "post",
         data: { code: registrationCode },
       });
-      setRegisterFormOpened(true);
-      setConfirmModalClose(true);
-      setPhone(response.data["phone"]);
-    } catch (error: any) {
-      if (error.response.data["error"] === "Invalid code") {
-        setCodeError("Invalid code entered");
-      } else if (error.response.data["error"] === "Expired code") {
-        setCodeError("This code has expired. Please get a new code");
+      if (response.data["status"] === "ERROR") {
+        if (response.data["message"] === "Invalid code") {
+          setCodeError("Invalid code entered");
+        } else if (response.data["message"] === "Expired code") {
+          setCodeError("This code has expired. Please get a new code");
+        }
       } else {
-        setCodeError("Something went wrong. Please try again later");
+        setRegisterFormOpened(true);
+        setConfirmModalClose(true);
+        setPhone(response.data["phone"]);
       }
+    } catch {
+      alert("Something went wrong. Please try again later");
     } finally {
       setFormDisabled(false);
     }
