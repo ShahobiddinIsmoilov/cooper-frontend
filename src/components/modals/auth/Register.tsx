@@ -30,8 +30,6 @@ export default function Register({
   const [registerFormOpened, setRegisterFormOpened] = useState(false);
 
   async function handleNext() {
-    setRegisterFormOpened(true);
-    setConfirmModalClose(true);
     setFormDisabled(true);
     try {
       const response = await makeRequest(`/api/user/check-code/`, {
