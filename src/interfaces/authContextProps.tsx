@@ -14,10 +14,4 @@ export interface AuthContextProps {
     access: string;
     refresh: string;
   };
-  showLogin: boolean;
-  setShowLogin: (value: boolean) => void;
-  loginMessage: React.ReactNode;
-  setLoginMessage: (value: React.ReactNode) => void;
-  showRegisterButton: boolean;
-  setShowRegisterButton: (value: boolean) => void;
 }

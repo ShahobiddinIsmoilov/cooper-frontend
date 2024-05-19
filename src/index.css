@@ -3,6 +3,14 @@
 @tailwind utilities;
 
 @layer base {
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
   code {
     @apply bg-dark-900 p-1 rounded-md text-sm text-emerald-400;
   }
@@ -42,9 +50,14 @@
   }
 
   .input {
-    @apply text-white placeholder-white placeholder-opacity-25
-            border border-solid border-white border-opacity-50 overflow-x-auto
-            rounded-xl mx-2 xs:mx-4 p-3 xs:p-4 bg-transparent w-64 xs:w-80;
+    @apply text-white placeholder-white placeholder-opacity-25 bg-dark-850
+           border border-line rounded-xl py-3 px-4 text-lg outline-none;
+  }
+
+  .input-responsive {
+    @apply text-white placeholder-white placeholder-opacity-25 bg-dark-850
+           border border-line rounded-xl py-2 xs:py-3 px-3 xs:px-4 xs:text-lg
+           outline-none;
   }
 
   .tiptap-editor {

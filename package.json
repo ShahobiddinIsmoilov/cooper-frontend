@@ -20,7 +20,7 @@
     "@mantine/form": "^7.6.2",
     "@mantine/hooks": "^7.6.2",
     "@mantine/modals": "^7.6.2",
-    "@mantine/notifications": "^7.6.2",
+    "@mantine/notifications": "^7.9.2",
     "@mantine/nprogress": "^7.6.2",
     "@mantine/tiptap": "^7.6.2",
     "@szhsin/react-menu": "^4.1.0",
@@ -55,6 +55,7 @@
     "react-router-dom": "^6.22.2",
     "react-scripts": "^5.0.1",
     "react-simple-image-viewer": "^1.2.2",
+    "use-debounce": "^10.0.0",
     "validator": "^13.11.0",
     "yarn": "^1.22.22"
   },

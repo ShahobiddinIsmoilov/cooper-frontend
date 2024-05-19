@@ -2,10 +2,12 @@ import "@mantine/core/styles.css";
 import "@mantine/tiptap/styles.css";
 import "@mantine/dropzone/styles.css";
 import "@mantine/carousel/styles.css";
+import "@mantine/notifications/styles.css";
 import "./index.css";
 import Layout from "./Layout";
 import { theme } from "./theme";
 import { MantineProvider } from "@mantine/core";
+import { Notifications } from "@mantine/notifications";
 import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import LanguageProvider from "./contexts/LanguageContext";
@@ -27,6 +29,7 @@ export default function App() {
                 <WindowSizeProvider>
                   <CustomModalProvider>
                     <Layout />
+                    <Notifications position="top-center" />
                   </CustomModalProvider>
                 </WindowSizeProvider>
               </LanguageProvider>

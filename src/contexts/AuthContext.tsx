@@ -6,9 +6,10 @@ import {
   useState,
 } from "react";
 import { jwtDecode } from "jwt-decode";
+import { FaRegCheckCircle } from "react-icons/fa";
+import { notifications } from "@mantine/notifications";
 import { AuthContextProps } from "../interfaces/authContextProps";
 import { makeRequest } from "../services/makeRequest";
-import { FaCheckCircle } from "react-icons/fa";
 
 const AuthContext = createContext<AuthContextProps | null>(null);
 
@@ -34,27 +35,30 @@ function AuthProvider({ children }: AuthProviderProps) {
   );
 
   const [loading, setLoading] = useState(true);
-  const [showLogin, setShowLogin] = useState(true);
-  const [loginMessage, setLoginMessage] = useState<React.ReactNode>(
-    <p className="text-2xl text-center">Welcome back</p>
-  );
-  const [showRegisterButton, setShowRegisterButton] = useState(true);
 
-  async function register(userData: {}) {
+  async function register(userData: {
+    username: string;
+    password: string;
+    phone: string;
+  }) {
     try {
       await makeRequest("/api/user/register/", {
         method: "post",
         data: userData,
       });
-      setShowLogin(true);
-      setShowRegisterButton(false);
-      setLoginMessage(
-        <div className="flex flex-col items-center text-2xl">
-          <FaCheckCircle size={40} className="text-green-400" />
-          <p className="text-green-400">Account created successfully</p>
-          <p> You can now log in</p>
-        </div>
-      );
+      const loginData = {
+        username: userData["username"],
+        password: userData["password"],
+      };
+      notifications.show({
+        message: "Account created succesfully",
+        icon: <FaRegCheckCircle color="white" />,
+        style: {
+          backgroundColor: "green",
+        },
+        autoClose: 5000,
+      });
+      login(loginData);
     } catch {
       console.log("Shit's gone downhill in register function bruh");
     }
@@ -88,12 +92,6 @@ function AuthProvider({ children }: AuthProviderProps) {
     logoutUser: logout,
     setAuthTokens: setAuthTokens,
     setUser: setUser,
-    showLogin: showLogin,
-    setShowLogin: setShowLogin,
-    loginMessage: loginMessage,
-    setLoginMessage: setLoginMessage,
-    showRegisterButton: showRegisterButton,
-    setShowRegisterButton: setShowRegisterButton,
   };
 
   useEffect(() => {
