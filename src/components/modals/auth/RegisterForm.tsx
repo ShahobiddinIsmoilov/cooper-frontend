@@ -89,11 +89,12 @@ export default function RegisterForm({
           size="lg"
           onClick={handleRegister}
           disabled={!safeToRegister || formDisabled}
-          className={`rounded-xl ${
+          radius={12}
+          className={
             safeToRegister && !formDisabled
               ? "button-primary"
               : "button-primary-disabled"
-          }`}
+          }
         >
           {formDisabled ? (
             <ImSpinner4 size={20} className="animate-spin" />

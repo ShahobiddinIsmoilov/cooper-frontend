@@ -59,8 +59,8 @@ function AuthProvider({ children }: AuthProviderProps) {
         autoClose: 5000,
       });
       login(loginData);
-    } catch {
-      console.log("Shit's gone downhill in register function bruh");
+    } catch (error: any) {
+      return error;
     }
   }
 
@@ -73,8 +73,9 @@ function AuthProvider({ children }: AuthProviderProps) {
       setAuthTokens(response.data);
       setUser(jwtDecode(response.data.access));
       localStorage.setItem("authTokens", JSON.stringify(response.data));
-    } catch {
-      console.log("Login function is having a stroke");
+      return Promise.resolve();
+    } catch (error: any) {
+      return Promise.reject(error);
     }
   }
 

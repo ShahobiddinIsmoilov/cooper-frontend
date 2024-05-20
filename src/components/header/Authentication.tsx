@@ -68,7 +68,12 @@ export function Authentication() {
                 style={{ ...transitionStyle, zIndex: 1 }}
                 hidden={!showLogin}
               >
-                <Login handleSwitch={handleSwitch} closeModal={closeModal} />
+                <Login
+                  handleSwitch={handleSwitch}
+                  closeModal={closeModal}
+                  formDisabled={formDisabled}
+                  setFormDisabled={setFormDisabled}
+                />
               </div>
             )}
           </Transition>
