@@ -4,12 +4,13 @@ import "@mantine/dropzone/styles.css";
 import "@mantine/carousel/styles.css";
 import "@mantine/notifications/styles.css";
 import "./index.css";
+import "react-toastify/dist/ReactToastify.css";
 import Layout from "./Layout";
 import { theme } from "./theme";
 import { MantineProvider } from "@mantine/core";
-import { Notifications } from "@mantine/notifications";
 import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ToastContainer } from "react-toastify";
 import LanguageProvider from "./contexts/LanguageContext";
 import AuthProvider from "./contexts/AuthContext";
 import DialogProvider from "./contexts/DialogContext";
@@ -29,7 +30,7 @@ export default function App() {
                 <WindowSizeProvider>
                   <CustomModalProvider>
                     <Layout />
-                    <Notifications position="top-center" />
+                    <ToastContainer limit={3} />
                   </CustomModalProvider>
                 </WindowSizeProvider>
               </LanguageProvider>

@@ -7,7 +7,7 @@ export interface AuthContextProps {
   user: UserProps | null;
   setUser: (e: any) => void;
   registerUser: (e: any) => void;
-  loginUser: (e: any) => void;
+  loginUser: (userData: {}) => void;
   logoutUser: () => void;
   setAuthTokens: (e: any) => void;
   authTokens: {

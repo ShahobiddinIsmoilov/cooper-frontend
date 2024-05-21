@@ -3,11 +3,9 @@ import { ReactNode, createContext, useContext, useState } from "react";
 interface DialogProps {
   isDialogOpen: boolean;
   dialogContent: ReactNode;
-  withCloseButton: boolean;
   openDialog: () => void;
   closeDialog: () => void;
   setDialogContent: (e: ReactNode) => void;
-  setWithCloseButton: (e: boolean) => void;
 }
 
 const DialogContext = createContext<DialogProps | null>(null);
@@ -22,7 +20,6 @@ interface DialogProviderProps {
 
 export default function DialogProvider({ children }: DialogProviderProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [withCloseButton, setWithCloseButton] = useState(false);
   const [dialogContent, setDialogContent] = useState<ReactNode | null>(null);
 
   function openDialog() {
@@ -36,11 +33,9 @@ export default function DialogProvider({ children }: DialogProviderProps) {
   let contextData = {
     isDialogOpen: isDialogOpen,
     dialogContent: dialogContent,
-    withCloseButton: withCloseButton,
     openDialog: openDialog,
     closeDialog: closeDialog,
     setDialogContent: setDialogContent,
-    setWithCloseButton: setWithCloseButton,
   };
 
   return (

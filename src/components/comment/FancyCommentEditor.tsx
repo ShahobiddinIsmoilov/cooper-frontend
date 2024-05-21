@@ -11,9 +11,6 @@ import { LuItalic } from "react-icons/lu";
 import { MdFormatUnderlined } from "react-icons/md";
 import { RiStrikethrough } from "react-icons/ri";
 import { FaCode } from "react-icons/fa6";
-import { MdFormatQuote } from "react-icons/md";
-import { PiListBulletsBold } from "react-icons/pi";
-import { GoListOrdered } from "react-icons/go";
 import { TbSubscript } from "react-icons/tb";
 import { TbSuperscript } from "react-icons/tb";
 import { LuLink2 } from "react-icons/lu";
@@ -85,7 +82,6 @@ export default function FancyCommentEditor({
             p={0}
             className="m-2 -mb-2 border-none bg-inherit"
           >
-            {/* <RichTextEditor.ControlsGroup className="flex-wrap"> */}
             <RichTextEditor.Bold icon={ImBold} style={fancyToolStyle} />
             <RichTextEditor.Italic icon={LuItalic} style={fancyToolStyle} />
             <RichTextEditor.Underline
@@ -108,19 +104,6 @@ export default function FancyCommentEditor({
             <RichTextEditor.H2 icon={RiFontSize2} style={fancyToolStyle} />
             <RichTextEditor.Link icon={LuLink2} style={fancyToolStyle} />
             <RichTextEditor.Unlink icon={LuLink2Off} style={fancyToolStyle} />
-            <RichTextEditor.Blockquote
-              icon={MdFormatQuote}
-              style={fancyToolStyle}
-            />
-            <RichTextEditor.BulletList
-              icon={PiListBulletsBold}
-              style={fancyToolStyle}
-            />
-            <RichTextEditor.OrderedList
-              icon={GoListOrdered}
-              style={fancyToolStyle}
-            />
-            {/* </RichTextEditor.ControlsGroup> */}
           </RichTextEditor.Toolbar>
         )}
         <RichTextEditor.Content bg={"dark"} />

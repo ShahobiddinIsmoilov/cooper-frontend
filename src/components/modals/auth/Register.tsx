@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Transition } from "@mantine/core";
 import { useAuthContext } from "../../../contexts/AuthContext";
 import { makeRequest } from "../../../services/makeRequest";
+import { Slide, toast } from "react-toastify";
 import ReceiveCodeForm from "./ReceiveCodeForm";
 import RegisterForm from "./RegisterForm";
 
@@ -20,7 +21,7 @@ export default function Register({
   setConfirmModalClose,
   handleSwitch,
 }: Props) {
-  const { registerUser } = useAuthContext();
+  const { registerUser, loginUser } = useAuthContext();
   const [registrationCode, setRegistrationCode] = useState("");
   const [codeError, setCodeError] = useState<string | undefined>();
   const [username, setUsername] = useState("");
@@ -54,7 +55,20 @@ export default function Register({
     }
   }
 
-  function handleRegister() {
+  const notifyRegisterSuccess = () =>
+    toast.success("Account created successfully", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Slide,
+    });
+
+  async function handleRegister() {
     setFormDisabled(true);
     const newUser = {
       username: username,
@@ -63,7 +77,14 @@ export default function Register({
       phone: phone,
     };
     try {
-      registerUser(newUser);
+      await registerUser(newUser);
+      const loginData = {
+        username: username,
+        password: password,
+      };
+      await loginUser(loginData);
+      setFormDisabled(false);
+      notifyRegisterSuccess();
     } catch {
       alert("Something went wrong. Please try again later");
     }

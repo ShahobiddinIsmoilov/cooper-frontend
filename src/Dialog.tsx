@@ -1,13 +1,11 @@
 import { Modal } from "@mantine/core";
-import { useWindowSize } from "./contexts/WindowSizeContext";
 import { useDisclosure } from "@mantine/hooks";
 import { useDialog } from "./contexts/DialogContext";
 
 export default function Dialog() {
-  const isSmall = useWindowSize().screenWidth < 768;
   const [_, { close }] = useDisclosure();
 
-  const { isDialogOpen, dialogContent, withCloseButton } = useDialog();
+  const { isDialogOpen, dialogContent } = useDialog();
 
   return (
     <Modal
@@ -15,12 +13,9 @@ export default function Dialog() {
       onClose={close}
       centered
       radius={12}
-      size="xl"
+      size="fit"
       shadow="xs"
-      closeOnClickOutside={false}
-      closeOnEscape={false}
-      withCloseButton={withCloseButton}
-      fullScreen={isSmall}
+      withCloseButton={false}
     >
       {dialogContent}
     </Modal>

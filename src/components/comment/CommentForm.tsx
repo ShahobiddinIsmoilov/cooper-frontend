@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Button, Stack } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
 import { useComments } from "../../contexts/CommentContext";
+import { useAuthContext } from "../../contexts/AuthContext";
+import { Slide, toast } from "react-toastify";
 import FancyCommentEditor from "./FancyCommentEditor";
 import useCredentials from "../../services/useCredentials";
 
@@ -25,7 +27,7 @@ export default function CommentForm({
   const [toolbarVisible, setToolbarVisible] = useState(false);
   const [formDisabled, setFormDisabled] = useState(false);
   const [clearForm, setClearForm] = useState(false);
-
+  const { user } = useAuthContext();
   const api = useCredentials();
 
   const mutatation = useMutation({
@@ -35,6 +37,19 @@ export default function CommentForm({
       handleCancel();
     },
   });
+
+  const notifyNotAuthenticated = () =>
+    toast.error("Firk bildirish uchun hisobingizga kiring", {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Slide,
+    });
 
   function handleCancel() {
     setControlsVisible(false);
@@ -46,15 +61,18 @@ export default function CommentForm({
 
   function handleSubmit(e: any) {
     e.preventDefault();
-    setFormDisabled(true);
-    const newComment = {
-      post: post,
-      community: community,
-      parent: parent === 0 ? null : parent,
-      body: HTMLComment,
-    };
-    console.log(newComment);
-    mutatation.mutate(newComment);
+    if (user) {
+      setFormDisabled(true);
+      const newComment = {
+        post: post,
+        community: community,
+        parent: parent === 0 ? null : parent,
+        body: HTMLComment,
+      };
+      mutatation.mutate(newComment);
+    } else {
+      notifyNotAuthenticated();
+    }
   }
 
   return (

@@ -2,6 +2,8 @@ import { Button } from "@mantine/core";
 import { useQueryClient } from "@tanstack/react-query";
 import { join_button } from "./lang_general";
 import { useLanguage } from "../../contexts/LanguageContext";
+import { useAuthContext } from "../../contexts/AuthContext";
+import { Slide, toast } from "react-toastify";
 import useCredentials from "../../services/useCredentials";
 
 interface Props {
@@ -18,16 +20,34 @@ export default function JoinButton({
   const api = useCredentials();
   const query = useQueryClient();
   const { language } = useLanguage();
+  const { user } = useAuthContext();
+
+  const notifyNotAuthenticated = () =>
+    toast.error("A'zo bo'lish uchun hisobingizga kiring", {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Slide,
+    });
 
   function handleClick() {
-    if (isJoined) {
-      api
-        .get(`/api/community/action/${community_id}/?action=leave`)
-        .then(() => refresh());
+    if (user) {
+      if (isJoined) {
+        api
+          .get(`/api/community/action/${community_id}/?action=leave`)
+          .then(() => refresh());
+      } else {
+        api
+          .get(`/api/community/action/${community_id}/?action=join`)
+          .then(() => refresh());
+      }
     } else {
-      api
-        .get(`/api/community/action/${community_id}/?action=join`)
-        .then(() => refresh());
+      notifyNotAuthenticated();
     }
   }
 

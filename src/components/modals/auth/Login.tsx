@@ -5,6 +5,8 @@ import { useAuthContext } from "../../../contexts/AuthContext";
 import { auth } from "../../header/lang_header";
 import { useLanguage } from "../../../contexts/LanguageContext";
 import { ImSpinner4 } from "react-icons/im";
+import { useDialog } from "../../../contexts/DialogContext";
+import { Slide, toast } from "react-toastify";
 
 interface Props {
   formDisabled: boolean;
@@ -21,10 +23,54 @@ export default function Login({
 }: Props) {
   const { language } = useLanguage();
   const { loginUser } = useAuthContext();
+  const { setDialogContent, openDialog, closeDialog } = useDialog();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState<string | undefined>();
   const safeToLogin = username.length > 0 && password.length > 0;
+  const authBot = import.meta.env.VITE_AUTH_BOT;
+
+  const notifyLoginSuccess = () =>
+    toast.success("Logged in successfully", {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Slide,
+    });
+
+  function openBot() {
+    window.open(authBot);
+  }
+
+  function handleForgotUsername() {
+    const dialogContent = (
+      <Stack className="text-lg">
+        To retrieve your username, open @MagicAuthBot on Telegram and click "My
+        username"
+        <div className="flex justify-center gap-4">
+          <Button
+            onClick={openBot}
+            className="rounded-full button-secondary w-32"
+          >
+            Open bot
+          </Button>
+          <Button
+            onClick={closeDialog}
+            className="rounded-full button-primary w-32"
+          >
+            OK
+          </Button>
+        </div>
+      </Stack>
+    );
+    setDialogContent(dialogContent);
+    openDialog();
+  }
 
   async function handleLogin() {
     setFormDisabled(true);
@@ -35,6 +81,7 @@ export default function Login({
     try {
       await loginUser(userData);
       setFormDisabled(false);
+      notifyLoginSuccess();
     } catch (error: any) {
       if (error.response.status === 401) {
         setLoginError("Incorrect username or password");
@@ -77,11 +124,7 @@ export default function Login({
       />
       <div className="flex justify-end -mt-4 mr-1">
         <button
-          onClick={() => {
-            setLoginError(
-              "How stupid do you have to be to forget a username??"
-            );
-          }}
+          onClick={handleForgotUsername}
           className="text-sm text-blue-400 hover:text-blue-300"
         >
           Forgot username?
@@ -101,9 +144,7 @@ export default function Login({
       />
       <div className="flex justify-end -mt-4 mr-1">
         <button
-          onClick={() => {
-            setLoginError("That's it. You lost access to your account forever");
-          }}
+          onClick={notifyLoginSuccess}
           className="text-sm text-blue-400 hover:text-blue-300"
         >
           Forgot password?

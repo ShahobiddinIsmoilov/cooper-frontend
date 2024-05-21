@@ -6,8 +6,6 @@ import {
   useState,
 } from "react";
 import { jwtDecode } from "jwt-decode";
-import { FaRegCheckCircle } from "react-icons/fa";
-import { notifications } from "@mantine/notifications";
 import { AuthContextProps } from "../interfaces/authContextProps";
 import { makeRequest } from "../services/makeRequest";
 
@@ -46,19 +44,6 @@ function AuthProvider({ children }: AuthProviderProps) {
         method: "post",
         data: userData,
       });
-      const loginData = {
-        username: userData["username"],
-        password: userData["password"],
-      };
-      notifications.show({
-        message: "Account created succesfully",
-        icon: <FaRegCheckCircle color="white" />,
-        style: {
-          backgroundColor: "green",
-        },
-        autoClose: 5000,
-      });
-      login(loginData);
     } catch (error: any) {
       return error;
     }

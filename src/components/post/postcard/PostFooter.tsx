@@ -7,6 +7,8 @@ import { ContentOptions } from "../../general/ContentOptions";
 import { PostProps } from "../../../interfaces/postProps";
 import { postcard } from "../lang_post";
 import { useLanguage } from "../../../contexts/LanguageContext";
+import { useAuthContext } from "../../../contexts/AuthContext";
+import { Slide, toast } from "react-toastify";
 import useCredentials from "../../../services/useCredentials";
 
 export interface Props {
@@ -15,30 +17,52 @@ export interface Props {
 
 export default function PostFooter({ post }: Props) {
   const { screenWidth } = useWindowSize();
+  const { language } = useLanguage();
+  const { user } = useAuthContext();
   const [upvoted, setUpvoted] = useState(post.upvoted);
   const [downvoted, setDownvoted] = useState(post.downvoted);
   const [votes, setVotes] = useState(post.votes);
-  const { language } = useLanguage();
   const api = useCredentials();
 
-  function handleUpvote() {
-    setVotes((votes) => (downvoted ? votes + 2 : votes + 1));
-    setUpvoted(true);
-    setDownvoted(false);
-    api.post("/api/post/action/", {
-      action: "upvote",
-      post: post.id,
+  const notifyNotAuthenticated = () =>
+    toast.error("Postga reaksiya bildirish uchun hisobingizga kiring", {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Slide,
     });
+
+  function handleUpvote() {
+    if (user) {
+      setVotes((votes) => (downvoted ? votes + 2 : votes + 1));
+      setUpvoted(true);
+      setDownvoted(false);
+      api.post("/api/post/action/", {
+        action: "upvote",
+        post: post.id,
+      });
+    } else {
+      notifyNotAuthenticated();
+    }
   }
 
   function handleDownvote() {
-    setVotes((votes) => (upvoted ? votes - 2 : votes - 1));
-    setDownvoted(true);
-    setUpvoted(false);
-    api.post("/api/post/action/", {
-      action: "downvote",
-      post: post.id,
-    });
+    if (user) {
+      setVotes((votes) => (upvoted ? votes - 2 : votes - 1));
+      setDownvoted(true);
+      setUpvoted(false);
+      api.post("/api/post/action/", {
+        action: "downvote",
+        post: post.id,
+      });
+    } else {
+      notifyNotAuthenticated();
+    }
   }
 
   return (

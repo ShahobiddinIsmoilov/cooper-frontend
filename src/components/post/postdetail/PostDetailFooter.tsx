@@ -4,6 +4,8 @@ import { useWindowSize } from "../../../contexts/WindowSizeContext";
 import { useState } from "react";
 import { ContentOptions } from "../../general/ContentOptions";
 import { PostProps } from "../../../interfaces/postProps";
+import { Slide, toast } from "react-toastify";
+import { useAuthContext } from "../../../contexts/AuthContext";
 import useCredentials from "../../../services/useCredentials";
 
 interface Props {
@@ -16,32 +18,54 @@ export default function PostDetailFooter({ post }: Props) {
   const [downvoted, setDownvoted] = useState(post.downvoted);
   const [upvoteCount, setUpvoteCount] = useState(post.upvotes);
   const [downvoteCount, setDownvoteCount] = useState(post.downvotes);
+  const { user } = useAuthContext();
   const api = useCredentials();
 
-  function handleUpvote() {
-    setUpvoteCount((prevUpvoteCount) => prevUpvoteCount + 1);
-    setDownvoteCount((prevDownvoteCount) =>
-      downvoted ? prevDownvoteCount - 1 : prevDownvoteCount
-    );
-    setUpvoted(true);
-    setDownvoted(false);
-    api.post("/api/post/action/", {
-      action: "upvote",
-      post: post.id,
+  const notifyNotAuthenticated = () =>
+    toast.error("Postga reaksiya bildirish uchun hisobingizga kiring", {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Slide,
     });
+
+  function handleUpvote() {
+    if (user) {
+      setUpvoteCount((prevUpvoteCount) => prevUpvoteCount + 1);
+      setDownvoteCount((prevDownvoteCount) =>
+        downvoted ? prevDownvoteCount - 1 : prevDownvoteCount
+      );
+      setUpvoted(true);
+      setDownvoted(false);
+      api.post("/api/post/action/", {
+        action: "upvote",
+        post: post.id,
+      });
+    } else {
+      notifyNotAuthenticated();
+    }
   }
 
   function handleDownvote() {
-    setDownvoteCount((prevDownvoteCount) => prevDownvoteCount + 1);
-    setUpvoteCount((prevUpvoteCount) =>
-      upvoted ? prevUpvoteCount - 1 : prevUpvoteCount
-    );
-    setDownvoted(true);
-    setUpvoted(false);
-    api.post("/api/post/action/", {
-      action: "downvote",
-      post: post.id,
-    });
+    if (user) {
+      setDownvoteCount((prevDownvoteCount) => prevDownvoteCount + 1);
+      setUpvoteCount((prevUpvoteCount) =>
+        upvoted ? prevUpvoteCount - 1 : prevUpvoteCount
+      );
+      setDownvoted(true);
+      setUpvoted(false);
+      api.post("/api/post/action/", {
+        action: "downvote",
+        post: post.id,
+      });
+    } else {
+      notifyNotAuthenticated();
+    }
   }
 
   return (

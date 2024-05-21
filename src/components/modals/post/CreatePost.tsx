@@ -10,6 +10,8 @@ import { FileWithPath } from "@mantine/dropzone";
 import { post } from "../lang_modals";
 import { useLanguage } from "../../../contexts/LanguageContext";
 import { useWindowSize } from "../../../contexts/WindowSizeContext";
+import { useAuthContext } from "../../../contexts/AuthContext";
+import { Slide, toast } from "react-toastify";
 import useCredentials from "../../../services/useCredentials";
 import CreatePostForm from "./CreatePostForm";
 
@@ -23,6 +25,7 @@ export default function CreatePost(props: Props) {
   const api = useCredentials();
   const queryClient = useQueryClient();
   const { language } = useLanguage();
+  const { user } = useAuthContext();
   const navigate = useNavigate();
 
   const mutation = useMutation({
@@ -67,8 +70,25 @@ export default function CreatePost(props: Props) {
     mutation.mutate(newPost);
   }
 
+  const notifyNotAuthenticated = () =>
+    toast.error("Post yaratish uchun hisobingizga kiring", {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Slide,
+    });
+
   function openForm() {
-    open();
+    if (user) {
+      open();
+    } else {
+      notifyNotAuthenticated();
+    }
   }
 
   // close modal and reset form values

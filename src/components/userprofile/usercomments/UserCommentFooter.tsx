@@ -1,6 +1,8 @@
 import { BiDislike, BiLike, BiSolidLike, BiSolidDislike } from "react-icons/bi";
 import { CommentProps } from "../../../interfaces/commentProps";
 import { useState } from "react";
+import { Slide, toast } from "react-toastify";
+import { useAuthContext } from "../../../contexts/AuthContext";
 import useCredentials from "../../../services/useCredentials";
 
 interface CommentCardProps {
@@ -11,26 +13,48 @@ export default function CommentFooter({ comment }: CommentCardProps) {
   const [upvoted, setUpvoted] = useState(comment.upvoted);
   const [downvoted, setDownvoted] = useState(comment.downvoted);
   const [votes, setVotes] = useState(comment.votes);
+  const { user } = useAuthContext();
   const api = useCredentials();
 
-  function handleUpvote() {
-    setVotes((votes) => (downvoted ? votes + 2 : votes + 1));
-    setUpvoted(true);
-    setDownvoted(false);
-    api.post("/api/comment/action/", {
-      action: "upvote",
-      comment: comment.id,
+  const notifyNotAuthenticated = () =>
+    toast.error("Fikrga reaksiya bildirish uchun hisobingizga kiring", {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Slide,
     });
+
+  function handleUpvote() {
+    if (user) {
+      setVotes((votes) => (downvoted ? votes + 2 : votes + 1));
+      setUpvoted(true);
+      setDownvoted(false);
+      api.post("/api/comment/action/", {
+        action: "upvote",
+        comment: comment.id,
+      });
+    } else {
+      notifyNotAuthenticated();
+    }
   }
 
   function handleDownvote() {
-    setVotes((votes) => (upvoted ? votes - 2 : votes - 1));
-    setDownvoted(true);
-    setUpvoted(false);
-    api.post("/api/comment/action/", {
-      action: "downvote",
-      comment: comment.id,
-    });
+    if (user) {
+      setVotes((votes) => (upvoted ? votes - 2 : votes - 1));
+      setDownvoted(true);
+      setUpvoted(false);
+      api.post("/api/comment/action/", {
+        action: "downvote",
+        comment: comment.id,
+      });
+    } else {
+      notifyNotAuthenticated();
+    }
   }
 
   return (
