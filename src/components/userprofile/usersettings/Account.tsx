@@ -121,6 +121,7 @@ export default function AccountSettings(props: Props) {
               id="phone_number"
               name="phone_number"
               placeholder="+998 (99) 999-99-99"
+              disabled
               className="w-full py-3 px-4 text-lg rounded-xl bg-dark-850 outline-none placeholder-white placeholder-opacity-25 border border-line"
             />
           </div>

@@ -64,6 +64,18 @@ function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
+  async function resetPassword(userData: {}) {
+    try {
+      await makeRequest("/api/user/reset-password/", {
+        method: "put",
+        data: userData,
+      });
+      return Promise.resolve();
+    } catch (error: any) {
+      return Promise.reject(error);
+    }
+  }
+
   function logout() {
     setAuthTokens(null);
     setUser(null);
@@ -75,6 +87,7 @@ function AuthProvider({ children }: AuthProviderProps) {
     authTokens: authTokens,
     registerUser: register,
     loginUser: login,
+    resetPassword: resetPassword,
     logoutUser: logout,
     setAuthTokens: setAuthTokens,
     setUser: setUser,

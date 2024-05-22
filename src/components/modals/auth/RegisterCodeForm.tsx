@@ -11,18 +11,18 @@ interface Props {
   setRegistrationCode: (value: string) => void;
   setCodeError: (value: string | undefined) => void;
   handleNext: () => void;
-  handleSwitch: () => void;
   closeModal: () => void;
+  setForm: (value: "login" | "register" | "reset") => void;
 }
 
-export default function ReceiveCodeForm({
+export default function RegisterCodeForm({
   registrationCode,
   codeError,
   formDisabled,
   setCodeError,
   setRegistrationCode,
   handleNext,
-  handleSwitch,
+  setForm,
   closeModal,
 }: Props) {
   const { language } = useLanguage();
@@ -106,7 +106,7 @@ export default function ReceiveCodeForm({
         {auth.already_registered[language]}{" "}
         <button
           disabled={formDisabled}
-          onClick={handleSwitch}
+          onClick={() => setForm("login")}
           className={`${
             formDisabled ? "text-white/25" : "text-blue-400 hover:text-blue-300"
           }`}

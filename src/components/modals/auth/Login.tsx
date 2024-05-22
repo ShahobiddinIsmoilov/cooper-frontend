@@ -11,14 +11,14 @@ import { Slide, toast } from "react-toastify";
 interface Props {
   formDisabled: boolean;
   setFormDisabled: (value: boolean) => void;
-  handleSwitch: () => void;
   closeModal: () => void;
+  setForm: (value: "login" | "register" | "reset") => void;
 }
 
 export default function Login({
   formDisabled,
   setFormDisabled,
-  handleSwitch,
+  setForm,
   closeModal,
 }: Props) {
   const { language } = useLanguage();
@@ -144,7 +144,7 @@ export default function Login({
       />
       <div className="flex justify-end -mt-4 mr-1">
         <button
-          onClick={notifyLoginSuccess}
+          onClick={() => setForm("reset")}
           className="text-sm text-blue-400 hover:text-blue-300"
         >
           Forgot password?
@@ -170,7 +170,7 @@ export default function Login({
       <div className="text-center">
         {auth.not_registered[language]}{" "}
         <button
-          onClick={handleSwitch}
+          onClick={() => setForm("register")}
           disabled={formDisabled}
           className={
             formDisabled ? "text-white/25" : "text-blue-400 hover:text-blue-300"

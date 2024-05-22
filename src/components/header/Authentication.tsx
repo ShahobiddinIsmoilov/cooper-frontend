@@ -8,6 +8,7 @@ import { useState } from "react";
 import Register from "../modals/auth/Register";
 import Login from "../modals/auth/Login";
 import Dashboard from "./Dashboard";
+import Reset from "../modals/auth/Reset";
 
 export function Authentication() {
   const user = useAuthContext().user;
@@ -17,20 +18,16 @@ export function Authentication() {
   const { language } = useLanguage();
   const [opened, { open, close }] = useDisclosure();
   const [confirmModalClose, setConfirmModalClose] = useState(false);
-  const [showLogin, setShowLogin] = useState(false);
+  const [form, setForm] = useState<"login" | "register" | "reset">("login");
   const [formDisabled, setFormDisabled] = useState(false);
 
-  function handleSwitch() {
-    setShowLogin(!showLogin);
-  }
-
   function openRegisterForm() {
-    setShowLogin(false);
+    setForm("register");
     open();
   }
 
   function openLoginForm() {
-    setShowLogin(true);
+    setForm("login");
     open();
   }
 
@@ -57,7 +54,7 @@ export function Authentication() {
       >
         <div className="h-screen xs:h-fit">
           <Transition
-            mounted={showLogin}
+            mounted={form === "login"}
             transition={"fade-down"}
             duration={200}
             timingFunction="ease"
@@ -66,31 +63,56 @@ export function Authentication() {
             {(transitionStyle) => (
               <div
                 style={{ ...transitionStyle, zIndex: 1 }}
-                hidden={!showLogin}
+                hidden={form !== "login"}
               >
                 <Login
-                  handleSwitch={handleSwitch}
-                  closeModal={closeModal}
                   formDisabled={formDisabled}
                   setFormDisabled={setFormDisabled}
+                  closeModal={closeModal}
+                  setForm={setForm}
                 />
               </div>
             )}
           </Transition>
           <Transition
-            mounted={!showLogin}
+            mounted={form === "register"}
             transition={"fade-up"}
             duration={200}
             timingFunction="ease"
             keepMounted
           >
             {(transitionStyle) => (
-              <div style={{ ...transitionStyle, zIndex: 1 }} hidden={showLogin}>
+              <div
+                style={{ ...transitionStyle, zIndex: 1 }}
+                hidden={form !== "register"}
+              >
                 <Register
                   formDisabled={formDisabled}
                   setFormDisabled={setFormDisabled}
-                  handleSwitch={handleSwitch}
+                  setForm={setForm}
                   setConfirmModalClose={setConfirmModalClose}
+                  closeModal={closeModal}
+                />
+              </div>
+            )}
+          </Transition>
+          <Transition
+            mounted={form === "reset"}
+            transition={"fade-up"}
+            duration={200}
+            timingFunction="ease"
+            keepMounted
+          >
+            {(transitionStyle) => (
+              <div
+                style={{ ...transitionStyle, zIndex: 1 }}
+                hidden={form !== "reset"}
+              >
+                <Reset
+                  formDisabled={formDisabled}
+                  setFormDisabled={setFormDisabled}
+                  setConfirmModalClose={setConfirmModalClose}
+                  setForm={setForm}
                   closeModal={closeModal}
                 />
               </div>

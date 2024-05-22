@@ -128,13 +128,13 @@ export default function Username({
 const tooltip = {
   uz: `O'zingiz uchun foydalanuvchi nomi tanlang. Bunda siz lotin
       katta (A-Z) va kichik (a-z) harflaridan, raqamlardan (0-9), chiziqchadan (-)
-      va tagchiziqdan (_) foydalanishingiz mumkin. Foydalanuvchi nomini faqat 30 kunda
-      bir marta o'zgartirish mumkin, shuning uchun yaxshilab o'ylab keyin tanlang.
+      va tagchiziqdan (_) foydalanishingiz mumkin. Foydalanuvchi nomini keyinchalik
+      o'zgartirib bo'lmaydi, shuning uchun yaxshilab o'ylab keyin tanlang.
       Nom uzunligi eng kam miqdori 4 ta, eng ko'pi 24 ta belgi bo'la oladi.`,
 
   en: `Choose a unique username. You are allowed to use
       uppercase (A-Z) and lowercase (a-z) letters, digits (0-9), hyphens (-)
-      and underscores (_). You can change your username only once in 30 days,
+      and underscores (_). You cannot change your username after creating your account,
       so choose wisely. Minimum length allowed is 4, maximum is 24 characters.`,
 
   ru: `Choose a unique username. You are allowed to use

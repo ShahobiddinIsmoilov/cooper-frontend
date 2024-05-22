@@ -1,10 +1,8 @@
-import { Link } from "react-router-dom";
 import { IoClose } from "react-icons/io5";
 import { useDisclosure } from "@mantine/hooks";
 import { Button, Group, Modal, Stack } from "@mantine/core";
 import { useState } from "react";
 import { ImSpinner4 } from "react-icons/im";
-import Username from "./Username";
 import Password from "./Password";
 import PasswordConfirm from "./PasswordConfirm";
 
@@ -13,32 +11,28 @@ interface Props {
   password: string;
   passwordConfirm: string;
   formDisabled: boolean;
-  setUsername: (value: string) => void;
   setPassword: (value: string) => void;
   setPasswordConfirm: (value: string) => void;
   setConfirmModalClose: (value: boolean) => void;
   closeModal: () => void;
-  handleRegister: () => void;
+  handleReset: () => void;
 }
 
-export default function RegisterForm({
+export default function ResetForm({
   username,
   password,
   passwordConfirm,
   formDisabled,
-  setUsername,
   setPassword,
   setPasswordConfirm,
   setConfirmModalClose,
   closeModal,
-  handleRegister,
+  handleReset,
 }: Props) {
   const [opened, { open, close }] = useDisclosure();
-  const [usernameSuccess, setUsernameSuccess] = useState(false);
   const [passwordSuccess, setPasswordSuccess] = useState(false);
   const [passwordConfirmSuccess, setPasswordConfirmSuccess] = useState(false);
-  const safeToRegister =
-    usernameSuccess && passwordSuccess && passwordConfirmSuccess;
+  const safeToRegister = passwordSuccess && passwordConfirmSuccess;
 
   function handleClose() {
     close();
@@ -50,7 +44,7 @@ export default function RegisterForm({
     <>
       <Stack mx={8} mb={4}>
         <div className="flex justify-between items-center">
-          <span className="text-2xl font-bold">Create account</span>
+          <span className="text-2xl font-bold">New password</span>
           <button
             disabled={formDisabled}
             onClick={open}
@@ -64,14 +58,9 @@ export default function RegisterForm({
           </button>
         </div>
         <span className="text-lg ml-1">
-          All good! Now you can create your account.
+          Hello, <span className="text-orange-400 font-bold">{username}</span>.
+          Create a new, secure password to restore access to your account.
         </span>
-        <Username
-          password={password}
-          setUsername={setUsername}
-          setUsernameSuccess={setUsernameSuccess}
-          formDisabled={formDisabled}
-        />
         <Password
           username={username}
           setPassword={setPassword}
@@ -87,7 +76,7 @@ export default function RegisterForm({
         />
         <Button
           size="lg"
-          onClick={handleRegister}
+          onClick={handleReset}
           disabled={!safeToRegister || formDisabled}
           radius={12}
           className={
@@ -99,21 +88,9 @@ export default function RegisterForm({
           {formDisabled ? (
             <ImSpinner4 size={20} className="animate-spin" />
           ) : (
-            "Create account and log in"
+            "Parolni tiklash va hisobga kirish"
           )}
         </Button>
-        <span className="text-sm text-center">
-          By creating your Diagonal.uz account, you agree to our{" "}
-          <Link
-            to="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block text-blue-400"
-          >
-            terms and conditions
-          </Link>
-          .
-        </span>
       </Stack>
       <Modal
         size="lg"
@@ -127,8 +104,7 @@ export default function RegisterForm({
       >
         <Stack className="items-center">
           <span className="text-lg">
-            Are you sure you want to exit the registration process? Your
-            information will not be saved.
+            Are you sure you want to quit the process?
           </span>
           <Group pt={12}>
             <Button

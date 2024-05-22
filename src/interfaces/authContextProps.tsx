@@ -8,6 +8,7 @@ export interface AuthContextProps {
   setUser: (e: any) => void;
   registerUser: (e: any) => void;
   loginUser: (userData: {}) => void;
+  resetPassword: (userData: {}) => void;
   logoutUser: () => void;
   setAuthTokens: (e: any) => void;
   authTokens: {

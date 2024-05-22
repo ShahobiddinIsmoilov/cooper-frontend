@@ -3,8 +3,8 @@ import { Transition } from "@mantine/core";
 import { useAuthContext } from "../../../contexts/AuthContext";
 import { makeRequest } from "../../../services/makeRequest";
 import { Slide, toast } from "react-toastify";
-import RegisterCodeForm from "./RegisterCodeForm";
-import RegisterForm from "./RegisterForm";
+import ResetCodeForm from "./ResetCodeForm";
+import ResetForm from "./ResetForm";
 
 interface Props {
   formDisabled: boolean;
@@ -14,43 +14,42 @@ interface Props {
   setForm: (value: "login" | "register" | "reset") => void;
 }
 
-export default function Register({
+export default function Reset({
   formDisabled,
   setFormDisabled,
   closeModal,
   setConfirmModalClose,
   setForm,
 }: Props) {
-  const { registerUser, loginUser } = useAuthContext();
-  const [registrationCode, setRegistrationCode] = useState("");
+  const { resetPassword, loginUser } = useAuthContext();
+  const [resetCode, setResetCode] = useState("");
   const [codeError, setCodeError] = useState<string | undefined>();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [phone, setPhone] = useState("");
-  const [registerFormOpened, setRegisterFormOpened] = useState(false);
+  const [restoreFormOpened, setRestoreFormOpened] = useState(false);
 
   async function handleNext() {
     setFormDisabled(true);
     try {
       const response = await makeRequest(`/api/user/check-code/`, {
         method: "post",
-        data: { code: registrationCode, type: "register" },
+        data: { code: resetCode, type: "reset" },
       });
       if (response.data["status"] === "ERROR") {
         if (response.data["message"] === "Invalid code") {
           setCodeError("Invalid code entered");
         } else if (response.data["message"] === "Expired code") {
           setCodeError(
-            "This code has expired. Please get a new registration code"
+            "This code has expired. Please get a new password reset code"
           );
-        } else if (response.data["message"] === "Already registered") {
-          setCodeError("The phone number is already in use");
+        } else if (response.data["message"] === "Not registered") {
+          setCodeError("There is no account with the given phone number");
         }
       } else {
-        setRegisterFormOpened(true);
+        setRestoreFormOpened(true);
         setConfirmModalClose(true);
-        setPhone(response.data["phone"]);
+        setUsername(response.data["username"]);
       }
     } catch {
       alert("Something went wrong. Please try again later");
@@ -59,8 +58,8 @@ export default function Register({
     }
   }
 
-  const notifyRegisterSuccess = () =>
-    toast.success("Account created successfully", {
+  const notifyRestoreSuccess = () =>
+    toast.success("Password was changed successfully", {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -72,23 +71,21 @@ export default function Register({
       transition: Slide,
     });
 
-  async function handleRegister() {
+  async function handleReset() {
     setFormDisabled(true);
-    const newUser = {
+    const userData = {
       username: username,
-      display_name: username,
       password: password,
-      phone: phone,
     };
     try {
-      await registerUser(newUser);
+      await resetPassword(userData);
       const loginData = {
         username: username,
         password: password,
       };
       await loginUser(loginData);
       setFormDisabled(false);
-      notifyRegisterSuccess();
+      notifyRestoreSuccess();
     } catch {
       alert("Something went wrong. Please try again later");
     }
@@ -96,20 +93,20 @@ export default function Register({
 
   return (
     <div>
-      <div hidden={registerFormOpened}>
-        <RegisterCodeForm
-          registrationCode={registrationCode}
+      <div hidden={restoreFormOpened}>
+        <ResetCodeForm
+          restoreCode={resetCode}
           codeError={codeError}
           formDisabled={formDisabled}
-          setRegistrationCode={setRegistrationCode}
-          setCodeError={setCodeError}
           setForm={setForm}
+          setRestoreCode={setResetCode}
+          setCodeError={setCodeError}
           handleNext={handleNext}
           closeModal={closeModal}
         />
       </div>
       <Transition
-        mounted={registerFormOpened}
+        mounted={restoreFormOpened}
         transition={"slide-left"}
         duration={200}
         timingFunction="ease"
@@ -121,19 +118,18 @@ export default function Register({
               ...transitionStyle,
               zIndex: 1,
             }}
-            hidden={!registerFormOpened}
+            hidden={!restoreFormOpened}
           >
-            <RegisterForm
+            <ResetForm
               username={username}
               password={password}
               passwordConfirm={passwordConfirm}
               formDisabled={formDisabled}
-              setUsername={setUsername}
               setPassword={setPassword}
               setPasswordConfirm={setPasswordConfirm}
               setConfirmModalClose={setConfirmModalClose}
               closeModal={closeModal}
-              handleRegister={handleRegister}
+              handleReset={handleReset}
             />
           </div>
         )}
