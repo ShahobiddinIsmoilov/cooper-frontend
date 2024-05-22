@@ -42,6 +42,10 @@ export default function Register({
           setCodeError("Invalid code entered");
         } else if (response.data["message"] === "Expired code") {
           setCodeError("This code has expired. Please get a new code");
+        } else if (
+          response.data["message"] === "Phone number registered before"
+        ) {
+          setCodeError("The phone number is already in use");
         }
       } else {
         setRegisterFormOpened(true);
