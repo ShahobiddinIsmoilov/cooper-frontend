@@ -4,6 +4,9 @@ import { useWindowSize } from "../../../contexts/WindowSizeContext";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { CommunityDetailProps } from "../../../interfaces/communityDetailProps";
 import { FileWithPath } from "@mantine/dropzone";
+import { Slide, toast } from "react-toastify";
+import { ImSpinner4 } from "react-icons/im";
+import { useNavigate } from "react-router-dom";
 import ManageVisuals from "./ManageVisuals";
 import ManageDetails from "./ManageDetails";
 import useCredentials from "../../../services/useCredentials";
@@ -16,6 +19,20 @@ export default function CommunitySettings({ community }: Props) {
   const isExtraSmall = useWindowSize().screenWidth < 576;
   const api = useCredentials();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  const notifyCommunitySettingsSavedSuccess = () =>
+    toast.success("Changes were saved successfully", {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Slide,
+    });
 
   const mutation = useMutation({
     mutationFn: (newSettings: {}) =>
@@ -24,11 +41,15 @@ export default function CommunitySettings({ community }: Props) {
       queryClient.invalidateQueries({
         queryKey: [`manage-${community.link}`],
       });
+      notifyCommunitySettingsSavedSuccess();
+      setFormDisabled(false);
+      navigate(`/c/${community.link}`);
     },
   });
 
   const [newAvatar, setNewAvatar] = useState<FileWithPath | undefined>();
   const [newBanner, setNewBanner] = useState<FileWithPath | undefined>();
+  const [formDisabled, setFormDisabled] = useState(false);
   const [newAvatarUrl, setNewAvatarUrl] = useState("");
   const [newBannerUrl, setNewBannerUrl] = useState("");
   const [name, setName] = useState(community.name);
@@ -64,6 +85,7 @@ export default function CommunitySettings({ community }: Props) {
   }
 
   function saveChanges() {
+    setFormDisabled(true);
     const newSettings = {
       avatar: newAvatar,
       banner: newBanner,
@@ -77,15 +99,14 @@ export default function CommunitySettings({ community }: Props) {
     <Stack gap={8}>
       <div className="gap-2 flex justify-end items-center mb-4">
         <Button
+          variant="default"
+          radius={12}
           size={isExtraSmall ? "sm" : "md"}
           onClick={(e) => {
             e.preventDefault();
             discardChanges();
           }}
-          disabled={itemChanged() ? false : true}
-          className={`rounded-xl ${
-            itemChanged() ? "button-secondary" : "button-secondary-disabled"
-          }`}
+          disabled={!itemChanged() || formDisabled}
         >
           Bekor qilish
         </Button>
@@ -95,12 +116,15 @@ export default function CommunitySettings({ community }: Props) {
             e.preventDefault();
             saveChanges();
           }}
-          disabled={safeToSave() ? false : true}
+          disabled={!safeToSave() || formDisabled}
           className={`rounded-xl ${
-            safeToSave() ? "button-primary" : "button-primary-disabled"
+            safeToSave() && !formDisabled
+              ? "button-primary"
+              : "button-primary-disabled"
           }`}
         >
           O'zgarishlarni saqlash
+          {formDisabled && <ImSpinner4 className="ml-2 animate-spin" />}
         </Button>
       </div>
       <ManageVisuals

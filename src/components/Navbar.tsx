@@ -55,7 +55,7 @@ export default function Navbar({ closeDrawer }: Props) {
               <>
                 <CustomLine />
                 <p className="flex justify-center">
-                  <CreateCommunityButton />
+                  <CreateCommunityButton closeDrawer={closeDrawer} />
                 </p>
               </>
             )}

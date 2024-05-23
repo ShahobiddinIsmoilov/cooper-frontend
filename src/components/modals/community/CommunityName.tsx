@@ -17,18 +17,23 @@ export default function CommunityName({
   const { language } = useLanguage();
   const isSmall = useWindowSize().screenWidth < 768;
 
+  function handleSpaces(s: string) {
+    s = s.replace(/\s\s+/g, " ");
+    return s;
+  }
+
   return (
     <div>
       <Textarea
         onKeyDown={(e) => {
           e.key === "Enter" && e.preventDefault();
         }}
-        onChange={(e) => setName(e.target.value)}
+        onChange={(e) => setName(handleSpaces(e.target.value))}
         readOnly={formDisabled}
         variant="unstyled"
         maxLength={32}
         bg={"dark"}
-        data-autofocus
+        value={name}
         autosize
         placeholder={community.name[language]}
         size={isSmall ? "md" : "lg"}

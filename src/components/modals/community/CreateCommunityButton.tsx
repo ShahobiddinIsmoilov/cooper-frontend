@@ -8,15 +8,35 @@ import { useLanguage } from "../../../contexts/LanguageContext";
 import { FaPlus } from "react-icons/fa6";
 import { community } from "../lang_modals";
 import { useWindowSize } from "../../../contexts/WindowSizeContext";
+import { Slide, toast } from "react-toastify";
+import { ImSpinner4 } from "react-icons/im";
 import useCredentials from "../../../services/useCredentials";
 import CommunityDescription from "./CommunityDescription";
 import CommunityName from "./CommunityName";
+import CommunityUrl from "./CommunityUrl";
 
-export default function CreateCommunityForm() {
+interface Props {
+  closeDrawer?: () => void;
+}
+
+export default function CreateCommunityForm({ closeDrawer }: Props) {
   const api = useCredentials();
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
   const { language } = useLanguage();
+  const navigate = useNavigate();
+
+  const notifyCommunityCreationSuccess = () =>
+    toast.success("Community created successfully", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Slide,
+    });
 
   const mutation = useMutation({
     mutationFn: (newCommunity: {}) =>
@@ -28,27 +48,30 @@ export default function CreateCommunityForm() {
       closeModal();
       setFormDisabled(false);
       navigate(`/c/${response.data}`);
+      notifyCommunityCreationSuccess();
     },
   });
 
-  // modal state
-  const [opened, { open, close }] = useDisclosure();
-
   // initial values of form fields
+  const [opened, { open, close }] = useDisclosure();
   const [name, setName] = useState("");
-  // const [link, setLink] = useState("");
+  const [link, setLink] = useState("");
+  const [linkSuccess, setLinkSuccess] = useState(false);
+  const [error, setError] = useState<string | undefined>();
   const [description, setDescription] = useState("");
   const [formDisabled, setFormDisabled] = useState(false);
+  const isSafeToProceed =
+    name.trim().length > 0 && linkSuccess && description.trim().length > 0;
   const isSmall = useWindowSize().screenWidth < 768;
 
   async function handleSubmit(e: any) {
     e.preventDefault();
+    setFormDisabled(true);
     const newCommunity = {
-      name: name,
-      link: name,
+      name: name.trim(),
+      link: link,
       description: description,
     };
-    setFormDisabled(true);
     mutation.mutate(newCommunity);
   }
 
@@ -56,7 +79,7 @@ export default function CreateCommunityForm() {
   function closeModal() {
     close();
     setName("");
-    // setLink("");
+    setLink("");
     setDescription("");
     setFormDisabled(false);
   }
@@ -95,28 +118,51 @@ export default function CreateCommunityForm() {
               setDescription={setDescription}
               formDisabled={formDisabled}
             />
+            <CommunityUrl
+              link={link}
+              setLink={setLink}
+              formDisabled={formDisabled}
+              error={error}
+              setError={setError}
+              setLinkSuccess={setLinkSuccess}
+            />
             <Group justify="flex-end">
               <Button
                 variant="default"
                 onClick={closeModal}
+                disabled={formDisabled}
                 size={isSmall ? "sm" : "md"}
-                className="rounded-xl"
+                radius={12}
               >
                 {community.cancel[language]}
               </Button>
               <Button
+                w={120}
                 type="submit"
+                disabled={!isSafeToProceed || formDisabled}
                 size={isSmall ? "sm" : "md"}
-                className="bg-cyan-700 hover:bg-cyan-600 rounded-xl"
+                radius={12}
+                className={
+                  isSafeToProceed && !formDisabled
+                    ? "button-primary"
+                    : "button-primary-disabled"
+                }
               >
-                {community.create[language]}
+                {formDisabled ? (
+                  <ImSpinner4 size={20} className="animate-spin" />
+                ) : (
+                  community.create[language]
+                )}
               </Button>
             </Group>
           </Stack>
         </form>
       </Modal>
       <button
-        onClick={open}
+        onClick={() => {
+          open();
+          closeDrawer && closeDrawer();
+        }}
         className="flex items-center gap-1 text-white rounded-full px-4 py-2 border text-base hover:bg-dark-700"
       >
         <FaPlus />

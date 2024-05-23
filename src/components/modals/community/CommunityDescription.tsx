@@ -28,7 +28,6 @@ export default function CommunityDescription({
         variant="unstyled"
         maxLength={500}
         bg={"dark"}
-        data-autofocus
         autosize
         placeholder={community.description[language]}
         size={isSmall ? "md" : "lg"}
