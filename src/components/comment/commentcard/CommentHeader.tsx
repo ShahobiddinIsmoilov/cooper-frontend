@@ -1,7 +1,9 @@
 import { CiSquarePlus, CiSquareMinus } from "react-icons/ci";
 import { CommentProps } from "../../../interfaces/commentProps";
+import { BsDot } from "react-icons/bs";
 import UserLink from "../../general/UserLink";
 import UserLinkAvatar from "../../general/UserLinkAvatar";
+import TimeDisplay from "../../general/TimeDisplay";
 
 interface CommentCardProps {
   comment: CommentProps;
@@ -29,10 +31,13 @@ function CommentHeader({ comment, hidden, setHidden }: CommentCardProps) {
           />
         )}
       </button>
-      <div className="text-xs xs:text-base flex items-center gap-1" id="fucker">
+      <div className="text-sm xs:text-base flex items-center gap-1" id="fucker">
         <UserLinkAvatar username={comment.username} avatar={comment.avatar} />
         <UserLink username={comment.username} />
-        <span className="opacity-50 text-sm"> ∙ 15 daqiqa oldin </span>
+        <span className="text-sm xs:text-base text-white/50 -ml-1 text-nowrap">
+          <BsDot className="inline-block" />
+          <TimeDisplay time={comment.created_at} />
+        </span>
       </div>
     </div>
   );

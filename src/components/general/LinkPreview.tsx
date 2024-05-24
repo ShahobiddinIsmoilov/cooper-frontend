@@ -96,7 +96,7 @@ export default function LinkPreview({
             </p>
             <p className="flex items-center gap-1 text-white/75 text-sm xs:text-base">
               <FaLink className="text-xs xs:text-sm" />
-              {baseUrl}
+              {baseUrl}wwwwwwwwwwww
               <FaExternalLinkAlt className="text-xs xs:text-sm" />
             </p>
           </Stack>

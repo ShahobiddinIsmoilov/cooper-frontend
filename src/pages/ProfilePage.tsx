@@ -5,6 +5,7 @@ import { useAuthContext } from "../contexts/AuthContext";
 import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../services/makeRequest";
 import { UserDetailProps } from "../interfaces/userDetailProps";
+import { useWindowSize } from "../contexts/WindowSizeContext";
 import Line from "../utils/Line";
 import MyUserNavbar from "../components/userprofile/usernavbar/MyUserNavbar";
 import UserActivity from "../components/userprofile/useractivity/UserActivity";
@@ -16,6 +17,7 @@ import UserDownvoted from "../components/userprofile/userdownvoted/UserDownvoted
 import UserProfile from "../components/userprofile/userinfo/UserProfile";
 
 export default function ProfilePage() {
+  const { screenWidth } = useWindowSize();
   const username = useAuthContext().user?.username;
   const navigate = useNavigate();
   !username && navigate("/");
@@ -38,7 +40,11 @@ export default function ProfilePage() {
       <MyUserNavbar active={active} />
       <Line />
       <div className="flex justify-center">
-        <div className="xs:p-1 flex-grow max-w-3xl">
+        <div
+          className={`flex-grow ${
+            screenWidth >= 768 ? "max-w-3xl" : "w-screen"
+          }`}
+        >
           <Routes>
             <Route path="" element={<UserActivity setActive={setActive} />} />
             <Route

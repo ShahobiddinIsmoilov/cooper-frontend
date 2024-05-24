@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../services/makeRequest";
 import { UserDetailProps } from "../interfaces/userDetailProps";
+import { useWindowSize } from "../contexts/WindowSizeContext";
 import {
   Navigate,
   Route,
@@ -20,9 +21,10 @@ import UserNavbar from "../components/userprofile/usernavbar/UserNavbar";
 import UserProfile from "../components/userprofile/userinfo/UserProfile";
 
 export default function UserPage() {
+  const navigate = useNavigate();
+  const { screenWidth } = useWindowSize();
   const username = useParams().username;
   const user = useAuthContext().user;
-  const navigate = useNavigate();
   const path = useLocation().pathname;
   const pattern_posts = /^\/user\/[^\/]+\/posts$/;
   const pattern_comments = /^\/user\/[^\/]+\/comments$/;
@@ -65,7 +67,11 @@ export default function UserPage() {
       <UserNavbar active={active} />
       <Line />
       <div className="flex justify-center">
-        <div className="xs:p-1 flex-grow max-w-3xl">
+        <div
+          className={`flex-grow ${
+            screenWidth >= 768 ? "max-w-3xl" : "w-screen"
+          }`}
+        >
           <Routes>
             <Route path="" element={<UserActivity setActive={setActive} />} />
             <Route

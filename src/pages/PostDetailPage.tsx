@@ -3,7 +3,6 @@ import { useWindowSize } from "../contexts/WindowSizeContext";
 import { ImSpinner4 } from "react-icons/im";
 import { useQuery } from "@tanstack/react-query";
 import { IoCloudOffline } from "react-icons/io5";
-import { Flex } from "@mantine/core";
 import { PostProps } from "../interfaces/postProps";
 import { CommunityDetailProps } from "../interfaces/communityDetailProps";
 import { makeRequest } from "../services/makeRequest";
@@ -51,8 +50,12 @@ export default function PostDetailPage() {
     );
 
   return (
-    <Flex>
-      <div className="flex-grow max-w-[768px] my-2 mx-4">
+    <div className="flex">
+      <div
+        className={`flex-grow ${
+          screenWidth >= 920 ? "max-w-[calc(100%-288px)]" : "w-screen"
+        }`}
+      >
         <PostDetail post={post} community={community.id} />
       </div>
       <div className="mt-2">
@@ -60,6 +63,6 @@ export default function PostDetailPage() {
           <Infobar community={data.data.community_detail} />
         )}
       </div>
-    </Flex>
+    </div>
   );
 }

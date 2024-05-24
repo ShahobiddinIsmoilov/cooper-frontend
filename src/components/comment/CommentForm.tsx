@@ -4,6 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useComments } from "../../contexts/CommentContext";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { Slide, toast } from "react-toastify";
+import { useLanguage } from "../../contexts/LanguageContext";
 import FancyCommentEditor from "./FancyCommentEditor";
 import useCredentials from "../../services/useCredentials";
 
@@ -28,6 +29,7 @@ export default function CommentForm({
   const [formDisabled, setFormDisabled] = useState(false);
   const [clearForm, setClearForm] = useState(false);
   const { user } = useAuthContext();
+  const { language } = useLanguage();
   const api = useCredentials();
 
   const mutatation = useMutation({
@@ -94,20 +96,20 @@ export default function CommentForm({
               onClick={() => setToolbarVisible(!toolbarVisible)}
               className="text-blue-400/75 hover:text-blue-300/75 bg-transparent hover:bg-transparent h-8 rounded-full px-2"
             >
-              {toolbarVisible ? "Hide toolbar" : "Show toolbar"}
+              {comment.toolbar[language]}
             </Button>
             <span>
               <Button
                 onClick={handleCancel}
-                className="bg-transparent hover:bg-dark-700 h-8 w-16 rounded-full p-0 mr-2 opacity-50 hover:opacity-100"
+                className="bg-transparent hover:bg-dark-700 rounded-full mr-2 px-2 opacity-50 hover:opacity-100"
               >
-                Cancel
+                {comment.cancel[language]}
               </Button>
               <Button
                 type="submit"
-                className="bg-cyan-700 hover:bg-cyan-600 h-8 w-16 rounded-full p-0"
+                className="bg-cyan-700 hover:bg-cyan-600 rounded-full px-2"
               >
-                Post
+                {comment.post[language]}
               </Button>
             </span>
           </div>
@@ -116,3 +118,21 @@ export default function CommentForm({
     </form>
   );
 }
+
+const comment = {
+  toolbar: {
+    uz: "Formatlash",
+    en: "Formatting",
+    ru: "Formatting",
+  },
+  cancel: {
+    uz: "Bekor qilish",
+    en: "Cancel",
+    ru: "Add a comment",
+  },
+  post: {
+    uz: "Joylash",
+    en: "Comment",
+    ru: "Comment",
+  },
+};

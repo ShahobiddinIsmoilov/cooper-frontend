@@ -15,7 +15,7 @@ interface PostDetailProps {
 
 export default function PostDetail({ post, community }: PostDetailProps) {
   return (
-    <>
+    <div className="my-2 mx-4">
       <PostDetailHeader post={post} />
       <div className="text-lg xs:text-xl font-bold text-white mt-3 mb-2 leading-snug xs:leading-normal">
         {post.title}
@@ -36,6 +36,6 @@ export default function PostDetail({ post, community }: PostDetailProps) {
       <CommentProvider post={post.id} community={community}>
         <CommentFeed />
       </CommentProvider>
-    </>
+    </div>
   );
 }
