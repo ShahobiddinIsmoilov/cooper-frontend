@@ -8,6 +8,8 @@ export default function Modallion() {
     isCustomModalOpen,
     customModalContent,
     customModalContentRef,
+    withCloseButton,
+    overlayColor,
     closeCustomModal,
   } = useCustomModal();
 
@@ -38,18 +40,19 @@ export default function Modallion() {
   const modallion = (
     <FocusTrap>
       <div
-        className={`fixed top-0 left-0 z-[101] w-screen h-screen bg-black/85`}
+        className={`fixed top-0 left-0 z-[101] w-screen h-screen bg-${overlayColor}`}
       >
         <div className="w-full h-full flex justify-center items-center">
           {customModalContent}
         </div>
-
-        <button
-          onClick={closeCustomModal}
-          className="absolute top-6 right-6 p-2 bg-dark-950/50 hover:bg-dark-800 rounded-full text-2xl"
-        >
-          <IoMdClose />
-        </button>
+        {withCloseButton && (
+          <button
+            onClick={closeCustomModal}
+            className="absolute top-6 right-6 p-2 bg-dark-950/50 hover:bg-dark-800 rounded-full text-2xl"
+          >
+            <IoMdClose />
+          </button>
+        )}
       </div>
     </FocusTrap>
   );

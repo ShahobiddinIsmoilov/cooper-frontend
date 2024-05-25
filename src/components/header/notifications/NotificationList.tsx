@@ -31,9 +31,19 @@ export default function NotificationList({
     queryFn: () => makeRequest(`/api/inbox/list/?filter=user&receiver=${user}`),
   });
 
-  if (isPending) return <FetchLoading mt={8} size={24} />;
+  if (isPending)
+    return (
+      <div className="h-24 flex justify-center items-center">
+        <FetchLoading size={20} />
+      </div>
+    );
 
-  if (error) return <FetchError mt={8} />;
+  if (error)
+    return (
+      <div className="h-24 flex justify-center items-center">
+        <FetchError />
+      </div>
+    );
 
   const notifs = data.data;
 

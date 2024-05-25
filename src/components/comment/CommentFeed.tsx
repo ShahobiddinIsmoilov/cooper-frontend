@@ -9,7 +9,10 @@ export default function CommentFeed() {
   const rootComments = getReplies(0);
 
   return (
-    <div id="comment-feed" className="mb-12 max-w-3xl overflow-x-scroll">
+    <div
+      id="comment-feed"
+      className="mb-12 max-w-3xl overflow-x-scroll no-scrollbar"
+    >
       <CommentForm
         post={post}
         parent={0}

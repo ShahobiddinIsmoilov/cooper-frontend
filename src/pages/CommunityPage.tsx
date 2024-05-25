@@ -35,9 +35,9 @@ export default function CommunityPage() {
           ),
   });
 
-  if (isPending) return <FetchLoading mt={16} />;
+  if (isPending) return <FetchLoading size={24} mt={8} />;
 
-  if (error) return <FetchError mt={16} />;
+  if (error) return <FetchError mt={8} />;
 
   const community: CommunityDetailProps = data.data;
 

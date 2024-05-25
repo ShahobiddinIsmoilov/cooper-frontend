@@ -2,6 +2,7 @@ import { Stack } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { PostProps } from "../../interfaces/postProps";
 import { useAuthContext } from "../../contexts/AuthContext";
+import { FetchError, FetchLoading } from "../../utils/FetchStatus";
 import { Link } from "react-router-dom";
 import { ReactNode } from "react";
 import Line from "../../utils/Line";
@@ -30,9 +31,9 @@ export default function PostList({ filter, sortOption, community }: Props) {
       }),
   });
 
-  if (isPending) return "Loading...";
+  if (isPending) return <FetchLoading size={24} mt={8} />;
 
-  if (error) return "Error";
+  if (error) return <FetchError mt={8} />;
 
   const posts = data.data;
 
