@@ -1,4 +1,5 @@
 import { Grid, Textarea } from "@mantine/core";
+import { useLanguage } from "../../../contexts/LanguageContext";
 
 interface Props {
   name: string;
@@ -8,6 +9,8 @@ interface Props {
 }
 
 export default function ManageDetails(props: Props) {
+  const { language } = useLanguage();
+
   function handleFormatting(s: string) {
     s = s.replace(/\s\s+/g, " ");
     s = s.replace(/\n/g, "");
@@ -25,7 +28,7 @@ export default function ManageDetails(props: Props) {
   return (
     <Grid mt={16} mb={100}>
       <Grid.Col span={{ base: 12, xs: 5 }}>
-        <p className="ml-1 mb-1">Hamjamiyat nomi:</p>
+        <p className="ml-1 mb-1">{labels.name[language]}:</p>
         <Textarea
           variant="unstyled"
           maxLength={32}
@@ -39,7 +42,7 @@ export default function ManageDetails(props: Props) {
         />
       </Grid.Col>
       <Grid.Col span={{ base: 12, xs: 7 }}>
-        <p className="ml-1 mb-1">Hamjamiyat haqida qisqacha:</p>
+        <p className="ml-1 mb-1">{labels.description[language]}:</p>
         <Textarea
           variant="unstyled"
           maxLength={500}
@@ -55,3 +58,16 @@ export default function ManageDetails(props: Props) {
     </Grid>
   );
 }
+
+const labels = {
+  name: {
+    uz: "Hamjamiyat nomi",
+    en: "Community name",
+    ru: "Community name",
+  },
+  description: {
+    uz: "Hamjamiyat haqida qisqacha",
+    en: "Community description",
+    ru: "Community description",
+  },
+};

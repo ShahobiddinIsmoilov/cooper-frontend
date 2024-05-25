@@ -4,6 +4,8 @@ import { makeRequest } from "../../../services/makeRequest";
 import { useAuthContext } from "../../../contexts/AuthContext";
 import { NotifProps } from "../../../interfaces/notificationProps";
 import { BiCheckDouble } from "react-icons/bi";
+import { FetchError, FetchLoading } from "../../../utils/FetchStatus";
+import { useLanguage } from "../../../contexts/LanguageContext";
 import NotificationCard from "./NotificationCard";
 
 interface Props {
@@ -21,6 +23,7 @@ export default function NotificationList({
     markAsRead("read_all");
   }
 
+  const { language } = useLanguage();
   const user = useAuthContext().user?.user_id;
 
   const { isPending, error, data } = useQuery({
@@ -28,17 +31,9 @@ export default function NotificationList({
     queryFn: () => makeRequest(`/api/inbox/list/?filter=user&receiver=${user}`),
   });
 
-  if (isPending)
-    return (
-      <div className="flex justify-center items-center h-48">Loading...</div>
-    );
+  if (isPending) return <FetchLoading mt={8} size={24} />;
 
-  if (error)
-    return (
-      <div className="flex justify-center items-center h-48">
-        Couldn't load data
-      </div>
-    );
+  if (error) return <FetchError mt={8} />;
 
   const notifs = data.data;
 
@@ -67,7 +62,7 @@ export default function NotificationList({
           }`}
         >
           <BiCheckDouble size={22} />
-          Mark all as read
+          {read_all[language]}
         </button>
       </div>
       {notifs.map((item: NotifProps) => (
@@ -83,3 +78,9 @@ export default function NotificationList({
     </Stack>
   );
 }
+
+const read_all = {
+  uz: "Hammasini o'qilgan deb belgilash",
+  en: "Mark all as read",
+  ru: "Mark all as read",
+};

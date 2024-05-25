@@ -56,54 +56,54 @@ export default function Social({
       </div>
       <Grid>
         <Grid.Col span={span}>
-          <p className="m-1">Telegram:</p>
+          <p className="m-1">Telegram{user_name[language]}:</p>
           <input
             onChange={(e) => handleTelegramChange(e.target.value)}
             value={telegram}
             type="text"
-            maxLength={200}
+            maxLength={50}
             id="telegram"
             name="telegram"
-            placeholder={`https://t.me/${username}`}
+            placeholder={username}
             className="w-full py-3 px-4 text-lg rounded-xl bg-dark-850 outline-none placeholder-white placeholder-opacity-25 border border-line"
           />
         </Grid.Col>
         <Grid.Col span={span}>
-          <p className="m-1">Instagram:</p>
+          <p className="m-1">Instagram{user_name[language]}:</p>
           <input
             onChange={(e) => handleInstagramChange(e.target.value)}
             value={instagram}
             type="text"
-            maxLength={200}
+            maxLength={50}
             id="instagram"
             name="instagram"
-            placeholder={`https://www.instagram.com/${username}`}
+            placeholder={username}
             className="w-full py-3 px-4 text-lg rounded-xl bg-dark-850 outline-none placeholder-white placeholder-opacity-25 border border-line"
           />
         </Grid.Col>
         <Grid.Col span={span}>
-          <p className="m-1">Facebook:</p>
+          <p className="m-1">Facebook{user_name[language]}:</p>
           <input
             onChange={(e) => handleFacebookChange(e.target.value)}
             value={facebook}
             type="text"
-            maxLength={200}
+            maxLength={50}
             id="facebook"
             name="facebook"
-            placeholder={`https://www.facebook.com/${username}`}
+            placeholder={username}
             className="w-full py-3 px-4 text-lg rounded-xl bg-dark-850 outline-none placeholder-white placeholder-opacity-25 border border-line"
           />
         </Grid.Col>
         <Grid.Col span={span}>
-          <p className="m-1">Twitter / X:</p>
+          <p className="m-1">Twitter / X{user_name[language]}:</p>
           <input
             onChange={(e) => handleTwitterChange(e.target.value)}
             value={twitter}
             type="text"
-            maxLength={200}
+            maxLength={50}
             id="twitter"
             name="twitter"
-            placeholder={`https://twitter.com/${username}`}
+            placeholder={username}
             className="w-full py-3 px-4 text-lg rounded-xl bg-dark-850 outline-none placeholder-white placeholder-opacity-25 border border-line"
           />
         </Grid.Col>
@@ -115,4 +115,10 @@ export default function Social({
 const span = {
   base: 12,
   xs: 6,
+};
+
+const user_name = {
+  uz: " foydalanuvchi nomi",
+  en: " username",
+  ru: " username",
 };

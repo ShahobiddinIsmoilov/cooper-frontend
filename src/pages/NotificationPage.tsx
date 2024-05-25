@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useWindowSize } from "../contexts/WindowSizeContext";
+import { useLanguage } from "../contexts/LanguageContext";
 import BackButtonHeader from "../components/general/BackButtonHeader";
 import NotificationList from "../components/header/notifications/NotificationList";
 import useCredentials from "../services/useCredentials";
@@ -7,6 +8,7 @@ import useCredentials from "../services/useCredentials";
 export default function NotificationPage() {
   const { unreadCount, setUnreadCount } = useWindowSize();
   const [unreadExists, setUnreadExists] = useState(unreadCount > 0);
+  const { language } = useLanguage();
 
   const api = useCredentials();
   function markAsRead(variant: "read_one" | "read_all", notif_id?: number) {
@@ -29,8 +31,14 @@ export default function NotificationPage() {
 
   return (
     <div className="max-w-3xl mx-4 mt-2">
-      <BackButtonHeader header="Notifications" />
+      <BackButtonHeader header={notifications[language]} />
       <NotificationList unreadExists={unreadExists} markAsRead={markAsRead} />
     </div>
   );
 }
+
+const notifications = {
+  uz: "Bildirishnomalar",
+  en: "Notifications",
+  ru: "Notifications",
+};

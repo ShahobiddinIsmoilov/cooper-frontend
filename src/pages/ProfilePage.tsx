@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../services/makeRequest";
 import { UserDetailProps } from "../interfaces/userDetailProps";
 import { useWindowSize } from "../contexts/WindowSizeContext";
+import { FetchError, FetchLoading } from "../utils/FetchStatus";
 import Line from "../utils/Line";
 import MyUserNavbar from "../components/userprofile/usernavbar/MyUserNavbar";
 import UserActivity from "../components/userprofile/useractivity/UserActivity";
@@ -28,9 +29,9 @@ export default function ProfilePage() {
     queryFn: () => makeRequest(`/api/user/detail/${username}`),
   });
 
-  if (isPending) return "Loading...";
+  if (isPending) return <FetchLoading mt={8} size={24} />;
 
-  if (error) return "Error";
+  if (error) return <FetchError mt={8} />;
 
   const userdetail: UserDetailProps = data.data;
 

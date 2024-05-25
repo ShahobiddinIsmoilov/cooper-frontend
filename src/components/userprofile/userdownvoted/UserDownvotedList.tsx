@@ -26,9 +26,9 @@ export default function UserDownvotedList({
       ),
   });
 
-  if (isPending) return <FetchLoading />;
+  if (isPending) return <FetchLoading mt={8} size={20} />;
 
-  if (error) return <FetchError />;
+  if (error) return <FetchError mt={8} />;
 
   const posts = data.data;
 

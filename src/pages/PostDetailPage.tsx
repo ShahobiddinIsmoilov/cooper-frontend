@@ -1,8 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useWindowSize } from "../contexts/WindowSizeContext";
-import { ImSpinner4 } from "react-icons/im";
 import { useQuery } from "@tanstack/react-query";
-import { IoCloudOffline } from "react-icons/io5";
+import { FetchError, FetchLoading } from "../utils/FetchStatus";
 import { PostProps } from "../interfaces/postProps";
 import { CommunityDetailProps } from "../interfaces/communityDetailProps";
 import { makeRequest } from "../services/makeRequest";
@@ -23,21 +22,9 @@ export default function PostDetailPage() {
     retry: 2,
   });
 
-  if (isPending)
-    return (
-      <div className="mt-24 flex justify-center items-center text-white text-2xl">
-        <ImSpinner4 className="animate-spin" />
-      </div>
-    );
+  if (isPending) return <FetchLoading size={24} mt={8} />;
 
-  if (error) {
-    return (
-      <div className="mt-24 flex justify-center items-center text-white text-xl gap-2">
-        <IoCloudOffline />
-        Couldn't load data
-      </div>
-    );
-  }
+  if (error) return <FetchError mt={8} />;
 
   const post: PostProps = data.data.post_detail;
   const community: CommunityDetailProps = data.data.community_detail;

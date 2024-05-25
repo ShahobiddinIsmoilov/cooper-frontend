@@ -7,6 +7,8 @@ import { useWindowSize } from "../../../contexts/WindowSizeContext";
 import { useLanguage } from "../../../contexts/LanguageContext";
 import { usersettings } from "./../lang_userprofile";
 import { FileWithPath } from "@mantine/dropzone";
+import { useNavigate } from "react-router-dom";
+import { Slide, toast } from "react-toastify";
 import Account from "./Account";
 import Social from "./Social";
 import Line from "../../../utils/Line";
@@ -55,6 +57,19 @@ export default function UserComments({ user }: Props) {
     return false;
   }
 
+  const notifyUserSettingsSavedSuccess = () =>
+    toast.success("Changes were saved successfully", {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Slide,
+    });
+
   function discardChanges() {
     setNewAvatar(undefined);
     setNewAvatarUrl("");
@@ -69,6 +84,7 @@ export default function UserComments({ user }: Props) {
   const isExtraSmall = useWindowSize().screenWidth < 576;
   const api = useCredentials();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const { language } = useLanguage();
 
   const mutation = useMutation({
@@ -81,6 +97,9 @@ export default function UserComments({ user }: Props) {
       queryClient.invalidateQueries({
         queryKey: ["dashboard"],
       });
+      notifyUserSettingsSavedSuccess();
+      // setFormDisabled(false);
+      navigate(`/c/profile`);
     },
   });
 

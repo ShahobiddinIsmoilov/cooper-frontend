@@ -4,6 +4,7 @@ import { Avatar } from "@mantine/core";
 import { BiCheckDouble } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { NotifProps } from "../../../interfaces/notificationProps";
+import { useLanguage } from "../../../contexts/LanguageContext";
 import ReactHtmlParser from "react-html-parser";
 import TimeDisplay from "../../general/TimeDisplay";
 
@@ -20,6 +21,7 @@ export default function NotificationCard({
   markAsRead,
   closeMenu,
 }: Props) {
+  const { language } = useLanguage();
   const [isRead, setIsRead] = useState(notif.is_read);
   const navigate = useNavigate();
 
@@ -44,11 +46,13 @@ export default function NotificationCard({
           <Avatar src={notif.sender_avatar} />
           <div
             className={`break-words text-sm font-bold ${
-              closeMenu && "w-[277px]"
+              closeMenu ? "w-[277px]" : "max-w-[calc(100vw-130px)]"
             } `}
           >
-            <span className="text-orange-400">{notif.sender}</span> replied to
-            your {notif.type === "post_reply" ? "post" : "comment"} in{" "}
+            <span className="text-orange-400 mr-1">{notif.sender}</span>
+            {notif.type === "post_reply"
+              ? notif_type.comment[language]
+              : notif_type.reply[language]}{" "}
             <span className="text-blue-400">{notif.community_name}</span>
             <span className="inline-block items-center text-white/50 font-normal">
               <BsDot className="inline-block" />
@@ -77,3 +81,16 @@ export default function NotificationCard({
     </>
   );
 }
+
+const notif_type = {
+  comment: {
+    uz: "postingizga fikr bildirdi",
+    en: "commented on your post in",
+    ru: "commented on your post in",
+  },
+  reply: {
+    uz: "fikringizga javob qaytardi",
+    en: "replied to your comment in",
+    ru: "replied to your comment in",
+  },
+};

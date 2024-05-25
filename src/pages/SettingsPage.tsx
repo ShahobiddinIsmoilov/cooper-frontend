@@ -17,9 +17,9 @@ export default function SettingsPage() {
     queryFn: () => makeRequest(`/api/user/detail/${username}`),
   });
 
-  if (isPending) return <FetchLoading size={24} mt={16} />;
+  if (isPending) return <FetchLoading size={24} mt={8} />;
 
-  if (error) return <FetchError mt={16} />;
+  if (error) return <FetchError mt={8} />;
 
   const user = data.data;
 

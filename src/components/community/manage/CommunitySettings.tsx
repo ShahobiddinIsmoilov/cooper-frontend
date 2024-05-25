@@ -7,6 +7,7 @@ import { FileWithPath } from "@mantine/dropzone";
 import { Slide, toast } from "react-toastify";
 import { ImSpinner4 } from "react-icons/im";
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from "../../../contexts/LanguageContext";
 import ManageVisuals from "./ManageVisuals";
 import ManageDetails from "./ManageDetails";
 import useCredentials from "../../../services/useCredentials";
@@ -19,6 +20,7 @@ export default function CommunitySettings({ community }: Props) {
   const isExtraSmall = useWindowSize().screenWidth < 576;
   const api = useCredentials();
   const queryClient = useQueryClient();
+  const { language } = useLanguage();
   const navigate = useNavigate();
 
   const notifyCommunitySettingsSavedSuccess = () =>
@@ -108,7 +110,7 @@ export default function CommunitySettings({ community }: Props) {
           }}
           disabled={!itemChanged() || formDisabled}
         >
-          Bekor qilish
+          {buttons.discard[language]}
         </Button>
         <Button
           size={isExtraSmall ? "sm" : "md"}
@@ -123,7 +125,7 @@ export default function CommunitySettings({ community }: Props) {
               : "button-primary-disabled"
           }`}
         >
-          O'zgarishlarni saqlash
+          {buttons.save[language]}
           {formDisabled && <ImSpinner4 className="ml-2 animate-spin" />}
         </Button>
       </div>
@@ -146,3 +148,16 @@ export default function CommunitySettings({ community }: Props) {
     </Stack>
   );
 }
+
+const buttons = {
+  discard: {
+    uz: "Bekor qilish",
+    en: "Discard changes",
+    ru: "Discard changes",
+  },
+  save: {
+    uz: "O'zgarishlarni saqlash",
+    en: "Save changes",
+    ru: "Save changes",
+  },
+};

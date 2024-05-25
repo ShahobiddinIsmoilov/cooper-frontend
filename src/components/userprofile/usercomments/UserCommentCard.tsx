@@ -24,9 +24,7 @@ export default function UserCommentCard({ comment }: UserCommentCardProps) {
           <div className="mt-2 ml-2">
             <div
               className={`post-detail break-words ${
-                screenWidth >= 768
-                  ? "max-w-[736px]"
-                  : `max-w-[${String(screenWidth - 40)}px]`
+                screenWidth >= 768 ? "max-w-2xl" : `max-w-[calc(100vw-80px)]`
               }`}
             >
               {ReactHtmlParser(comment.body)}
