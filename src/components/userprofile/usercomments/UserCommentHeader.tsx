@@ -63,8 +63,8 @@ export default function CommentHeader({ comment }: CommentCardProps) {
         community_avatar={comment.community_avatar}
         size={32}
       />
-      <div className="ml-2">
-        <div className="inline-block">
+      <div className="ml-2 max-w-[calc(100vw-150px)]">
+        <div className="inline-block break-words">
           <CommunityLink
             community_name={comment.community_name}
             community_link={comment.community_link}

@@ -17,12 +17,7 @@ export default function PostHeader({ post, variant }: Props) {
     <div className="flex justify-between items-center">
       <div className="flex items-center gap-2 max-w-[calc(100vw-72px)] xs:max-w-[calc(100vw-128px)]">
         {variant === "community" ? (
-          <div className="max-w-[calc(65%)] xs:max-w-[calc(85%)] overflow-hidden text-nowrap">
-            <UserLinkAvatar
-              username={post.username}
-              avatar={post.user_avatar}
-            />
-          </div>
+          <UserLinkAvatar username={post.username} avatar={post.user_avatar} />
         ) : (
           <CommunityLinkAvatar
             community_link={post.community_link}
@@ -31,7 +26,9 @@ export default function PostHeader({ post, variant }: Props) {
           />
         )}
         {variant === "community" ? (
-          <UserLink username={post.username} />
+          <div className="max-w-[calc(65%)] xs:max-w-[calc(85%)] overflow-hidden text-nowrap">
+            <UserLink username={post.username} />
+          </div>
         ) : (
           <div className="max-w-[calc(65%)] xs:max-w-[calc(85%)] overflow-hidden text-nowrap">
             <CommunityLink

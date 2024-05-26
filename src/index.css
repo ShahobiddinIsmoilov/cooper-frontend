@@ -70,7 +70,7 @@
   }
 
   .post-card {
-    @apply text-white/75 [&_hr]:my-4 [&_p]:mb-0
+    @apply text-white/75 [&_hr]:my-4 [&_p]:mb-0 break-words
           [&_a]:text-blue-400 [&_h2]:text-xl [&_h2]:py-2;
   }
 }

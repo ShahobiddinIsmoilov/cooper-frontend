@@ -15,9 +15,9 @@ interface PostDetailProps {
 
 export default function PostDetail({ post, community }: PostDetailProps) {
   return (
-    <div className="my-2 mx-4">
+    <div className="my-2 mx-4 max-w-3xl">
       <PostDetailHeader post={post} />
-      <div className="text-lg xs:text-xl font-bold text-white mt-3 mb-2 leading-snug xs:leading-normal">
+      <div className="text-lg xs:text-xl font-bold text-white mt-3 mb-2 leading-snug xs:leading-normal break-words">
         {post.title}
       </div>
       {post.type === "text" ? (

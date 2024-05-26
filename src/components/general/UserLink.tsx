@@ -7,6 +7,7 @@ import { BiSolidLike } from "react-icons/bi";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { makeRequest } from "../../services/makeRequest";
 import { Avatar } from "@mantine/core";
+import { useLanguage } from "../../contexts/LanguageContext";
 import readableTime from "../../utils/readableTime";
 
 interface UserLinkProps {
@@ -61,10 +62,12 @@ export function Preview({ username }: UserLinkProps) {
       </div>
     );
 
+  const { language } = useLanguage();
+
   if (error)
     return (
       <div className="flex justify-center items-center w-96 h-32 overflow-hidden absolute z-30 bg-dark-850 rounded-xl text-white shadow shadow-white">
-        <span className="opacity-50">Couldn't load data</span>
+        <span className="opacity-50">{user_details.error[language]}</span>
       </div>
     );
 
@@ -81,6 +84,7 @@ interface UserPreviewProps {
 
 function UserPreview({ userDetail }: UserPreviewProps) {
   const user = useAuthContext().user;
+  const { language } = useLanguage();
 
   return (
     <div className="w-96">
@@ -91,7 +95,7 @@ function UserPreview({ userDetail }: UserPreviewProps) {
           className="w-20 h-20 min-w-20 min-h-20 object-cover rounded-lg"
         />
         <div className="mx-1 w-full">
-          <div className="flex justify-between">
+          <div className="flex justify-between text-wrap">
             <Link
               to={
                 userDetail.username === user?.username
@@ -110,11 +114,15 @@ function UserPreview({ userDetail }: UserPreviewProps) {
       </div>
       <div className="flex justify-center w-96 px-6 pb-4">
         <div className="w-64 overflow-hidden">
-          <p className="font-bold opacity-50">Date joined:</p>
+          <p className="font-bold opacity-50">
+            {user_details.date_joined[language]}:
+          </p>
           {readableTime(userDetail.created_at, "uz")}
         </div>
         <div className="w-48">
-          <p className="font-bold opacity-50">Likes:</p>
+          <p className="font-bold opacity-50">
+            {user_details.likes[language]}:
+          </p>
           <p>
             <BiSolidLike className="text-yellow-400 inline-block mr-1" />
             {userDetail.votes}
@@ -124,3 +132,21 @@ function UserPreview({ userDetail }: UserPreviewProps) {
     </div>
   );
 }
+
+const user_details = {
+  date_joined: {
+    uz: "Saytga qo'shilgan",
+    en: "Date joined",
+    ru: "Date joined",
+  },
+  likes: {
+    uz: "Yoqtirishlar",
+    en: "Likes",
+    ru: "Likes",
+  },
+  error: {
+    uz: "Ma'lumotlarni yuklab bo'lmadi",
+    en: "Couldn't load data",
+    ru: "Couldn't load data",
+  },
+};

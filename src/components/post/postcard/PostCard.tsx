@@ -18,7 +18,7 @@ export default function PostCard({ post, headerVariant }: PostCardProps) {
         <PostHeader post={post} variant={headerVariant} />
       </div>
       <Link to={`/c/${post.community_link}/post/${post.permalink}`}>
-        <p className="text-lg xs:text-xl font-bold pt-2 pb-1 px-4 hover:text-indigo-400 leading-snug xs:leading-normal">
+        <p className="text-lg xs:text-xl font-bold pt-2 pb-1 px-4 hover:text-indigo-400 leading-snug xs:leading-normal break-words">
           {post.title}
         </p>
       </Link>

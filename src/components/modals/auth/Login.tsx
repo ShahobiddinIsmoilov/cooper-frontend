@@ -114,6 +114,7 @@ export default function Login({
         type="text"
         id="username"
         name="username"
+        maxLength={24}
         placeholder="Username"
         disabled={formDisabled}
         onChange={(e: any) => {

@@ -135,10 +135,10 @@ function CommunityPreview({ community }: CommunityPreviewProps) {
             src={community.avatar}
             className="w-10 xs:w-14 h-10 xs:h-14 min-w-10 xs:min-w-14 object-cover rounded-full"
           />
-          <div className="max-w-[180px] mt-1">
+          <div className="w-[180px] mt-1 overflow-hidden text-wrap">
             <Link
               to={`/c/${community.link}`}
-              className="text-xl text-blue-400 hover:text-blue-300 font-bold max-w-[180px] overflow-hidden break-words"
+              className="text-xl text-blue-400 hover:text-blue-300 font-bold w-[180px] break-words"
             >
               <p>{community.name}</p>
             </Link>

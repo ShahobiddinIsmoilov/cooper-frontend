@@ -1,12 +1,13 @@
+import { BsDot } from "react-icons/bs";
+import { FaArrowLeft } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { PostProps } from "../../../interfaces/postProps";
-import { FaArrowLeft } from "react-icons/fa6";
-import { BsDot } from "react-icons/bs";
-import UserLink from "../../general/UserLink";
+import { useWindowSize } from "../../../contexts/WindowSizeContext";
 import CommunityLinkAvatar from "../../general/CommunityLinkAvatar";
 import CommunityLink from "../../general/CommunityLink";
 import ContentShare from "../../general/ContentShare";
 import TimeDisplay from "../../general/TimeDisplay";
+import UserLink from "../../general/UserLink";
 
 export interface PostDetailHeaderProps {
   post: PostProps;
@@ -14,10 +15,11 @@ export interface PostDetailHeaderProps {
 
 export default function PostDetailHeader({ post }: PostDetailHeaderProps) {
   const navigate = useNavigate();
+  const screenWidth = useWindowSize().screenWidth;
 
   return (
     <div className="flex justify-between">
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 overflow-hidden">
         <button
           className="p-2 rounded-full cursor-pointer bg-dark-750 hover:bg-dark-700"
           onClick={() => navigate(-1)}
@@ -29,15 +31,23 @@ export default function PostDetailHeader({ post }: PostDetailHeaderProps) {
           community_link={post.community_link}
           size={38}
         />
-        <div>
+        <div className="text-nowrap">
           <CommunityLink
             community_name={post.community_name}
             community_link={post.community_link}
           />
-          <div className="flex items-center text-sm text-white/50">
-            <UserLink username={post.username} />
-            <BsDot className="inline-block sm:mt-1" />
-            <TimeDisplay time={post.created_at} />
+          <div
+            className={`flex items-center text-sm text-white/50 ${
+              screenWidth < 768 && "max-w-[calc(100vw-150px)]"
+            }`}
+          >
+            <div className="max-w-[65%] sm:max-w-full overflow-hidden">
+              <UserLink username={post.username} />
+            </div>
+            <div>
+              <BsDot className="inline-block sm:mt-1" />
+              <TimeDisplay time={post.created_at} />
+            </div>
           </div>
         </div>
       </div>
