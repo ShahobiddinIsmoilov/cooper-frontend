@@ -4,12 +4,8 @@ interface CustomModalProps {
   customModalContent: ReactNode;
   customModalContentRef: any;
   isCustomModalOpen: boolean;
-  withCloseButton: boolean;
-  overlayColor: string;
   openCustomModal: () => void;
   closeCustomModal: () => void;
-  setOverlayColor: (value: string) => void;
-  setWithCloseButton: (value: boolean) => void;
   setCustomModalContent: (e: ReactNode) => void;
 }
 
@@ -28,8 +24,6 @@ export default function CustomModalProvider({
 }: CustomModalProviderProps) {
   const customModalContentRef = useRef<HTMLElement>(null);
   const [isCustomModalOpen, setIsCustomModalOpen] = useState(false);
-  const [withCloseButton, setWithCloseButton] = useState(true);
-  const [overlayColor, setOverlayColor] = useState("black/85");
   const [customModalContent, setCustomModalContent] =
     useState<ReactNode | null>(null);
 
@@ -45,12 +39,8 @@ export default function CustomModalProvider({
     customModalContentRef: customModalContentRef,
     customModalContent: customModalContent,
     isCustomModalOpen: isCustomModalOpen,
-    withCloseButton: withCloseButton,
-    overlayColor: overlayColor,
     openCustomModal: openCustomModal,
-    setOverlayColor: setOverlayColor,
     closeCustomModal: closeCustomModal,
-    setWithCloseButton: setWithCloseButton,
     setCustomModalContent: setCustomModalContent,
   };
 

@@ -31,7 +31,7 @@ export function ContentOptions({ post, bg }: { post: PostProps; bg: string }) {
       transition: Slide,
     });
 
-  function handleClick() {
+  function handleSave() {
     if (user) {
       saved
         ? api
@@ -62,7 +62,7 @@ export function ContentOptions({ post, bg }: { post: PostProps; bg: string }) {
       }}
     >
       <MenuItem
-        onClick={handleClick}
+        onClick={handleSave}
         className="content-menuitem flex gap-2 items-center cursor-pointer rounded-lg text-white"
       >
         {saved ? <FaBookmark size={20} /> : <FaRegBookmark size={20} />}

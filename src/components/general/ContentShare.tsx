@@ -1,8 +1,9 @@
 import { FiLink } from "react-icons/fi";
 import { IoCopySharp } from "react-icons/io5";
-import { Menu, MenuItem, MenuButton } from "@szhsin/react-menu";
+import { Slide, toast } from "react-toastify";
 import { content_share } from "./lang_general";
 import { useLanguage } from "../../contexts/LanguageContext";
+import { Menu, MenuItem, MenuButton } from "@szhsin/react-menu";
 import "./content-menu.css";
 
 interface Props {
@@ -21,6 +22,32 @@ export default function ContentShare({
   const path = window.location.href;
   const { language } = useLanguage();
 
+  const notifyCopySuccess = () =>
+    toast.success(link_copy.success[language], {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Slide,
+    });
+
+  const notifyCopyFail = () =>
+    toast.error(link_copy.fail[language], {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Slide,
+    });
+
   async function handleCopy() {
     const parsedUrl = new URL(path);
     const baseUrl = parsedUrl.protocol + "//" + parsedUrl.host;
@@ -29,7 +56,12 @@ export default function ContentShare({
       ? `${baseUrl}/c/${community_link}/post/${post_permalink}/${comment_permalink}`
       : `${baseUrl}/c/${community_link}/post/${post_permalink}`;
 
-    await navigator.clipboard.writeText(link);
+    try {
+      await navigator.clipboard.writeText(link);
+      notifyCopySuccess();
+    } catch {
+      notifyCopyFail();
+    }
   }
 
   return (
@@ -58,3 +90,16 @@ export default function ContentShare({
     </Menu>
   );
 }
+
+const link_copy = {
+  success: {
+    uz: "Havola nusxalandi",
+    en: "Link copied successfully",
+    ru: "Link copied successfully",
+  },
+  fail: {
+    uz: "Havolani nusxalab bo'lmadi",
+    en: "Couldn't copy link",
+    ru: "Couldn't copy link",
+  },
+};

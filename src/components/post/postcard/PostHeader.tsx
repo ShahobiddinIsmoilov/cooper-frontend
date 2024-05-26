@@ -1,11 +1,11 @@
 import { BsDot } from "react-icons/bs";
 import { PostProps } from "../../../interfaces/postProps";
-import CommunityLink from "../../general/CommunityLink";
 import CommunityLinkAvatar from "../../general/CommunityLinkAvatar";
-import UserLink from "../../general/UserLink";
 import UserLinkAvatar from "../../general/UserLinkAvatar";
+import CommunityLink from "../../general/CommunityLink";
 import ContentShare from "../../general/ContentShare";
 import TimeDisplay from "../../general/TimeDisplay";
+import UserLink from "../../general/UserLink";
 
 export interface Props {
   post: PostProps;
@@ -15,9 +15,14 @@ export interface Props {
 export default function PostHeader({ post, variant }: Props) {
   return (
     <div className="flex justify-between items-center">
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 max-w-[calc(100vw-72px)] xs:max-w-[calc(100vw-128px)]">
         {variant === "community" ? (
-          <UserLinkAvatar username={post.username} avatar={post.user_avatar} />
+          <div className="max-w-[calc(65%)] xs:max-w-[calc(85%)] overflow-hidden text-nowrap">
+            <UserLinkAvatar
+              username={post.username}
+              avatar={post.user_avatar}
+            />
+          </div>
         ) : (
           <CommunityLinkAvatar
             community_link={post.community_link}
@@ -28,12 +33,14 @@ export default function PostHeader({ post, variant }: Props) {
         {variant === "community" ? (
           <UserLink username={post.username} />
         ) : (
-          <CommunityLink
-            community_name={post.community_name}
-            community_link={post.community_link}
-          />
+          <div className="max-w-[calc(65%)] xs:max-w-[calc(85%)] overflow-hidden text-nowrap">
+            <CommunityLink
+              community_name={post.community_name}
+              community_link={post.community_link}
+            />
+          </div>
         )}
-        <div className="-ml-2 text-white/50">
+        <div className="-ml-2 text-white/50 overflow-hidden text-nowrap">
           <BsDot className="inline-block" />
           <TimeDisplay time={post.created_at} />
         </div>

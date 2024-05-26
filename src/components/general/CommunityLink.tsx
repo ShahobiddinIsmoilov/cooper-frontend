@@ -140,7 +140,7 @@ function CommunityPreview({ community }: CommunityPreviewProps) {
               to={`/c/${community.link}`}
               className="text-xl text-blue-400 hover:text-blue-300 font-bold max-w-[180px] overflow-hidden break-words"
             >
-              {community.name}
+              <p>{community.name}</p>
             </Link>
             <p className="text-white/50 text-sm">
               {community.members === 1

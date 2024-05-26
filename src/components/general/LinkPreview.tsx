@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Image, Stack } from "@mantine/core";
 import { Link } from "react-router-dom";
-import { FaLink } from "react-icons/fa";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { link_preview } from "./lang_general";
@@ -95,9 +94,7 @@ export default function LinkPreview({
               {metadata.description}
             </p>
             <p className="flex items-center gap-1 text-white/75 text-sm xs:text-base">
-              <FaLink className="text-xs xs:text-sm" />
               {baseUrl}
-              <FaExternalLinkAlt className="text-xs xs:text-sm" />
             </p>
           </Stack>
         </Link>

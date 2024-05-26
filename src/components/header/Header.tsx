@@ -1,36 +1,27 @@
-import { Flex } from "@mantine/core";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { IoCube } from "react-icons/io5";
+import { Flex, Portal } from "@mantine/core";
 import { Authentication } from "./Authentication";
-import { useLayoutEffect } from "react";
-import { useCustomModal } from "../../contexts/CustomModalContext";
 
 export default function Header() {
-  const {
-    openCustomModal,
-    setCustomModalContent,
-    setWithCloseButton,
-    setOverlayColor,
-    closeCustomModal,
-  } = useCustomModal();
+  const [showLogo, setShowLogo] = useState(true);
 
-  setTimeout(() => {
-    closeCustomModal();
-  }, 1500);
-
-  useLayoutEffect(() => {
-    setCustomModalContent(
+  const logo = (
+    <div className="fixed top-0 left-0 bg-dark-850 w-screen h-screen z-[101]">
       <div className="flex justify-center items-center w-full h-full">
         <IoCube size={80} className="mb-8 sm:mb-8" />
       </div>
-    );
-    setWithCloseButton(false);
-    setOverlayColor("dark-900");
-    openCustomModal();
-  }, []);
+    </div>
+  );
+
+  setTimeout(() => {
+    setShowLogo(false);
+  }, 1500);
 
   return (
     <div className="flex justify-between bg-dark-900 h-full text-white px-4 xs:px-8 py-2 z-50">
+      {showLogo && <Portal>{logo}</Portal>}
       <Link to="/home" className="flex items-center">
         <IoCube size={32} />
       </Link>
