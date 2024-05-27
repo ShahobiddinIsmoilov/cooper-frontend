@@ -83,9 +83,9 @@ export function ContentOptions({ post, bg }: { post: PostProps; bg: string }) {
     navigate(`/c/${post.community_link}/post/${post.permalink}/edit`);
   }
 
-  function handleDelete() {}
+  // function handleDelete() {}
 
-  function handleReport() {}
+  // function handleReport() {}
 
   return (
     <Menu
