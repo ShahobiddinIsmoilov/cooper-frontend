@@ -6,6 +6,8 @@ import { ContentOptions } from "../../general/ContentOptions";
 import { PostProps } from "../../../interfaces/postProps";
 import { Slide, toast } from "react-toastify";
 import { useAuthContext } from "../../../contexts/AuthContext";
+import { postcard } from "../lang_post";
+import { useLanguage } from "../../../contexts/LanguageContext";
 import useCredentials from "../../../services/useCredentials";
 
 interface Props {
@@ -18,6 +20,7 @@ export default function PostDetailFooter({ post }: Props) {
   const [downvoted, setDownvoted] = useState(post.downvoted);
   const [upvoteCount, setUpvoteCount] = useState(post.upvotes);
   const [downvoteCount, setDownvoteCount] = useState(post.downvotes);
+  const { language } = useLanguage();
   const { user } = useAuthContext();
   const api = useCredentials();
 
@@ -105,8 +108,9 @@ export default function PostDetailFooter({ post }: Props) {
             {screenWidth < 576
               ? post?.comments.toLocaleString()
               : post?.comments === 1
-              ? "1 comment"
-              : post?.comments.toLocaleString() + " comments"}
+              ? postcard.post_footer.comments_one[language]
+              : post?.comments.toLocaleString() +
+                postcard.post_footer.comments[language]}
           </span>
         </div>
       </div>

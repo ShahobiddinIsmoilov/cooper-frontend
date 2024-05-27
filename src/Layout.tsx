@@ -9,7 +9,7 @@ import HomePage from "./pages/HomePage";
 import PostDetailPage from "./pages/PostDetailPage";
 import CommunityPage from "./pages/CommunityPage";
 import ManagePage from "./pages/ManagePage";
-import Header from "./components/header/Header";
+import Header, { LanguageChoices } from "./components/header/Header";
 import Navbar from "./components/Navbar";
 import UserPage from "./pages/UserPage";
 import ProfilePage from "./pages/ProfilePage";
@@ -26,7 +26,6 @@ import "react-modern-drawer/dist/index.css";
 export default function Layout() {
   const [opened] = useDisclosure();
   const { screenWidth, screenHeight } = useWindowSize();
-
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   function openDrawer() {
@@ -76,16 +75,23 @@ export default function Layout() {
             duration={200}
           >
             <div
-              className={`flex items-center gap-8 bg-dark-850 w-[300px] border-r border-line ${
+              className={`flex justify-between items-center gap-8 bg-dark-850 w-[300px] border-r border-line ${
                 screenHeight >= 700 ? "h-[60px]" : "h-[50px]"
               }`}
             >
-              <button onClick={closeDrawer} className="ml-4">
-                <MdMenu size={28} />
-              </button>
-              <Link to="/home" onClick={closeDrawer}>
-                <IoCube size={32} />
-              </Link>
+              <div className="flex items-center gap-8">
+                <button onClick={closeDrawer} className="ml-4">
+                  <MdMenu size={28} />
+                </button>
+                <Link to="/home" onClick={closeDrawer}>
+                  <IoCube size={32} />
+                </Link>
+              </div>
+              {screenWidth < 700 && (
+                <div className="mr-4">
+                  <LanguageChoices />
+                </div>
+              )}
             </div>
             <Navbar closeDrawer={closeDrawer} />
           </Drawer>
@@ -105,7 +111,7 @@ export default function Layout() {
                 element={<ManagePage />}
               />
               <Route
-                path="/c/:community_link/post/:post_permalink"
+                path="/c/:community_link/post/:post_permalink/*"
                 element={<PostDetailPage />}
               />
               <Route path="/user/:username/*" element={<UserPage />} />

@@ -25,14 +25,14 @@ import { useWindowSize } from "../../../contexts/WindowSizeContext";
 
 interface FancyTextEditorProps {
   content: string;
-  setContent: (content: string) => void;
+  setBody: (text: string) => void;
   setHTMLbody: (body: any) => void;
   formDisabled: boolean;
 }
 
 export default function FancyTextEditor({
   content,
-  setContent,
+  setBody,
   setHTMLbody,
   formDisabled,
 }: FancyTextEditorProps) {
@@ -55,7 +55,7 @@ export default function FancyTextEditor({
     ],
     content,
     onUpdate({ editor }) {
-      setContent(editor.getText());
+      setBody(editor.getText());
       setHTMLbody(editor.getHTML());
     },
     editable: !formDisabled,

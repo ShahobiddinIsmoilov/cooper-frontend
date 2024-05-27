@@ -2,6 +2,7 @@ import { BsDot } from "react-icons/bs";
 import { FaArrowLeft } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { PostProps } from "../../../interfaces/postProps";
+import { useLanguage } from "../../../contexts/LanguageContext";
 import { useWindowSize } from "../../../contexts/WindowSizeContext";
 import CommunityLinkAvatar from "../../general/CommunityLinkAvatar";
 import CommunityLink from "../../general/CommunityLink";
@@ -16,6 +17,7 @@ export interface PostDetailHeaderProps {
 export default function PostDetailHeader({ post }: PostDetailHeaderProps) {
   const navigate = useNavigate();
   const screenWidth = useWindowSize().screenWidth;
+  const { language } = useLanguage();
 
   return (
     <div className="flex justify-between">
@@ -45,10 +47,19 @@ export default function PostDetailHeader({ post }: PostDetailHeaderProps) {
               <UserLink username={post.username} />
             </div>
             <div>
-              <BsDot className="inline-block sm:mt-1" />
+              <BsDot className="inline-block" />
               <TimeDisplay time={post.created_at} />
             </div>
           </div>
+          {post.edited && (
+            <div className="text-sm text-white/50">
+              (<i>{language === "en" && "edited "}</i>
+              <i>
+                <TimeDisplay time={post.updated_at} />
+              </i>
+              <i>{language === "uz" && " tahrirlangan"}</i>)
+            </div>
+          )}
         </div>
       </div>
       <ContentShare

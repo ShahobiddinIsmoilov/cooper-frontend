@@ -62,6 +62,7 @@ export default function CreatePost(props: Props) {
       community: props.community,
       title: title,
       body: HTMLbody,
+      body_text: body,
       image: image,
       link: link,
       type: postType,

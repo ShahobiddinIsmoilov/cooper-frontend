@@ -1,13 +1,14 @@
-import { useParams } from "react-router-dom";
-import { useWindowSize } from "../contexts/WindowSizeContext";
+import { Route, Routes, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { FetchError, FetchLoading } from "../utils/FetchStatus";
 import { PostProps } from "../interfaces/postProps";
-import { CommunityDetailProps } from "../interfaces/communityDetailProps";
 import { makeRequest } from "../services/makeRequest";
 import { useAuthContext } from "../contexts/AuthContext";
+import { useWindowSize } from "../contexts/WindowSizeContext";
+import { FetchError, FetchLoading } from "../utils/FetchStatus";
+import { CommunityDetailProps } from "../interfaces/communityDetailProps";
 import PostDetail from "../components/post/postdetail/PostDetail";
 import Infobar from "../components/Infobar";
+import PostEdit from "../components/post/postdetail/PostEdit";
 
 export default function PostDetailPage() {
   const { screenWidth } = useWindowSize();
@@ -43,7 +44,13 @@ export default function PostDetailPage() {
           screenWidth >= 920 ? "max-w-[calc(100%-288px)]" : "w-screen"
         }`}
       >
-        <PostDetail post={post} community={community.id} />
+        <Routes>
+          <Route
+            path=""
+            element={<PostDetail post={post} community={community.id} />}
+          />
+          <Route path="/edit" element={<PostEdit post={post} />} />
+        </Routes>
       </div>
       <div className="mt-2">
         {screenWidth >= 920 && (

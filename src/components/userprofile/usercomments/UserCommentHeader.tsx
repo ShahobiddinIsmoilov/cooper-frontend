@@ -63,7 +63,7 @@ export default function CommentHeader({ comment }: CommentCardProps) {
         community_avatar={comment.community_avatar}
         size={32}
       />
-      <div className="ml-2 max-w-[calc(100vw-150px)]">
+      <div className="ml-2 max-w-[calc(100vw-100px)]">
         <div className="inline-block break-words">
           <CommunityLink
             community_name={comment.community_name}
@@ -73,12 +73,12 @@ export default function CommentHeader({ comment }: CommentCardProps) {
         <BsDot className="inline-block" />
         <Link
           to={`/c/${comment.community_link}/post/${comment.post_permalink}`}
-          className="hover:underline"
+          className="hover:underline w-full break-words"
         >
           <span className="font-bold text-white">{comment.post_title}</span>
         </Link>
         <div className="w-[38px]" />
-        <div className="inline-block mr-1">
+        <div className="inline-block mr-1 break-words">
           <UserLink username={comment.username} />
         </div>
         <div className="inline-block">{userAction}</div>

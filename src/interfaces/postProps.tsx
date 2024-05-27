@@ -10,7 +10,10 @@ export interface PostProps {
   link: string;
   title: string;
   body: string;
+  body_text: string;
+  edited: boolean;
   created_at: string;
+  updated_at: string;
   visits: number;
   upvotes: number;
   downvotes: number;

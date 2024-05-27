@@ -80,7 +80,7 @@ export default function CreatePostForm(props: Props) {
           {props.postType === "text" ? (
             <FancyTextEditor
               content={props.body}
-              setContent={props.setBody}
+              setBody={props.setBody}
               setHTMLbody={props.setHTMLbody}
               formDisabled={props.formDisabled}
             />

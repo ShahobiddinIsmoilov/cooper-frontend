@@ -18,7 +18,6 @@ export default function ProfileMenu({ user }: { user: UserDetailProps }) {
 
   const screenHeight = useWindowSize().screenHeight;
   const avatarsize = screenHeight > 700 ? 36 : 32;
-
   const { language, changeLanguage } = useLanguage();
 
   return (
@@ -70,22 +69,16 @@ export default function ProfileMenu({ user }: { user: UserDetailProps }) {
         shadow="xs"
         withCloseButton={false}
       >
-        <Stack className="items-center">
-          <span className="text-xl">Are you sure you want to log out?</span>
+        <Stack className="items-center px-4">
+          <span className="text-xl">
+            {profile_menu.log_out_modal.text[language]}
+          </span>
           <Group pt={12}>
-            <Button
-              variant="unstyled"
-              onClick={close}
-              className="border border-dark-700 rounded-xl py-2 px-4 w-32 hover:bg-dark-700"
-            >
-              Cancel
+            <Button variant="default" radius={12} onClick={close}>
+              {profile_menu.log_out_modal.cancel[language]}
             </Button>
-            <Button
-              variant="unstyled"
-              onClick={logout}
-              className="border border-dark-700 rounded-xl py-2 px-4 w-32 hover:bg-dark-700 hover:text-red-500"
-            >
-              Log out
+            <Button variant="default" radius={12} onClick={logout}>
+              {profile_menu.log_out_modal.log_out[language]}
             </Button>
           </Group>
         </Stack>
@@ -113,6 +106,8 @@ function MenuItem({ icon, text, onClick }: MenuItemProps) {
 }
 
 function ProfileInfoMenu({ user }: { user: UserDetailProps }) {
+  const { language } = useLanguage();
+
   return (
     <div className="gap-2 px-4 py-2 flex items-center">
       <Avatar
@@ -125,10 +120,53 @@ function ProfileInfoMenu({ user }: { user: UserDetailProps }) {
         <p className="flex items-center gap-1">
           <BiSolidLike className="text-yellow-400" />
           <span className="opacity-75">
-            {user.votes.toLocaleString()} likes
+            {user.votes.toLocaleString() +
+              profile_menu.menu_items.likes[language]}
           </span>
         </p>
       </div>
     </div>
   );
 }
+
+const profile_menu = {
+  menu_items: {
+    likes: {
+      uz: " yoqtirishlar",
+      en: " likes",
+      ru: " likes",
+    },
+    view_profile: {
+      uz: "Profilga o'tish",
+      en: "View Profile",
+      ru: "View profile",
+    },
+    settings: {
+      uz: "Sozlamalar",
+      en: "Settings",
+      ru: "Settings",
+    },
+    log_out: {
+      uz: "Hisobdan chiqish",
+      en: "Log out",
+      ru: "Log out",
+    },
+  },
+  log_out_modal: {
+    text: {
+      uz: "Rostdan ham hisobdan chiqishni xohlaysizmi?",
+      en: "Are you sure you want to log out?",
+      ru: "Are you sure you want to log out?",
+    },
+    cancel: {
+      uz: "Bekor qilish",
+      en: "Cancel",
+      ru: "Cancel",
+    },
+    log_out: {
+      uz: "Chiqish",
+      en: "Log out",
+      ru: "Log out",
+    },
+  },
+};

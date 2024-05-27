@@ -23,24 +23,6 @@ export const lang_sort = {
   },
 };
 
-export const content_options = {
-  save: {
-    uz: "Saqlash",
-    en: "Save",
-    ru: "(неопределенный)",
-  },
-  remove_save: {
-    uz: "Saqlanganlardan olib tashlash",
-    en: "Remove from saved",
-    ru: "(неопределенный)",
-  },
-  report: {
-    uz: "Shikoyat qilish",
-    en: "Report",
-    ru: "(неопределенный)",
-  },
-};
-
 export const content_share = {
   copy_link: {
     uz: "Havolani nusxalash",

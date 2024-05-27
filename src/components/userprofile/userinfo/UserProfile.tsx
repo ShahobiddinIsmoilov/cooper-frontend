@@ -42,12 +42,16 @@ export default function UserProfile({ user }: Props) {
           user_id={user.id}
         />
       </div>
-      <p className="text-white text-3xl font-bold break-words mt-3">
-        {user.display_name}
-      </p>
-      <p className="text-orange-400 text-xl font-bold">{user.username}</p>
-      <div className="flex justify-between">
-        <SocialIcons user={user} />
+      <div className="max-w-[calc(95%)] sm:max-w-full">
+        <p className="text-white text-3xl font-bold break-words mt-3">
+          {user.display_name}
+        </p>
+        <p className="text-orange-400 text-xl font-bold break-words">
+          {user.username}
+        </p>
+        <div className="flex justify-between">
+          <SocialIcons user={user} />
+        </div>
       </div>
     </Stack>
   );

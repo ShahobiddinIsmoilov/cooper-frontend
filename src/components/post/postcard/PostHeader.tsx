@@ -1,5 +1,6 @@
 import { BsDot } from "react-icons/bs";
 import { PostProps } from "../../../interfaces/postProps";
+import { useLanguage } from "../../../contexts/LanguageContext";
 import CommunityLinkAvatar from "../../general/CommunityLinkAvatar";
 import UserLinkAvatar from "../../general/UserLinkAvatar";
 import CommunityLink from "../../general/CommunityLink";
@@ -13,6 +14,8 @@ export interface Props {
 }
 
 export default function PostHeader({ post, variant }: Props) {
+  const { language } = useLanguage();
+
   return (
     <div className="flex justify-between items-center">
       <div className="flex items-center gap-2 max-w-[calc(100vw-72px)] xs:max-w-[calc(100vw-128px)]">
@@ -25,21 +28,34 @@ export default function PostHeader({ post, variant }: Props) {
             size={32}
           />
         )}
-        {variant === "community" ? (
-          <div className="max-w-[calc(65%)] xs:max-w-[calc(85%)] overflow-hidden text-nowrap">
-            <UserLink username={post.username} />
+        <div className="text-nowrap w-full">
+          <div className="flex items-center gap-2 w-full">
+            {variant === "community" ? (
+              <div className="max-w-[calc(65%)] xs:max-w-[calc(85%)] overflow-hidden text-nowrap">
+                <UserLink username={post.username} />
+              </div>
+            ) : (
+              <div className="max-w-[calc(65%)] xs:max-w-[calc(85%)] overflow-hidden text-nowrap">
+                <CommunityLink
+                  community_name={post.community_name}
+                  community_link={post.community_link}
+                />
+              </div>
+            )}
+            <div className="-ml-2 text-white/50 overflow-hidden text-nowrap">
+              <BsDot className="inline-block" />
+              <TimeDisplay time={post.created_at} />
+            </div>
           </div>
-        ) : (
-          <div className="max-w-[calc(65%)] xs:max-w-[calc(85%)] overflow-hidden text-nowrap">
-            <CommunityLink
-              community_name={post.community_name}
-              community_link={post.community_link}
-            />
-          </div>
-        )}
-        <div className="-ml-2 text-white/50 overflow-hidden text-nowrap">
-          <BsDot className="inline-block" />
-          <TimeDisplay time={post.created_at} />
+          {post.edited && (
+            <div className="text-sm text-white/50">
+              (<i>{language === "en" && "edited "}</i>
+              <i>
+                <TimeDisplay time={post.updated_at} />
+              </i>
+              <i>{language === "uz" && " tahrirlangan"}</i>)
+            </div>
+          )}
         </div>
       </div>
       <ContentShare
