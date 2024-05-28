@@ -38,12 +38,12 @@ export default function CommentCard({ comment, last }: CommentCardProps) {
             />
             <div className="flex">
               <div className="overflow-hidden break-words">
-                {!hidden && (
+                {!hidden && !comment.deleted && (
                   <div className="post-detail mx-2 xs:mx-4 mt-2">
                     {ReactHtmlParser(comment.body)}
                   </div>
                 )}
-                {!hidden && (
+                {!hidden && !comment.deleted && (
                   <CommentFooter
                     comment={comment}
                     replyCount={replies && replies.length}
@@ -55,7 +55,7 @@ export default function CommentCard({ comment, last }: CommentCardProps) {
           </div>
         </div>
         <div className="ml-10">
-          {showReply && (
+          {showReply && comment.user && !comment.deleted && (
             <CommentForm
               post={post}
               parent={comment.id}

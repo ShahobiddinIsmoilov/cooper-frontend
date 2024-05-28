@@ -11,9 +11,9 @@ export interface PostProps {
   title: string;
   body: string;
   body_text: string;
-  edited: boolean;
   created_at: string;
-  updated_at: string;
+  edited: boolean;
+  edited_at: string;
   visits: number;
   upvotes: number;
   downvotes: number;
@@ -28,4 +28,5 @@ export interface PostProps {
   saved: boolean;
   hidden: boolean;
   permalink: string;
+  deleted: boolean;
 }

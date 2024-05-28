@@ -9,7 +9,8 @@ export interface CommentProps {
   downvotes: number;
   votes: number;
   created_at: string;
-  updated_at: string;
+  edited: boolean;
+  edited_at: string;
   community: number;
   community_name: string;
   community_link: string;
@@ -20,4 +21,5 @@ export interface CommentProps {
   downvoted: boolean;
   post_permalink: number;
   comment_permalink: string;
+  deleted: boolean;
 }

@@ -90,12 +90,14 @@ export default function CommentFooter({
             <BiDislike className="xs:text-lg" />
           )}
         </div>
-        <button
-          onClick={() => setShowReply(true)}
-          className="font-bold xs:ml-4 px-2 py-1 rounded-full text-xs xs:text-sm hover:bg-dark-700 cursor-pointer text-sky-300"
-        >
-          Reply
-        </button>
+        {comment.user && !comment.deleted && (
+          <button
+            onClick={() => setShowReply(true)}
+            className="font-bold xs:ml-4 px-2 py-1 rounded-full text-xs xs:text-sm hover:bg-dark-700 cursor-pointer text-sky-300"
+          >
+            Reply
+          </button>
+        )}
         {replyCount > 0 && (
           <div className="text-xs xs:text-sm font-bold opacity-50 flex items-center gap-1 xs:gap-2 xs:px-2">
             <FaReply />

@@ -54,6 +54,7 @@ export default function CommunityLink({
 
 export function Preview({ community_link }: { community_link: string }) {
   const user = useAuthContext().user;
+  const { language } = useLanguage();
 
   const { isPending, error, data } = useQuery({
     queryKey: [`community-preview-${community_link}`],
@@ -81,7 +82,7 @@ export function Preview({ community_link }: { community_link: string }) {
     return (
       <div className="overflow-hidden absolute z-30 bg-dark-850 rounded-xl text-white shadow shadow-white">
         <div className="flex justify-center items-center w-96 h-48 opacity-50">
-          Couldn't load data
+          {fetch_error[language]}
         </div>
       </div>
     );
@@ -164,7 +165,15 @@ function CommunityPreview({ community }: CommunityPreviewProps) {
           </Button>
         </div>
       </div>
-      <p className="mx-6 mb-6 text-white/75">{community.description} </p>
+      <p className="mx-6 mb-6 text-white/75 text-wrap">
+        {community.description}{" "}
+      </p>
     </div>
   );
 }
+
+const fetch_error = {
+  uz: "Ma'lumotlarni yuklab bo'lmadi",
+  en: "Couldn't load data",
+  ru: "Couldn't load data",
+};

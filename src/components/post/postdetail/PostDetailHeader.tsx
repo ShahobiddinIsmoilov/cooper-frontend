@@ -55,7 +55,7 @@ export default function PostDetailHeader({ post }: PostDetailHeaderProps) {
             <div className="text-sm text-white/50">
               (<i>{language === "en" && "edited "}</i>
               <i>
-                <TimeDisplay time={post.updated_at} />
+                <TimeDisplay time={post.edited_at} />
               </i>
               <i>{language === "uz" && " tahrirlangan"}</i>)
             </div>
