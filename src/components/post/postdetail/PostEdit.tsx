@@ -22,12 +22,14 @@ export default function PostEdit({ post }: PostDetailProps) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    user !== post.user &&
-      navigate(`/c/${post.community}/post/${post.permalink}`);
+    user !== post.user ||
+      (post.type !== "text" &&
+        navigate(`/c/${post.community}/post/${post.permalink}`));
   }, []);
 
   const api = useCredentials();
   const queryClient = useQueryClient();
+  const username = useAuthContext().user?.username;
   const [editedBody, setEditedBody] = useState(post.body_text);
   const [editedHTMLbody, setEditedHTMLbody] = useState(post.body);
   const [formDisabled, setFormDisabled] = useState(false);
@@ -88,7 +90,7 @@ export default function PostEdit({ post }: PostDetailProps) {
       });
       setFormDisabled(false);
       notifyUpdateSuccess();
-      refresh();
+      refreshPosts();
       navigate(-1);
     },
     onError: () => {
@@ -97,13 +99,19 @@ export default function PostEdit({ post }: PostDetailProps) {
     },
   });
 
-  async function refresh() {
+  function refreshPosts() {
     queryClient.invalidateQueries({ queryKey: ["posts-home"] });
     queryClient.invalidateQueries({ queryKey: ["posts-explore"] });
     queryClient.invalidateQueries({ queryKey: ["posts-all"] });
     queryClient.invalidateQueries({
       queryKey: [`posts-community-${post.community_link}`],
     });
+    queryClient.invalidateQueries({ queryKey: [`useractivity-${username}`] });
+    queryClient.invalidateQueries({ queryKey: [`userposts-${username}`] });
+    queryClient.invalidateQueries({ queryKey: [`usercomments-${username}`] });
+    queryClient.invalidateQueries({ queryKey: [`usersaved`] });
+    queryClient.invalidateQueries({ queryKey: [`userupvoted`] });
+    queryClient.invalidateQueries({ queryKey: [`userdownvoted`] });
   }
 
   async function handleSave() {

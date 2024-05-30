@@ -3,13 +3,13 @@ import { BiLike, BiDislike, BiSolidLike, BiSolidDislike } from "react-icons/bi";
 import { FaComment } from "react-icons/fa";
 import { useWindowSize } from "../../../contexts/WindowSizeContext";
 import { useState } from "react";
-import { ContentOptions } from "../../general/ContentOptions";
 import { PostProps } from "../../../interfaces/postProps";
 import { postcard } from "../lang_post";
 import { useLanguage } from "../../../contexts/LanguageContext";
 import { useAuthContext } from "../../../contexts/AuthContext";
 import { Slide, toast } from "react-toastify";
 import useCredentials from "../../../services/useCredentials";
+import PostOptions from "../../general/PostOptions";
 
 export interface Props {
   post: PostProps;
@@ -116,7 +116,7 @@ export default function PostFooter({ post }: Props) {
           </span>
         </Link>
       </div>
-      <ContentOptions post={post} bg="600" />
+      <PostOptions post={post} bg="600" />
     </div>
   );
 }

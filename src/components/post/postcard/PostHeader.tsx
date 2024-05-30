@@ -1,4 +1,5 @@
 import { BsDot } from "react-icons/bs";
+import { Avatar } from "@mantine/core";
 import { PostProps } from "../../../interfaces/postProps";
 import { useLanguage } from "../../../contexts/LanguageContext";
 import CommunityLinkAvatar from "../../general/CommunityLinkAvatar";
@@ -20,7 +21,14 @@ export default function PostHeader({ post, variant }: Props) {
     <div className="flex justify-between items-center">
       <div className="flex items-center gap-2 max-w-[calc(100vw-72px)] xs:max-w-[calc(100vw-128px)]">
         {variant === "community" ? (
-          <UserLinkAvatar username={post.username} avatar={post.user_avatar} />
+          post.user ? (
+            <UserLinkAvatar
+              username={post.username}
+              avatar={post.user_avatar}
+            />
+          ) : (
+            <Avatar size={32}></Avatar>
+          )
         ) : (
           <CommunityLinkAvatar
             community_link={post.community_link}
@@ -32,7 +40,11 @@ export default function PostHeader({ post, variant }: Props) {
           <div className="flex items-center gap-2 w-full">
             {variant === "community" ? (
               <div className="max-w-[calc(65%)] xs:max-w-[calc(85%)] overflow-hidden text-nowrap">
-                <UserLink username={post.username} />
+                {post.user ? (
+                  <UserLink username={post.username} />
+                ) : (
+                  <p className="text-white/50">[{deleted_account[language]}]</p>
+                )}
               </div>
             ) : (
               <div className="max-w-[calc(65%)] xs:max-w-[calc(85%)] overflow-hidden text-nowrap">
@@ -66,3 +78,9 @@ export default function PostHeader({ post, variant }: Props) {
     </div>
   );
 }
+
+const deleted_account = {
+  uz: "hisob o'chirilgan",
+  en: "deleted account",
+  ru: "deleted account",
+};

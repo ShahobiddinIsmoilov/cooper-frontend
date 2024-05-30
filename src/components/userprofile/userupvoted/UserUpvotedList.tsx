@@ -19,7 +19,7 @@ export default function UserUpvotedList({
   const { language } = useLanguage();
 
   const { isPending, error, data } = useQuery({
-    queryKey: ["user-upvoted"],
+    queryKey: ["userupvoted"],
     queryFn: () =>
       getUserPosts(
         `/api/post/privatelist/?filter=upvoted&user=${user}&sort=${sort}`
@@ -30,7 +30,9 @@ export default function UserUpvotedList({
 
   if (error) return <FetchError mt={8} />;
 
-  const posts = data.data;
+  const posts = data.data.filter(
+    (element: PostProps) => element.deleted === false
+  );
 
   return (
     <Stack gap={0}>

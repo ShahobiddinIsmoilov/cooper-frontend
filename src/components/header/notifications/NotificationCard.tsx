@@ -43,24 +43,42 @@ export default function NotificationCard({
         }`}
       >
         <button onClick={goToComment} className="flex gap-2 text-start">
-          <Avatar src={notif.sender_avatar} />
+          <Avatar
+            src={
+              notif.sender_deleted || notif.comment_deleted
+                ? null
+                : notif.sender_avatar
+            }
+          />
           <div
             className={`break-words text-sm font-bold ${
               closeMenu ? "w-[277px]" : "max-w-[calc(100vw-130px)]"
             } `}
           >
-            <span className="text-orange-400 mr-1">{notif.sender}</span>
+            {notif.sender_deleted || notif.comment_deleted ? (
+              <span className="font-bold mr-1 text-white/50">
+                [{notif_lang.deleted.user[language]}]
+              </span>
+            ) : (
+              <span className="text-orange-400 mr-1">{notif.sender}</span>
+            )}
             {notif.type === "post_reply"
-              ? notif_type.comment[language]
-              : notif_type.reply[language]}{" "}
+              ? notif_lang.notif_type.comment[language]
+              : notif_lang.notif_type.reply[language]}{" "}
             <span className="text-blue-400">{notif.community_name}</span>
             <span className="inline-block items-center text-white/50 font-normal">
               <BsDot className="inline-block" />
               <TimeDisplay time={notif.created_at} />
             </span>
-            <div className="post-detail line-clamp-3 font-normal">
-              {ReactHtmlParser(notif.comment)}
-            </div>
+            {notif.comment_deleted ? (
+              <div className="text-white/50">
+                [{notif_lang.deleted.comment[language]}]
+              </div>
+            ) : (
+              <div className="post-detail line-clamp-3 font-normal">
+                {ReactHtmlParser(notif.comment)}
+              </div>
+            )}
           </div>
         </button>
         <div className="flex items-center">
@@ -82,15 +100,29 @@ export default function NotificationCard({
   );
 }
 
-const notif_type = {
-  comment: {
-    uz: "postingizga fikr bildirdi",
-    en: "commented on your post in",
-    ru: "commented on your post in",
+const notif_lang = {
+  notif_type: {
+    comment: {
+      uz: "postingizga fikr bildirdi",
+      en: "commented on your post in",
+      ru: "commented on your post in",
+    },
+    reply: {
+      uz: "fikringizga javob qaytardi",
+      en: "replied to your comment in",
+      ru: "replied to your comment in",
+    },
   },
-  reply: {
-    uz: "fikringizga javob qaytardi",
-    en: "replied to your comment in",
-    ru: "replied to your comment in",
+  deleted: {
+    user: {
+      uz: "o'chirilgan",
+      en: "deleted",
+      ru: "deleted",
+    },
+    comment: {
+      uz: "fikr o'chirib yuborilgan",
+      en: "comment was deleted",
+      ru: "comment was deleted",
+    },
   },
 };

@@ -5,6 +5,8 @@ export interface CommentProps {
   post_title: string;
   parent: number;
   parent_username: string;
+  parent_deleted: boolean;
+  parent_user_deleted: boolean;
   upvotes: number;
   downvotes: number;
   votes: number;
@@ -20,6 +22,7 @@ export interface CommentProps {
   upvoted: boolean;
   downvoted: boolean;
   post_permalink: number;
+  post_deleted: boolean;
   comment_permalink: string;
   deleted: boolean;
 }

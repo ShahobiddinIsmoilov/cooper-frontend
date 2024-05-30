@@ -15,7 +15,7 @@ export default function UserSavedList({ sortOption }: { sortOption: string }) {
   const { language } = useLanguage();
 
   const { isPending, error, data } = useQuery({
-    queryKey: ["user-saved"],
+    queryKey: ["usersaved"],
     queryFn: () =>
       getUserPosts(
         `/api/post/privatelist/?filter=saved&user=${user}&sort=${sort}`
@@ -26,7 +26,9 @@ export default function UserSavedList({ sortOption }: { sortOption: string }) {
 
   if (error) return <FetchError mt={8} />;
 
-  const posts = data.data;
+  const posts = data.data.filter(
+    (element: PostProps) => element.deleted === false
+  );
 
   return (
     <Stack gap={0}>

@@ -34,7 +34,9 @@ export default function UserPostList({ sortOption }: { sortOption: string }) {
 
   if (error) return <FetchError mt={8} />;
 
-  const posts = data.data;
+  const posts = data.data.filter(
+    (element: PostProps) => element.deleted === false
+  );
 
   return (
     <Stack gap={0}>

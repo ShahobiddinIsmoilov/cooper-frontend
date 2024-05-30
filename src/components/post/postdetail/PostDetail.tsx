@@ -1,4 +1,5 @@
 import { PostProps } from "../../../interfaces/postProps";
+import { useLanguage } from "../../../contexts/LanguageContext";
 import PostDetailHeader from "./PostDetailHeader";
 import Line from "../../../utils/Line";
 import CommentFeed from "../../comment/CommentFeed";
@@ -14,13 +15,17 @@ interface PostDetailProps {
 }
 
 export default function PostDetail({ post, community }: PostDetailProps) {
+  const { language } = useLanguage();
+
   return (
     <div className="my-2 mx-4 max-w-3xl">
       <PostDetailHeader post={post} />
       <div className="text-lg xs:text-xl font-bold text-white mt-3 mb-2 leading-snug xs:leading-normal break-words">
         {post.title}
       </div>
-      {post.type === "text" ? (
+      {post.deleted ? (
+        <p className="text-white/50">[{deleted[language]}]</p>
+      ) : post.type === "text" ? (
         <div className="post-detail overflow-hidden break-words leading-snug xs:leading-normal">
           {ReactHtmlParser(post.body)}
         </div>
@@ -39,3 +44,9 @@ export default function PostDetail({ post, community }: PostDetailProps) {
     </div>
   );
 }
+
+const deleted = {
+  uz: "post o'chirib yuborilgan",
+  en: "post was deleted",
+  ru: "post was deleted",
+};

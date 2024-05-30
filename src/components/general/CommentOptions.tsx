@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { Slide, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -7,15 +6,20 @@ import { PostProps } from "../../interfaces/postProps";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { Menu, MenuItem, MenuButton } from "@szhsin/react-menu";
-import { FaRegBookmark, FaBookmark, FaRegFlag } from "react-icons/fa6";
+import { FaRegFlag } from "react-icons/fa6";
 import useCredentials from "../../services/useCredentials";
 import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
 import "./content-menu.css";
 
-export function ContentOptions({ post, bg }: { post: PostProps; bg: string }) {
+export default function CommentOptions({
+  comment,
+  bg,
+}: {
+  comment: PostProps;
+  bg: string;
+}) {
   const api = useCredentials();
-  const [saved, setSaved] = useState(post.saved);
   const { user } = useAuthContext();
   const { language } = useLanguage();
   const navigate = useNavigate();
@@ -33,55 +37,9 @@ export function ContentOptions({ post, bg }: { post: PostProps; bg: string }) {
       transition: Slide,
     });
 
-  const notifySaveSuccess = () =>
-    toast.success(content_options.toast.saved[language], {
-      position: "top-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-      transition: Slide,
-    });
-
-  const notifyUndoSaveSuccess = () =>
-    toast.info(content_options.toast.unsaved[language], {
-      position: "top-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-      transition: Slide,
-    });
-
-  function handleSave() {
-    if (user) {
-      saved
-        ? api
-            .post("/api/post/action/", { action: "undo_save", post: post.id })
-            .then(() => {
-              setSaved(false);
-              notifyUndoSaveSuccess();
-            })
-        : api
-            .post("/api/post/action/", { action: "save", post: post.id })
-            .then(() => {
-              setSaved(true);
-              notifySaveSuccess();
-            });
-    } else {
-      notifyNotAuthenticated();
-    }
-  }
-
-  function handleEdit() {
-    navigate(`/c/${post.community_link}/post/${post.permalink}/edit`);
-  }
+  // function handleEdit() {
+  //   navigate(`/c/${comment.community_link}/comment/${comment.permalink}/edit`);
+  // }
 
   // function handleDelete() {}
 
@@ -103,28 +61,15 @@ export function ContentOptions({ post, bg }: { post: PostProps; bg: string }) {
         zIndex: 2,
       }}
     >
-      <MenuItem
-        onClick={handleSave}
-        className="content-menuitem flex gap-2 items-center cursor-pointer rounded-lg text-white mb-2"
-      >
-        {saved ? <FaBookmark size={20} /> : <FaRegBookmark size={20} />}
-        <span>
-          {saved
-            ? content_options.menu_items.remove_save[language]
-            : content_options.menu_items.save[language]}
-        </span>
-      </MenuItem>
-      {user?.user_id === post.user ? (
+      {user?.user_id === comment.user ? (
         <>
-          {post.type === "text" && (
-            <MenuItem
-              onClick={handleEdit}
-              className="my-2 content-menuitem flex gap-2 items-center cursor-pointer rounded-lg text-white"
-            >
-              <FaEdit size={20} />
-              <span>{content_options.menu_items.edit[language]}</span>
-            </MenuItem>
-          )}
+          <MenuItem
+            // onClick={handleEdit}
+            className="my-2 content-menuitem flex gap-2 items-center cursor-pointer rounded-lg text-white"
+          >
+            <FaEdit size={20} />
+            <span>{content_options.menu_items.edit[language]}</span>
+          </MenuItem>
           <MenuItem className="mt-2 content-menuitem flex gap-2 items-center cursor-pointer rounded-lg text-white">
             <FaRegTrashAlt size={20} />
             <span>{content_options.menu_items.delete[language]}</span>

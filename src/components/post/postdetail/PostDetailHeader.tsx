@@ -43,9 +43,15 @@ export default function PostDetailHeader({ post }: PostDetailHeaderProps) {
               screenWidth < 768 && "max-w-[calc(100vw-150px)]"
             }`}
           >
-            <div className="max-w-[65%] sm:max-w-full overflow-hidden">
-              <UserLink username={post.username} />
-            </div>
+            {post.deleted ? (
+              <p>{[deleted.deleted_post[language]]}</p>
+            ) : post.user ? (
+              <div className="max-w-[65%] sm:max-w-full overflow-hidden">
+                <UserLink username={post.username} />
+              </div>
+            ) : (
+              <p>[{deleted.deleted_account[language]}]</p>
+            )}
             <div>
               <BsDot className="inline-block" />
               <TimeDisplay time={post.created_at} />
@@ -70,3 +76,16 @@ export default function PostDetailHeader({ post }: PostDetailHeaderProps) {
     </div>
   );
 }
+
+const deleted = {
+  deleted_post: {
+    uz: "o'chirilgan",
+    en: "deleted",
+    ru: "deleted",
+  },
+  deleted_account: {
+    uz: "hisob o'chirilgan",
+    en: "deleted account",
+    ru: "deleted account",
+  },
+};

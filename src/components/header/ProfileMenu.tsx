@@ -74,10 +74,16 @@ export default function ProfileMenu({ user }: { user: UserDetailProps }) {
             {profile_menu.log_out_modal.text[language]}
           </span>
           <Group pt={12}>
-            <Button variant="default" radius={12} onClick={close}>
+            <Button size="md" variant="default" radius={12} onClick={close}>
               {profile_menu.log_out_modal.cancel[language]}
             </Button>
-            <Button variant="default" radius={12} onClick={logout}>
+            <Button
+              size="md"
+              variant="default"
+              radius={12}
+              onClick={logout}
+              className="text-red-400"
+            >
               {profile_menu.log_out_modal.log_out[language]}
             </Button>
           </Group>

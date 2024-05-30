@@ -19,7 +19,7 @@ export default function UserDownvotedList({
   const { language } = useLanguage();
 
   const { isPending, error, data } = useQuery({
-    queryKey: ["user-downvoted"],
+    queryKey: ["userdownvoted"],
     queryFn: () =>
       getUserPosts(
         `/api/post/privatelist/?filter=downvoted&user=${user}&sort=${sort}`
@@ -30,7 +30,9 @@ export default function UserDownvotedList({
 
   if (error) return <FetchError mt={8} />;
 
-  const posts = data.data;
+  const posts = data.data.filter(
+    (element: PostProps) => element.deleted === false
+  );
 
   return (
     <Stack gap={0}>

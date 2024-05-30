@@ -10,5 +10,7 @@ export interface NotifProps {
   is_read: boolean;
   receiver: number;
   comment: string;
+  comment_deleted: boolean;
   sender_avatar: string;
+  sender_deleted: boolean;
 }

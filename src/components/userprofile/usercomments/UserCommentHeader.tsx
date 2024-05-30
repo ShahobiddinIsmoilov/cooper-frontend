@@ -30,7 +30,13 @@ export default function CommentHeader({ comment }: CommentCardProps) {
           <span className="text-white/50">
             <TimeDisplay time={comment.created_at} />{" "}
           </span>
-          <UserLink username={comment.parent_username} />
+          {comment.parent_deleted || comment.parent_user_deleted ? (
+            <span className="text-white/50 font-bold">
+              [{deleted.user[language]}]
+            </span>
+          ) : (
+            <UserLink username={comment.parent_username} />
+          )}
           <span className="text-white/50">ga javob yozdi</span>
         </Flex>
       );
@@ -71,12 +77,16 @@ export default function CommentHeader({ comment }: CommentCardProps) {
           />
         </div>
         <BsDot className="inline-block" />
-        <Link
-          to={`/c/${comment.community_link}/post/${comment.post_permalink}`}
-          className="hover:underline w-full break-words"
-        >
-          <span className="font-bold text-white">{comment.post_title}</span>
-        </Link>
+        {comment.post_deleted ? (
+          <span className="text-white/50">[{deleted.post[language]}]</span>
+        ) : (
+          <Link
+            to={`/c/${comment.community_link}/post/${comment.post_permalink}`}
+            className="hover:underline w-full break-words"
+          >
+            <span className="font-bold text-white">{comment.post_title}</span>
+          </Link>
+        )}
         <div className="w-[38px]" />
         <div className="inline-block mr-1 break-words">
           <UserLink username={comment.username} />
@@ -86,3 +96,16 @@ export default function CommentHeader({ comment }: CommentCardProps) {
     </Flex>
   );
 }
+
+const deleted = {
+  post: {
+    uz: "post o'chirib yuborilgan",
+    en: "deleted post",
+    ru: "deleted post",
+  },
+  user: {
+    uz: "o'chirilgan",
+    en: "deleted",
+    ru: "deleted",
+  },
+};

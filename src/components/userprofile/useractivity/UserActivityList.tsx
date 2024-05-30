@@ -40,7 +40,9 @@ export default function UserActivityList({
 
   if (error) return <FetchError mt={8} />;
 
-  const list = data.data;
+  const list = data.data.filter(
+    (element: PostProps) => element.deleted === false
+  );
 
   return (
     <Stack gap={0}>

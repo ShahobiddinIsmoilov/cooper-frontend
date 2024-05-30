@@ -38,7 +38,9 @@ export default function UserCommentList({
 
   if (error) return <FetchError mt={8} />;
 
-  const comments = data.data;
+  const comments = data.data.filter(
+    (element: CommentProps) => element.deleted === false
+  );
 
   return (
     <Stack gap={0}>
