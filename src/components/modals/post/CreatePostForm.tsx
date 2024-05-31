@@ -99,6 +99,7 @@ export default function CreatePostForm(props: Props) {
         </div>
         <Group justify="flex-end">
           <Button
+            disabled={props.formDisabled}
             variant="default"
             onClick={props.closeForm}
             size={isSmall ? "sm" : "md"}
@@ -110,9 +111,9 @@ export default function CreatePostForm(props: Props) {
             type="submit"
             size={isSmall ? "sm" : "md"}
             radius={12}
-            disabled={props.title.length === 0 ? true : false}
+            disabled={props.title.length === 0 || props.formDisabled}
             className={
-              props.title.length === 0
+              props.title.length === 0 || props.formDisabled
                 ? "bg-dark-700"
                 : "bg-cyan-700 hover:bg-cyan-600"
             }
