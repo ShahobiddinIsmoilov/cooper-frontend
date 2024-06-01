@@ -19,7 +19,7 @@ export default function PostHeader({ post, variant }: Props) {
 
   return (
     <div className="flex justify-between items-center">
-      <div className="flex items-center gap-2 max-w-[calc(100vw-72px)] xs:max-w-[calc(100vw-128px)]">
+      <div className="flex items-center gap-2 max-w-[calc(100vw-72px)] xs:max-w-[calc(100vw-128px)] overflow-hidden">
         {variant === "community" ? (
           post.user ? (
             <UserLinkAvatar
