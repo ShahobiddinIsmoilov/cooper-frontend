@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../services/makeRequest";
 import ProfileMenu from "./ProfileMenu";
 import Notifications from "./notifications/Notifications";
-// import CreatePost from "../modals/post/CreatePost";
+import CreatePost from "../modals/post/CreatePost";
 
 export default function Dashboard({ username }: { username: string }) {
   const { isPending, error, data } = useQuery({
@@ -19,7 +19,7 @@ export default function Dashboard({ username }: { username: string }) {
 
   return (
     <Flex align="center" gap={8}>
-      {/* <CreatePost /> */}
+      <CreatePost />
       <Notifications count={user.notifications} />
       <ProfileMenu user={user} />
     </Flex>

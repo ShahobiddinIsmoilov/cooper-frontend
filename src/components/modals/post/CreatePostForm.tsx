@@ -4,6 +4,8 @@ import { post } from "../lang_modals";
 import { useLanguage } from "../../../contexts/LanguageContext";
 import { IoMdClose } from "react-icons/io";
 import { useWindowSize } from "../../../contexts/WindowSizeContext";
+import { ImSpinner4 } from "react-icons/im";
+import validator from "validator";
 import CommunityCombobox from "./CommunityCombobox";
 import FancyTextEditor from "./FancyTextEditor";
 import PostTitle from "./PostTitle";
@@ -12,29 +14,40 @@ import LinkInput from "./LinkInput";
 import UserAvatar from "./UserAvatar";
 
 interface Props {
-  community_avatar?: string;
+  communityAvatar?: string;
+  communityName: string | undefined;
   postType: string;
-  combobox: string | undefined;
   title: string;
   body: string;
   formDisabled: boolean;
   image: FileWithPath | null;
   link: string;
+  linkRaw: string;
   titleChanged: boolean;
+  setCommunityId: (value: number) => void;
+  setCommunityAvatar: (value: string) => void;
+  setCommunityName: (value: string) => void;
   setTitle: (value: string) => void;
   setBody: (value: string) => void;
   setHTMLbody: (value: string) => void;
-  setCombobox: (value: string) => void;
   handleSubmit: (value: any) => void;
   closeForm: () => void;
   setImage: (image: FileWithPath) => void;
   setLink: (link: string) => void;
+  setLinkRaw: (link: string) => void;
   setTitleChanged: (value: boolean) => void;
 }
 
 export default function CreatePostForm(props: Props) {
   const { language } = useLanguage();
   const isSmall = useWindowSize().screenWidth < 768;
+  let safeToPost =
+    props.title.length > 0 &&
+    props.communityAvatar != undefined &&
+    !props.formDisabled;
+  if (props.postType === "image" && !props.image) safeToPost = false;
+  if (props.postType === "link" && !validator.isURL(props.linkRaw))
+    safeToPost = false;
 
   return (
     <form onSubmit={(e) => props.handleSubmit(e)}>
@@ -63,9 +76,11 @@ export default function CreatePostForm(props: Props) {
             </button>
           </div>
           <CommunityCombobox
-            community_name={props.combobox}
-            community_avatar={props.community_avatar}
-            setCommunity={props.setCombobox}
+            communityName={props.communityName}
+            communityAvatar={props.communityAvatar}
+            setCommunityId={props.setCommunityId}
+            setCommunityAvatar={props.setCommunityAvatar}
+            setCommunityName={props.setCommunityName}
           />
         </div>
         <div className="mb-3 sm:mb-4">
@@ -90,6 +105,7 @@ export default function CreatePostForm(props: Props) {
             <LinkInput
               link={props.link}
               setLink={props.setLink}
+              setLinkRaw={props.setLinkRaw}
               title={props.title}
               setTitle={props.setTitle}
               titleChanged={props.titleChanged}
@@ -111,14 +127,17 @@ export default function CreatePostForm(props: Props) {
             type="submit"
             size={isSmall ? "sm" : "md"}
             radius={12}
-            disabled={props.title.length === 0 || props.formDisabled}
+            disabled={!safeToPost}
             className={
-              props.title.length === 0 || props.formDisabled
+              !safeToPost || props.formDisabled
                 ? "bg-dark-700"
                 : "bg-cyan-700 hover:bg-cyan-600"
             }
           >
             {post.create_post[language]}
+            {props.formDisabled && (
+              <ImSpinner4 size={18} className="animate-spin ml-2" />
+            )}
           </Button>
         </Group>
       </Stack>

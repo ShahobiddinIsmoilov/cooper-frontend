@@ -7,21 +7,28 @@ import {
   useCombobox,
 } from "@mantine/core";
 import { useWindowSize } from "../../../contexts/WindowSizeContext";
+import { useLanguage } from "../../../contexts/LanguageContext";
 import ComboboxDropdown from "./ComboboxDropdown";
 
 interface CommunityComboboxProps {
-  community_name?: string;
-  community_avatar?: string;
-  setCommunity: (community: string) => void;
+  communityName?: string;
+  communityAvatar?: string;
+  setCommunityId: (value: number) => void;
+  setCommunityAvatar: (value: string) => void;
+  setCommunityName: (value: string) => void;
   formDisabled?: boolean;
 }
 
 export default function CommunityCombobox({
-  community_name,
-  community_avatar,
-  setCommunity,
+  communityName,
+  communityAvatar,
+  setCommunityId,
+  setCommunityAvatar,
+  setCommunityName,
+  formDisabled,
 }: CommunityComboboxProps) {
   const isSmall = useWindowSize().screenWidth < 768;
+  const { language } = useLanguage();
 
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
@@ -36,11 +43,15 @@ export default function CommunityCombobox({
 
   return (
     <Combobox
+      disabled={formDisabled}
       radius={12}
       store={combobox}
       resetSelectionOnOptionHover
-      onOptionSubmit={(val) => {
-        setCommunity(val);
+      onOptionSubmit={(value) => {
+        const separated = value.split("@@@");
+        setCommunityId(Number(separated[0]));
+        setCommunityAvatar(separated[1]);
+        setCommunityName(separated[2]);
         combobox.updateSelectedOptionIndex("active");
         combobox.closeDropdown();
       }}
@@ -55,30 +66,44 @@ export default function CommunityCombobox({
           rightSection={<Combobox.Chevron />}
           rightSectionPointerEvents="none"
           onClick={() => combobox.toggleDropdown()}
-          w={{ base: "auto", xs: "300px" }}
+          w={{ base: "auto", xs: "350px" }}
           bg={"dark"}
           className="overflow-hidden border border-[#424242] rounded-[4px] pl-4"
         >
           <div className="font-bold">
-            {community_name ? (
+            {communityName ? (
               <Flex gap="xs" className="overflow-hidden items-center">
                 <Avatar
-                  src={community_avatar}
+                  src={communityAvatar}
                   size={isSmall ? 24 : 28}
                   miw={isSmall ? 24 : 28}
                 />
-                <span className="truncate">{community_name}</span>
+                <span className="truncate">{communityName}</span>
               </Flex>
             ) : (
-              <Input.Placeholder>Choose a community</Input.Placeholder>
+              <Input.Placeholder>{placeholder[language]}</Input.Placeholder>
             )}
           </div>
         </InputBase>
       </Combobox.Target>
-
       <Combobox.Dropdown>
-        <Combobox.Options>{<ComboboxDropdown />}</Combobox.Options>
+        <Combobox.Options
+          mah={400}
+          style={{
+            overflowY: "auto",
+            scrollbarWidth: "thin",
+            scrollbarColor: "#595959 rgba(0, 0, 0, 0)",
+          }}
+        >
+          <ComboboxDropdown />
+        </Combobox.Options>
       </Combobox.Dropdown>
     </Combobox>
   );
 }
+
+const placeholder = {
+  uz: "Hamjamiyat tanlang",
+  en: "Choose a community",
+  ru: "Choose a community",
+};

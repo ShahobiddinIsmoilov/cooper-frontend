@@ -20,6 +20,7 @@ export default function PostDetailFooter({ post }: Props) {
   const [downvoted, setDownvoted] = useState(post.downvoted);
   const [upvoteCount, setUpvoteCount] = useState(post.upvotes);
   const [downvoteCount, setDownvoteCount] = useState(post.downvotes);
+  const [disabled, setDisabled] = useState(false);
   const { language } = useLanguage();
   const { user } = useAuthContext();
   const api = useCredentials();
@@ -37,35 +38,51 @@ export default function PostDetailFooter({ post }: Props) {
       transition: Slide,
     });
 
-  function handleUpvote() {
+  async function handleUpvote() {
     if (user) {
-      setUpvoteCount((prevUpvoteCount) => prevUpvoteCount + 1);
-      setDownvoteCount((prevDownvoteCount) =>
-        downvoted ? prevDownvoteCount - 1 : prevDownvoteCount
-      );
-      setUpvoted(true);
+      setDisabled(true);
+      let newUpvoteCount = upvoteCount;
+      if (upvoted) {
+        newUpvoteCount -= 1;
+      } else if (downvoted) {
+        newUpvoteCount += 1;
+        setDownvoteCount(downvoteCount - 1);
+      } else {
+        newUpvoteCount += 1;
+      }
+      setUpvoteCount(newUpvoteCount);
+      setUpvoted(!upvoted);
       setDownvoted(false);
-      api.post("/api/post/action/", {
-        action: "upvote",
+      await api.post("/api/post/action/", {
+        action: upvoted ? "undo_upvote" : "upvote",
         post: post.id,
       });
+      setDisabled(false);
     } else {
       notifyNotAuthenticated();
     }
   }
 
-  function handleDownvote() {
+  async function handleDownvote() {
     if (user) {
-      setDownvoteCount((prevDownvoteCount) => prevDownvoteCount + 1);
-      setUpvoteCount((prevUpvoteCount) =>
-        upvoted ? prevUpvoteCount - 1 : prevUpvoteCount
-      );
-      setDownvoted(true);
+      setDisabled(true);
+      let newDownvotes = downvoteCount;
+      if (downvoted) {
+        newDownvotes -= 1;
+      } else if (upvoted) {
+        newDownvotes += 1;
+        setUpvoteCount(upvoteCount - 1);
+      } else {
+        newDownvotes += 1;
+      }
+      setDownvoteCount(newDownvotes);
+      setDownvoted(!downvoted);
       setUpvoted(false);
-      api.post("/api/post/action/", {
-        action: "downvote",
+      await api.post("/api/post/action/", {
+        action: downvoted ? "undo_downvote" : "downvote",
         post: post.id,
       });
+      setDisabled(false);
     } else {
       notifyNotAuthenticated();
     }
@@ -76,6 +93,7 @@ export default function PostDetailFooter({ post }: Props) {
       <div className="flex items-center gap-1 xs:gap-4">
         <div className="flex items-center xs:gap-1 bg-dark-900 xs:bg-transparent rounded-full">
           <button
+            disabled={disabled}
             onClick={handleUpvote}
             className={`p-2 rounded-full cursor-pointer hover:bg-dark-700 text-yellow-400 hover:text-green-400`}
           >
@@ -89,6 +107,7 @@ export default function PostDetailFooter({ post }: Props) {
             {upvoteCount}
           </span>
           <button
+            disabled={disabled}
             onClick={handleDownvote}
             className="p-2 ml-2 rounded-full cursor-pointer hover:bg-dark-700 text-yellow-400 hover:text-red-400"
           >

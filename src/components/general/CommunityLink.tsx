@@ -8,6 +8,7 @@ import { join_button } from "./lang_general";
 import { infobar } from "../lang_components";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { useAuthContext } from "../../contexts/AuthContext";
+import { Slide, toast } from "react-toastify";
 import getCommunityDetail from "../../services/community/getCommunityDetail";
 import useCredentials from "../../services/useCredentials";
 
@@ -82,7 +83,7 @@ export function Preview({ community_link }: { community_link: string }) {
     return (
       <div className="overflow-hidden absolute z-30 bg-dark-850 rounded-xl text-white shadow shadow-white">
         <div className="flex justify-center items-center w-96 h-48 opacity-50">
-          {fetch_error[language]}
+          {lang.fetch_error[language]}
         </div>
       </div>
     );
@@ -101,27 +102,50 @@ interface CommunityPreviewProps {
 function CommunityPreview({ community }: CommunityPreviewProps) {
   const api = useCredentials();
   const query = useQueryClient();
+  const { user } = useAuthContext();
   const { language } = useLanguage();
+  const [loading, setLoading] = useState(false);
+
+  const notifyNotAuthenticated = () =>
+    toast.error(lang.unauthorized[language], {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Slide,
+    });
 
   function handleClick() {
-    if (community.is_joined) {
-      api
-        .get(`/api/community/action/${community.id}/?action=leave`)
-        .then(() => refresh());
+    if (user) {
+      setLoading(true);
+      if (community.is_joined) {
+        api
+          .get(`/api/community/action/${community.id}/?action=leave`)
+          .then(() => refresh());
+      } else {
+        api
+          .get(`/api/community/action/${community.id}/?action=join`)
+          .then(() => refresh());
+      }
     } else {
-      api
-        .get(`/api/community/action/${community.id}/?action=join`)
-        .then(() => refresh());
+      notifyNotAuthenticated();
     }
   }
 
-  function refresh() {
-    query.invalidateQueries({ queryKey: ["community-list-joined"] });
-    query.invalidateQueries({ queryKey: ["community-list-discover"] });
-    query.invalidateQueries({ queryKey: [`community-page-${community.link}`] });
-    query.invalidateQueries({
+  async function refresh() {
+    await query.invalidateQueries({ queryKey: ["community-list-joined"] });
+    await query.invalidateQueries({ queryKey: ["community-list-discover"] });
+    await query.invalidateQueries({
+      queryKey: [`community-page-${community.link}`],
+    });
+    await query.invalidateQueries({
       queryKey: [`community-preview-${community.link}`],
     });
+    setLoading(false);
   }
 
   return (
@@ -153,10 +177,17 @@ function CommunityPreview({ community }: CommunityPreviewProps) {
         </div>
         <div className="mt-1">
           <Button
+            disabled={loading}
             size="xs"
             onClick={handleClick}
             className={`rounded-full px-3 ${
-              community.is_joined ? "button-secondary" : "button-primary"
+              community.is_joined
+                ? loading
+                  ? "button-secondary-disabled"
+                  : "button-secondary"
+                : loading
+                ? "button-primary-disabled"
+                : "button-primary"
             }`}
           >
             {community.is_joined
@@ -172,8 +203,15 @@ function CommunityPreview({ community }: CommunityPreviewProps) {
   );
 }
 
-const fetch_error = {
-  uz: "Ma'lumotlarni yuklab bo'lmadi",
-  en: "Couldn't load data",
-  ru: "Couldn't load data",
+const lang = {
+  unauthorized: {
+    uz: "A'zo bo'lish uchun hisobingizga kiring",
+    en: "You must be logged in to join a community",
+    ru: "You must be logged in to join a community",
+  },
+  fetch_error: {
+    uz: "Ma'lumotlarni yuklab bo'lmadi",
+    en: "Couldn't load data",
+    ru: "Couldn't load data",
+  },
 };

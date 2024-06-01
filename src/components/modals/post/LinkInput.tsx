@@ -10,18 +10,20 @@ interface Props {
   link: string;
   title: string;
   formDisabled: boolean;
-  setLink: (link: string) => void;
-  setTitle: (title: string) => void;
   titleChanged: boolean;
+  setLink: (link: string) => void;
+  setLinkRaw: (link: string) => void;
+  setTitle: (title: string) => void;
 }
 
 export default function LinkInput({
   link,
-  setLink,
   title,
-  setTitle,
   titleChanged,
   formDisabled,
+  setLink,
+  setLinkRaw,
+  setTitle,
 }: Props) {
   const [isUrl, setIsUrl] = useState(false);
   const [showIncorrectUrlError, setShowIncorrectUrlError] = useState(false);
@@ -29,6 +31,7 @@ export default function LinkInput({
   const isSmall = useWindowSize().screenWidth < 768;
 
   function validateUrl(url: string) {
+    setLinkRaw(url);
     if (validator.isURL(url)) {
       setIsUrl(true);
       if (!url.startsWith("www") && !url.startsWith("http")) url = "www." + url;

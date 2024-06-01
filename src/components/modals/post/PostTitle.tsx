@@ -34,7 +34,6 @@ export default function PostTitle({
         variant="unstyled"
         maxLength={200}
         bg={"dark"}
-        data-autofocus
         autosize
         placeholder={post.title[language]}
         size={isSmall ? "md" : "lg"}

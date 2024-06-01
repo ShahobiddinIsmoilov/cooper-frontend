@@ -62,7 +62,7 @@ export default function LinkPreview({
     }
 
     // set the title of the post to the title of the page
-    title === "" && !titleChanged && setTitle && setTitle(title);
+    title === "" && !titleChanged && setTitle && setTitle(metadata.title);
 
     return (
       <div className="mt-2">

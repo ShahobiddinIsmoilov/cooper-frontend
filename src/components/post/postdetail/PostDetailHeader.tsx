@@ -44,7 +44,7 @@ export default function PostDetailHeader({ post }: PostDetailHeaderProps) {
             }`}
           >
             {post.deleted ? (
-              <p>{[deleted.deleted_post[language]]}</p>
+              <p>[{deleted.deleted_post[language]}]</p>
             ) : post.user ? (
               <div className="max-w-[65%] sm:max-w-full overflow-hidden">
                 <UserLink username={post.username} />
@@ -52,12 +52,14 @@ export default function PostDetailHeader({ post }: PostDetailHeaderProps) {
             ) : (
               <p>[{deleted.deleted_account[language]}]</p>
             )}
-            <div>
-              <BsDot className="inline-block" />
-              <TimeDisplay time={post.created_at} />
-            </div>
+            {!post.deleted && (
+              <div>
+                <BsDot className="inline-block" />
+                <TimeDisplay time={post.created_at} />
+              </div>
+            )}
           </div>
-          {post.edited && (
+          {post.edited && !post.deleted && (
             <div className="text-sm text-white/50">
               (<i>{language === "en" && "edited "}</i>
               <i>

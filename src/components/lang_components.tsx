@@ -16,7 +16,7 @@ export const navbar = {
   },
   create_community: {
     uz: "Hamjamiyat yaratish",
-    en: "Create community",
+    en: "Create a community",
     ru: "(неопределенный)",
   },
   joined_communities: {

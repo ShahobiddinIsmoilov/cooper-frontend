@@ -24,8 +24,9 @@ interface Props {
 export default function CreatePost(props: Props) {
   const api = useCredentials();
   const queryClient = useQueryClient();
-  const { language } = useLanguage();
   const { user } = useAuthContext();
+  const { language } = useLanguage();
+  const isSmall = useWindowSize().screenWidth < 768;
   const navigate = useNavigate();
 
   const mutation = useMutation({
@@ -44,7 +45,11 @@ export default function CreatePost(props: Props) {
   const [opened, { open, close }] = useDisclosure();
 
   // initial values of form fields
-  const [combobox, setCombobox] = useState<string | undefined>(
+  const [communityId, setCommunityId] = useState(props.community);
+  const [communityAvatar, setCommunityAvatar] = useState(
+    props.community_avatar
+  );
+  const [communityName, setCommunityName] = useState<string | undefined>(
     props.community_name
   );
   const [title, setTitle] = useState("");
@@ -55,11 +60,12 @@ export default function CreatePost(props: Props) {
   const [image, setImage] = useState<FileWithPath | null>(null);
   const [titleChanged, setTitleChanged] = useState(false);
   const [link, setLink] = useState("");
+  const [linkRaw, setLinkRaw] = useState("");
 
   async function handleSubmit(e: any) {
     e.preventDefault();
     const newPost = {
-      community: props.community,
+      community: communityId,
       title: title,
       body: HTMLbody,
       body_text: body,
@@ -72,7 +78,7 @@ export default function CreatePost(props: Props) {
   }
 
   const notifyNotAuthenticated = () =>
-    toast.error("Post yaratish uchun hisobingizga kiring", {
+    toast.error(unauthorized[language], {
       position: "top-center",
       autoClose: 3000,
       hideProgressBar: false,
@@ -95,7 +101,7 @@ export default function CreatePost(props: Props) {
   // close modal and reset form values
   function closeForm() {
     close();
-    setCombobox(props.community_name);
+    setCommunityName(props.community_name);
     setTitle("");
     setTitleChanged(false);
     setBody("");
@@ -103,8 +109,6 @@ export default function CreatePost(props: Props) {
     setFormDisabled(false);
     setLink("");
   }
-
-  const isSmall = useWindowSize().screenWidth < 768;
 
   return (
     <>
@@ -169,22 +173,26 @@ export default function CreatePost(props: Props) {
         fullScreen={isSmall}
       >
         <CreatePostForm
-          community_avatar={props.community_avatar}
+          communityAvatar={communityAvatar}
+          communityName={communityName}
           postType={postType}
-          combobox={combobox}
           title={title}
           body={body}
           formDisabled={formDisabled}
+          setCommunityId={setCommunityId}
+          setCommunityAvatar={setCommunityAvatar}
+          setCommunityName={setCommunityName}
           setTitle={setTitle}
           setBody={setBody}
           setHTMLbody={setHTMLbody}
-          setCombobox={setCombobox}
           handleSubmit={handleSubmit}
           closeForm={closeForm}
           image={image}
           setImage={setImage}
           link={link}
+          linkRaw={linkRaw}
           setLink={setLink}
+          setLinkRaw={setLinkRaw}
           titleChanged={titleChanged}
           setTitleChanged={setTitleChanged}
         />
@@ -192,3 +200,9 @@ export default function CreatePost(props: Props) {
     </>
   );
 }
+
+const unauthorized = {
+  uz: "Post yaratish uchun hisobingizga kiring",
+  en: "You must be logged in to create a post",
+  ru: "You must be logged in to create a post",
+};

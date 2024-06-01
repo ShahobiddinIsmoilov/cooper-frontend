@@ -22,6 +22,7 @@ export default function PostFooter({ post }: Props) {
   const [upvoted, setUpvoted] = useState(post.upvoted);
   const [downvoted, setDownvoted] = useState(post.downvoted);
   const [votes, setVotes] = useState(post.votes);
+  const [disabled, setDisabled] = useState(false);
   const api = useCredentials();
 
   const notifyNotAuthenticated = () =>
@@ -37,29 +38,49 @@ export default function PostFooter({ post }: Props) {
       transition: Slide,
     });
 
-  function handleUpvote() {
+  async function handleUpvote() {
     if (user) {
-      setVotes((votes) => (downvoted ? votes + 2 : votes + 1));
-      setUpvoted(true);
+      setDisabled(true);
+      let newVotes = votes;
+      if (upvoted) {
+        newVotes -= 1;
+      } else if (downvoted) {
+        newVotes += 2;
+      } else {
+        newVotes += 1;
+      }
+      setVotes(newVotes);
+      setUpvoted(!upvoted);
       setDownvoted(false);
-      api.post("/api/post/action/", {
-        action: "upvote",
+      await api.post("/api/post/action/", {
+        action: upvoted ? "undo_upvote" : "upvote",
         post: post.id,
       });
+      setDisabled(false);
     } else {
       notifyNotAuthenticated();
     }
   }
 
-  function handleDownvote() {
+  async function handleDownvote() {
     if (user) {
-      setVotes((votes) => (upvoted ? votes - 2 : votes - 1));
-      setDownvoted(true);
+      setDisabled(true);
+      let newVotes = votes;
+      if (downvoted) {
+        newVotes += 1;
+      } else if (upvoted) {
+        newVotes -= 2;
+      } else {
+        newVotes -= 1;
+      }
+      setVotes(newVotes);
+      setDownvoted(!downvoted);
       setUpvoted(false);
-      api.post("/api/post/action/", {
-        action: "downvote",
+      await api.post("/api/post/action/", {
+        action: downvoted ? "undo_downvote" : "downvote",
         post: post.id,
       });
+      setDisabled(false);
     } else {
       notifyNotAuthenticated();
     }
@@ -70,6 +91,7 @@ export default function PostFooter({ post }: Props) {
       <div className="flex items-center justify-space gap-1 xs:gap-4">
         <div className="flex items-center xs:gap-1 bg-dark-900 xs:bg-transparent rounded-full">
           <button
+            disabled={disabled}
             onClick={handleUpvote}
             className={`p-2 rounded-full cursor-pointer hover:bg-dark-600 text-yellow-400 hover:text-green-400`}
           >
@@ -91,6 +113,7 @@ export default function PostFooter({ post }: Props) {
             {votes > 0 ? "+" + votes.toLocaleString() : votes}
           </span>
           <button
+            disabled={disabled}
             onClick={handleDownvote}
             className="p-2 rounded-full cursor-pointer hover:bg-dark-600 text-yellow-400 hover:text-red-400"
           >
