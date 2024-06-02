@@ -13,7 +13,7 @@ export default function Dialog() {
       onClose={close}
       centered
       radius={12}
-      size="fit"
+      size="xl"
       shadow="xs"
       withCloseButton={false}
     >

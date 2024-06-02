@@ -42,7 +42,7 @@ export default function PasswordConfirm({
 
   return (
     <Stack gap={0}>
-      <span className="text-lg ml-1">Confirm Password:</span>
+      <span className="text-lg ml-1">{label[language]}</span>
       <div
         className={`flex justify-between gap-2 items-center input ${
           passwordsMatch
@@ -103,4 +103,10 @@ const placeholder = {
   uz: "Parolni qayta kiriting",
   en: "Enter your password again",
   ru: "Enter your password again",
+};
+
+const label = {
+  uz: "Parol (qaytadan):",
+  en: "Confirm password:",
+  ru: "Confirm password:",
 };

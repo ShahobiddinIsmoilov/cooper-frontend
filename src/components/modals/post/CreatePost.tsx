@@ -167,6 +167,7 @@ export default function CreatePost(props: Props) {
         radius={12}
         size="xl"
         shadow="xs"
+        overlayProps={{ backgroundOpacity: 0.9 }}
         closeOnClickOutside={false}
         closeOnEscape={false}
         withCloseButton={false}

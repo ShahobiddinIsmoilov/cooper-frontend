@@ -3,6 +3,7 @@ import { Transition } from "@mantine/core";
 import { useAuthContext } from "../../../contexts/AuthContext";
 import { makeRequest } from "../../../services/makeRequest";
 import { Slide, toast } from "react-toastify";
+import { useLanguage } from "../../../contexts/LanguageContext";
 import ResetCodeForm from "./ResetCodeForm";
 import ResetForm from "./ResetForm";
 
@@ -22,6 +23,7 @@ export default function Reset({
   setForm,
 }: Props) {
   const { resetPassword, loginUser } = useAuthContext();
+  const { language } = useLanguage();
   const [resetCode, setResetCode] = useState("");
   const [codeError, setCodeError] = useState<string | undefined>();
   const [username, setUsername] = useState("");
@@ -38,13 +40,11 @@ export default function Reset({
       });
       if (response.data["status"] === "ERROR") {
         if (response.data["message"] === "Invalid code") {
-          setCodeError("Invalid code entered");
+          setCodeError(reset_modal.errors.invalid_code[language]);
         } else if (response.data["message"] === "Expired code") {
-          setCodeError(
-            "This code has expired. Please get a new password reset code"
-          );
+          setCodeError(reset_modal.errors.expired[language]);
         } else if (response.data["message"] === "Not registered") {
-          setCodeError("There is no account with the given phone number");
+          setCodeError(reset_modal.errors.no_account[language]);
         }
       } else {
         setRestoreFormOpened(true);
@@ -52,14 +52,14 @@ export default function Reset({
         setUsername(response.data["username"]);
       }
     } catch {
-      alert("Something went wrong. Please try again later");
+      alert(reset_modal.errors.fatal_error[language]);
     } finally {
       setFormDisabled(false);
     }
   }
 
   const notifyRestoreSuccess = () =>
-    toast.success("Password was changed successfully", {
+    toast.success(reset_modal.toast[language], {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -87,7 +87,7 @@ export default function Reset({
       setFormDisabled(false);
       notifyRestoreSuccess();
     } catch {
-      alert("Something went wrong. Please try again later");
+      alert(reset_modal.errors.fatal_error[language]);
     }
   }
 
@@ -137,3 +137,33 @@ export default function Reset({
     </div>
   );
 }
+
+const reset_modal = {
+  toast: {
+    uz: "Parol muvaffaqiyatli o'zgartirildi",
+    en: "Password was changed successfully",
+    ru: "Password was changed successfully",
+  },
+  errors: {
+    invalid_code: {
+      uz: "Noto'g'ri kod kiritildi",
+      en: "Invalid code entered",
+      ru: "Invalid code entered",
+    },
+    expired: {
+      uz: "Bu kod eskirgan. Botdan yangi parolni tiklash kodi oling",
+      en: "This code has expired. Please get a new password reset code",
+      ru: "This code has expired. Please get a new password reset code",
+    },
+    no_account: {
+      uz: "Bu telefon raqamiga bog'langan hisob mavjud emas",
+      en: "There is no account with the given phone number",
+      ru: "There is no account with the given phone number",
+    },
+    fatal_error: {
+      uz: "Nimadir xato ketdi. Iltimos keyinroq urinib ko'ring",
+      en: "Something went wrong. Please try again later",
+      ru: "Something went wrong. Please try again later",
+    },
+  },
+};

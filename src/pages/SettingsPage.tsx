@@ -1,16 +1,25 @@
+import { useEffect } from "react";
 import { Stack } from "@mantine/core";
+import { settings_page } from "./lang_pages";
+import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../services/makeRequest";
 import { useAuthContext } from "../contexts/AuthContext";
-import { FetchError, FetchLoading } from "../utils/FetchStatus";
-import { settings_page } from "./lang_pages";
 import { useLanguage } from "../contexts/LanguageContext";
+import { FetchError, FetchLoading } from "../utils/FetchStatus";
 import BackButtonHeader from "../components/general/BackButtonHeader";
 import UserSettings from "../components/userprofile/usersettings/UserSettings";
 
 export default function SettingsPage() {
+  const navigate = useNavigate();
   const username = useAuthContext().user?.username;
   const { language } = useLanguage();
+
+  useEffect(() => {
+    if (!username) navigate(`/home`);
+  }, []);
+
+  if (!username) return null;
 
   const { isPending, error, data } = useQuery({
     queryKey: ["usersettings"],

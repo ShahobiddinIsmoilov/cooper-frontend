@@ -1,10 +1,11 @@
+import { useState } from "react";
 import { BiDislike, BiLike, BiSolidDislike, BiSolidLike } from "react-icons/bi";
 import { FaReply } from "react-icons/fa6";
 import { CommentProps } from "../../../interfaces/commentProps";
 import { useWindowSize } from "../../../contexts/WindowSizeContext";
-import { useState } from "react";
 import { Slide, toast } from "react-toastify";
 import { useAuthContext } from "../../../contexts/AuthContext";
+import { useLanguage } from "../../../contexts/LanguageContext";
 import useCredentials from "../../../services/useCredentials";
 
 interface CommentCardProps {
@@ -23,10 +24,11 @@ export default function CommentFooter({
   const [downvoted, setDownvoted] = useState(comment.downvoted);
   const [votes, setVotes] = useState(comment.votes);
   const { user } = useAuthContext();
+  const { language } = useLanguage();
   const api = useCredentials();
 
   const notifyNotAuthenticated = () =>
-    toast.error("Fikrga reaksiya bildirish uchun hisobingizga kiring", {
+    toast.error(comment_footer.toast[language], {
       position: "top-center",
       autoClose: 3000,
       hideProgressBar: false,
@@ -95,17 +97,44 @@ export default function CommentFooter({
             onClick={() => setShowReply(true)}
             className="font-bold xs:ml-4 px-2 py-1 rounded-full text-xs xs:text-sm hover:bg-dark-700 cursor-pointer text-sky-300"
           >
-            Reply
+            {comment_footer.reply_button[language]}
           </button>
         )}
         {replyCount > 0 && (
           <div className="text-xs xs:text-sm font-bold opacity-50 flex items-center gap-1 xs:gap-2 xs:px-2">
             <FaReply />
             {replyCount}
-            {screenWidth > 576 ? (replyCount > 1 ? " replies" : " reply") : ""}
+            {screenWidth > 576
+              ? replyCount > 1
+                ? comment_footer.reply_many[language]
+                : comment_footer.reply_one[language]
+              : ""}
           </div>
         )}
       </div>
     </div>
   );
 }
+
+const comment_footer = {
+  toast: {
+    uz: "Fikrga reaksiya bildirish uchun hisobingizga kiring",
+    en: "You must be logged in to react to a comment",
+    ru: "You must be logged in to react to a comment",
+  },
+  reply_button: {
+    uz: "Javob",
+    en: "Reply",
+    ru: "Reply",
+  },
+  reply_one: {
+    uz: " ta javob",
+    en: " reply",
+    ru: " reply",
+  },
+  reply_many: {
+    uz: " ta javob",
+    en: " replies",
+    ru: " replies",
+  },
+};

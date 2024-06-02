@@ -31,7 +31,7 @@ export default function Login({
   const authBot = import.meta.env.VITE_AUTH_BOT;
 
   const notifyLoginSuccess = () =>
-    toast.success("Logged in successfully", {
+    toast.success(login_modal.success[language], {
       position: "top-center",
       autoClose: 3000,
       hideProgressBar: false,
@@ -50,14 +50,13 @@ export default function Login({
   function handleForgotUsername() {
     const dialogContent = (
       <Stack className="text-lg">
-        To retrieve your username, open @MagicAuthBot on Telegram and click "My
-        username"
+        {login_modal.forgot_username_dialog.text[language]}
         <div className="flex justify-center gap-4">
           <Button
             onClick={openBot}
             className="rounded-full button-secondary w-32"
           >
-            Open bot
+            {login_modal.forgot_username_dialog.open_bot[language]}
           </Button>
           <Button
             onClick={closeDialog}
@@ -84,9 +83,9 @@ export default function Login({
       notifyLoginSuccess();
     } catch (error: any) {
       if (error.response.status === 401) {
-        setLoginError("Incorrect username or password");
+        setLoginError(login_modal.wrong_credentials[language]);
       } else {
-        setLoginError("Something went wrong. Please try again later");
+        setLoginError(login_modal.fatal_error[language]);
       }
       setFormDisabled(false);
     }
@@ -95,7 +94,9 @@ export default function Login({
   return (
     <Stack mx={8}>
       <div className="flex justify-between items-center">
-        <span className="text-2xl font-bold">Log in</span>
+        <span className="text-2xl font-bold">
+          {login_modal.title[language]}
+        </span>
         <button
           onClick={closeModal}
           disabled={formDisabled}
@@ -108,14 +109,16 @@ export default function Login({
           <IoClose size={30} />
         </button>
       </div>
-      <span className="text-center text-xl">Welcome back</span>
+      <span className="text-center text-xl">
+        {login_modal.welcome_text[language]}
+      </span>
       {loginError && <p className="text-red-400">{loginError}</p>}
       <input
         type="text"
         id="username"
         name="username"
         maxLength={24}
-        placeholder="Username"
+        placeholder={login_modal.username[language]}
         disabled={formDisabled}
         onChange={(e: any) => {
           setUsername(e.target.value);
@@ -128,14 +131,14 @@ export default function Login({
           onClick={handleForgotUsername}
           className="text-sm text-blue-400 hover:text-blue-300"
         >
-          Forgot username?
+          {login_modal.forgot_username_button[language]}
         </button>
       </div>
       <input
         type="password"
         id="password"
         name="password"
-        placeholder="Password"
+        placeholder={login_modal.password[language]}
         disabled={formDisabled}
         onChange={(e: any) => {
           setPassword(e.target.value);
@@ -148,7 +151,7 @@ export default function Login({
           onClick={() => setForm("reset")}
           className="text-sm text-blue-400 hover:text-blue-300"
         >
-          Forgot password?
+          {login_modal.forgot_password_button[language]}
         </button>
       </div>
       <Button
@@ -165,7 +168,7 @@ export default function Login({
         {formDisabled ? (
           <ImSpinner4 size={20} className="animate-spin" />
         ) : (
-          "Login"
+          login_modal.login_button[language]
         )}
       </Button>
       <div className="text-center">
@@ -183,3 +186,69 @@ export default function Login({
     </Stack>
   );
 }
+
+const login_modal = {
+  title: {
+    uz: "Hisobga kirish",
+    en: "Log in",
+    ru: "Log in",
+  },
+  welcome_text: {
+    uz: "Xush kelibsiz",
+    en: "Welcome back",
+    ru: "Welcome back",
+  },
+  username: {
+    uz: "Foydalanuvchi nomi",
+    en: "Username",
+    ru: "Username",
+  },
+  password: {
+    uz: "Parol",
+    en: "Password",
+    ru: "Password",
+  },
+  forgot_username_button: {
+    uz: "Foydalanuvchi nomingizni unutdingizmi?",
+    en: "Forgot username?",
+    ru: "Forgot username?",
+  },
+  forgot_password_button: {
+    uz: "Parolingizni unutdingizmi?",
+    en: "Forgot password?",
+    ru: "Forgot password?",
+  },
+  login_button: {
+    uz: "Kirish",
+    en: "Log in",
+    ru: "Log in",
+  },
+  wrong_credentials: {
+    uz: "Noto'g'ri foydalanuvchi nomi yoki parol kiritildi",
+    en: "Incorrect username or password",
+    ru: "Incorrect username or password",
+  },
+  fatal_error: {
+    uz: "Nimadir xato ketdi. Iltimos keyinroq urinib ko'ring",
+    en: "Something went wrong. Please try again later",
+    ru: "Something went wrong. Please try again later",
+  },
+  success: {
+    uz: "Hisobga muvaffaqiyatli kirildi",
+    en: "Logged in successfully",
+    ru: "Logged in successfully",
+  },
+  forgot_username_dialog: {
+    text: {
+      uz: `Foydalanuvchi nomingizni ko'rish uchun Telegram botimizni oching va "Foydalanuvchi
+          nomini ko'rish" tugmasini bosing`,
+      en: `To retrieve your username, open our Telegram bot and click "My username"`,
+      ru: `To retrieve your username, open our Telegram bot and click "My username"`,
+    },
+    open_bot: {
+      uz: "Botni ochish",
+      en: "Open bot",
+      ru: "Open bot",
+    },
+  },
+};

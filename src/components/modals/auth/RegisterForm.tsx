@@ -4,6 +4,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { Button, Group, Modal, Stack } from "@mantine/core";
 import { useState } from "react";
 import { ImSpinner4 } from "react-icons/im";
+import { useLanguage } from "../../../contexts/LanguageContext";
 import Username from "./Username";
 import Password from "./Password";
 import PasswordConfirm from "./PasswordConfirm";
@@ -33,6 +34,7 @@ export default function RegisterForm({
   closeModal,
   handleRegister,
 }: Props) {
+  const { language } = useLanguage();
   const [opened, { open, close }] = useDisclosure();
   const [usernameSuccess, setUsernameSuccess] = useState(false);
   const [passwordSuccess, setPasswordSuccess] = useState(false);
@@ -46,11 +48,43 @@ export default function RegisterForm({
     setConfirmModalClose(false);
   }
 
+  const agreement_uz = (
+    <span className="text-sm text-center">
+      Diagonal.uz hisobini yaratish orqali, siz saytning{" "}
+      <Link
+        to="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-block text-blue-400"
+      >
+        foydalanish shartlariga
+      </Link>{" "}
+      rozilik bildirasiz.
+    </span>
+  );
+
+  const agreement_en = (
+    <span className="text-sm text-center">
+      By creating your Diagonal.uz account, you agree to our{" "}
+      <Link
+        to="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-block text-blue-400"
+      >
+        terms and conditions
+      </Link>
+      .
+    </span>
+  );
+
   return (
     <>
       <Stack mx={8} mb={4}>
         <div className="flex justify-between items-center">
-          <span className="text-2xl font-bold">Create account</span>
+          <span className="text-2xl font-bold">
+            {register_form_modal.title[language]}
+          </span>
           <button
             disabled={formDisabled}
             onClick={open}
@@ -64,7 +98,7 @@ export default function RegisterForm({
           </button>
         </div>
         <span className="text-lg ml-1">
-          All good! Now you can create your account.
+          {register_form_modal.success[language]}
         </span>
         <Username
           password={password}
@@ -99,21 +133,10 @@ export default function RegisterForm({
           {formDisabled ? (
             <ImSpinner4 size={20} className="animate-spin" />
           ) : (
-            "Create account and log in"
+            register_form_modal.create_account_button[language]
           )}
         </Button>
-        <span className="text-sm text-center">
-          By creating your Diagonal.uz account, you agree to our{" "}
-          <Link
-            to="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block text-blue-400"
-          >
-            terms and conditions
-          </Link>
-          .
-        </span>
+        {language === "uz" ? agreement_uz : agreement_en}
       </Stack>
       <Modal
         size="lg"
@@ -127,27 +150,26 @@ export default function RegisterForm({
       >
         <Stack className="items-center">
           <span className="text-lg">
-            Are you sure you want to exit the registration process? Your
-            information will not be saved.
+            {register_form_modal.exit_dialog.text[language]}
           </span>
           <Group pt={12}>
             <Button
               variant="default"
               radius={12}
               size="md"
-              w={100}
+              w={150}
               onClick={close}
             >
-              Cancel
+              {register_form_modal.exit_dialog.cancel[language]}
             </Button>
             <Button
               variant="default"
               radius={12}
               size="md"
-              w={100}
+              w={150}
               onClick={handleClose}
             >
-              Exit
+              {register_form_modal.exit_dialog.exit[language]}
             </Button>
           </Group>
         </Stack>
@@ -155,3 +177,41 @@ export default function RegisterForm({
     </>
   );
 }
+
+const register_form_modal = {
+  title: {
+    uz: "Hisob yaratish",
+    en: "Create account",
+    ru: "Create account",
+  },
+  success: {
+    uz: "Hammasi yaxshi! Endi hisobingizni yaratishingiz mumkin.",
+    en: "All good! Now you can create your account.",
+    ru: "All good! Now you can create your account.",
+  },
+  create_account_button: {
+    uz: "Hisobni yaratish va kirish",
+    en: "Create account and log in",
+    ru: "Create account and log in",
+  },
+  exit_dialog: {
+    text: {
+      uz: `Rostdan ham jarayondan chiqishni xohlaysizmi? Hozirgacha kiritgan
+          ma'lumotlaringiz o'chib ketadi.`,
+      en: `Are you sure you want to exit the registration process? Your
+          progress will not be saved.`,
+      ru: `Are you sure you want to exit the registration process? Your
+          progress will not be saved.`,
+    },
+    cancel: {
+      uz: "Bekor qilish",
+      en: "Cancel",
+      ru: "Cancel",
+    },
+    exit: {
+      uz: "Chiqish",
+      en: "Exit",
+      ru: "Exit",
+    },
+  },
+};

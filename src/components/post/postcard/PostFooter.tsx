@@ -26,7 +26,7 @@ export default function PostFooter({ post }: Props) {
   const api = useCredentials();
 
   const notifyNotAuthenticated = () =>
-    toast.error("Postga reaksiya bildirish uchun hisobingizga kiring", {
+    toast.error(toast_unauthorized[language], {
       position: "top-center",
       autoClose: 3000,
       hideProgressBar: false,
@@ -143,3 +143,9 @@ export default function PostFooter({ post }: Props) {
     </div>
   );
 }
+
+const toast_unauthorized = {
+  uz: "Postga reaksiya bildirish uchun hisobingizga kiring",
+  en: "You must be logged in to react to a post",
+  ru: "You must be logged in to react to a post",
+};

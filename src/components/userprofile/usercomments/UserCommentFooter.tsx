@@ -3,6 +3,7 @@ import { CommentProps } from "../../../interfaces/commentProps";
 import { useState } from "react";
 import { Slide, toast } from "react-toastify";
 import { useAuthContext } from "../../../contexts/AuthContext";
+import { useLanguage } from "../../../contexts/LanguageContext";
 import useCredentials from "../../../services/useCredentials";
 
 interface CommentCardProps {
@@ -14,10 +15,11 @@ export default function CommentFooter({ comment }: CommentCardProps) {
   const [downvoted, setDownvoted] = useState(comment.downvoted);
   const [votes, setVotes] = useState(comment.votes);
   const { user } = useAuthContext();
+  const { language } = useLanguage();
   const api = useCredentials();
 
   const notifyNotAuthenticated = () =>
-    toast.error("Fikrga reaksiya bildirish uchun hisobingizga kiring", {
+    toast.error(toast_unauthorized[language], {
       position: "top-center",
       autoClose: 3000,
       hideProgressBar: false,
@@ -83,3 +85,9 @@ export default function CommentFooter({ comment }: CommentCardProps) {
     </div>
   );
 }
+
+const toast_unauthorized = {
+  uz: "Fikrga reaksiya bildirish uchun hisobingizga kiring",
+  en: "You must be logged in to react to a comment",
+  ru: "You must be logged in to react to a comment",
+};

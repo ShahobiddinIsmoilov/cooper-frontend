@@ -121,10 +121,21 @@ export default function Password({
 }
 
 const tooltip = {
-  uz: `O'zingiz uchun foydalanuvchi nomi tanlang. Bunda siz
-      uppercase (A-Z) and lowercase (a-z) letters, digits (0-9), hyphens (-)
-      and underscores (_). You can change your username only once in 30 days,
-      so choose carefully. Maximum length of a username is 24 characters.`,
+  uz: (
+    <div>
+      Kamida 8 ta belgidan iborat bo'lgan mustahkam parol kiriting. Parolda
+      quyidagilar bo'lishi shart:
+      <br />
+      - kamida bitta katta lotin harfi (A-Z)
+      <br />
+      - kamida bitta kichik lotin harfi (a-z)
+      <br />
+      - kamida bitta raqam (0-9)
+      <br />
+      Maxsus belgilardan foydalanish majburiy emas, lekin tavsiya etiladi.
+      Parolda foydalanuvchi nomingizni ishlatmang.
+    </div>
+  ),
 
   en: (
     <div>

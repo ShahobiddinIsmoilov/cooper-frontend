@@ -26,7 +26,7 @@ export default function CreateCommunityForm({ closeDrawer }: Props) {
   const navigate = useNavigate();
 
   const notifyCommunityCreationSuccess = () =>
-    toast.success("Community created successfully", {
+    toast.success(toast_success[language], {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -93,6 +93,7 @@ export default function CreateCommunityForm({ closeDrawer }: Props) {
         radius={12}
         size="xl"
         shadow="xs"
+        overlayProps={{ backgroundOpacity: 0.9 }}
         closeOnClickOutside={false}
         closeOnEscape={false}
         withCloseButton={false}
@@ -171,3 +172,9 @@ export default function CreateCommunityForm({ closeDrawer }: Props) {
     </>
   );
 }
+
+const toast_success = {
+  uz: "Hamjamiyat muvaffaqiyatli yaratildi",
+  en: "Community was created successfully",
+  ru: "Community was created successfully",
+};

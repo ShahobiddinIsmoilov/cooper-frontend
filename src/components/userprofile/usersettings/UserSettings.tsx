@@ -58,7 +58,7 @@ export default function UserComments({ user }: Props) {
   }
 
   const notifyUserSettingsSavedSuccess = () =>
-    toast.success("Changes were saved successfully", {
+    toast.success(toast_save_success[language], {
       position: "top-center",
       autoClose: 2000,
       hideProgressBar: false,
@@ -183,3 +183,9 @@ export default function UserComments({ user }: Props) {
     </Stack>
   );
 }
+
+const toast_save_success = {
+  uz: "O'zgartirishlar saqlandi",
+  en: "Changes were saved successfully",
+  ru: "Changes were saved successfully",
+};

@@ -3,6 +3,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { Button, Group, Modal, Stack } from "@mantine/core";
 import { useState } from "react";
 import { ImSpinner4 } from "react-icons/im";
+import { useLanguage } from "../../../contexts/LanguageContext";
 import Password from "./Password";
 import PasswordConfirm from "./PasswordConfirm";
 
@@ -32,6 +33,7 @@ export default function ResetForm({
   const [opened, { open, close }] = useDisclosure();
   const [passwordSuccess, setPasswordSuccess] = useState(false);
   const [passwordConfirmSuccess, setPasswordConfirmSuccess] = useState(false);
+  const { language } = useLanguage();
   const safeToRegister = passwordSuccess && passwordConfirmSuccess;
 
   function handleClose() {
@@ -44,7 +46,9 @@ export default function ResetForm({
     <>
       <Stack mx={8} mb={4}>
         <div className="flex justify-between items-center">
-          <span className="text-2xl font-bold">New password</span>
+          <span className="text-2xl font-bold">
+            {reset_form_modal.title[language]}
+          </span>
           <button
             disabled={formDisabled}
             onClick={open}
@@ -58,8 +62,9 @@ export default function ResetForm({
           </button>
         </div>
         <span className="text-lg ml-1">
-          Hello, <span className="text-orange-400 font-bold">{username}</span>.
-          Create a new, secure password to restore access to your account.
+          {reset_form_modal.hello[language]}
+          <span className="text-orange-400 font-bold">{username}</span>.
+          {reset_form_modal.text[language]}
         </span>
         <Password
           username={username}
@@ -88,7 +93,7 @@ export default function ResetForm({
           {formDisabled ? (
             <ImSpinner4 size={20} className="animate-spin" />
           ) : (
-            "Parolni tiklash va hisobga kirish"
+            reset_form_modal.reset_button[language]
           )}
         </Button>
       </Stack>
@@ -104,26 +109,26 @@ export default function ResetForm({
       >
         <Stack className="items-center">
           <span className="text-lg">
-            Are you sure you want to quit the process?
+            {reset_form_modal.exit_dialog.text[language]}
           </span>
           <Group pt={12}>
             <Button
               variant="default"
               radius={12}
               size="md"
-              w={100}
+              w={150}
               onClick={close}
             >
-              Cancel
+              {reset_form_modal.exit_dialog.cancel[language]}
             </Button>
             <Button
               variant="default"
               radius={12}
               size="md"
-              w={100}
+              w={150}
               onClick={handleClose}
             >
-              Exit
+              {reset_form_modal.exit_dialog.exit[language]}
             </Button>
           </Group>
         </Stack>
@@ -131,3 +136,43 @@ export default function ResetForm({
     </>
   );
 }
+
+const reset_form_modal = {
+  title: {
+    uz: "Yangi parol",
+    en: "New password",
+    ru: "New password",
+  },
+  hello: {
+    uz: "Salom, ",
+    en: "Hello, ",
+    ru: "Hello, ",
+  },
+  text: {
+    uz: " Hisobingizga kirish uchun yangi, mustahkam parol yarating",
+    en: " Create a new, secure password to restore access to your account.",
+    ru: " Create a new, secure password to restore access to your account.",
+  },
+  reset_button: {
+    uz: "Parolni tiklash va hisobga kirish",
+    en: "Reset password and log in",
+    ru: "Reset password and log in",
+  },
+  exit_dialog: {
+    text: {
+      uz: "Rostdan ham jarayondan chiqishni xohlaysizmi?",
+      en: "Are you sure you want to exit the process?",
+      ru: "Are you sure you want to exit the process?",
+    },
+    cancel: {
+      uz: "Bekor qilish",
+      en: "Cancel",
+      ru: "Cancel",
+    },
+    exit: {
+      uz: "Chiqish",
+      en: "Exit",
+      ru: "Exit",
+    },
+  },
+};

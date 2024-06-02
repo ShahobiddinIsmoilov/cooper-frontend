@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { Stack } from "@mantine/core";
 import { useAuthContext } from "../contexts/AuthContext";
@@ -21,8 +21,13 @@ export default function ProfilePage() {
   const { screenWidth } = useWindowSize();
   const username = useAuthContext().user?.username;
   const navigate = useNavigate();
-  !username && navigate("/");
   const [active, setActive] = useState("activity");
+
+  useEffect(() => {
+    if (!username) navigate(`/home`);
+  }, []);
+
+  if (!username) return null;
 
   const { isPending, error, data } = useQuery({
     queryKey: ["profile-page"],

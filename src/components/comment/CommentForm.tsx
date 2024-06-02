@@ -41,7 +41,7 @@ export default function CommentForm({
   });
 
   const notifyNotAuthenticated = () =>
-    toast.error("Firk bildirish uchun hisobingizga kiring", {
+    toast.error(comment.toast[language], {
       position: "top-center",
       autoClose: 3000,
       hideProgressBar: false,
@@ -134,5 +134,10 @@ const comment = {
     uz: "Joylash",
     en: "Comment",
     ru: "Comment",
+  },
+  toast: {
+    uz: "Firk bildirish uchun hisobingizga kiring",
+    en: "You must be logged in to comment",
+    ru: "You must be logged in to comment",
   },
 };

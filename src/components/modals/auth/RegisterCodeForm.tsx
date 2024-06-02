@@ -41,7 +41,9 @@ export default function RegisterCodeForm({
   return (
     <Stack mx={8}>
       <div className="flex justify-between items-center">
-        <span className="text-2xl font-bold">Registration</span>
+        <span className="text-2xl font-bold">
+          {register_code_modal.title[language]}
+        </span>
         <button
           disabled={formDisabled}
           onClick={closeModal}
@@ -55,8 +57,7 @@ export default function RegisterCodeForm({
         </button>
       </div>
       <p className="text-lg">
-        To create your account, please open our Telegram bot and request a
-        registration code.
+        {register_code_modal.text_before_code[language]}
       </p>
       <Button
         variant="default"
@@ -65,13 +66,13 @@ export default function RegisterCodeForm({
         disabled={formDisabled}
         onClick={openBot}
       >
-        Open bot
+        {register_code_modal.open_bot[language]}
       </Button>
-      <p className="text-lg">Once received, enter the code below:</p>
+      <p className="text-lg">{register_code_modal.text_after_code[language]}</p>
       <input
         onChange={handleCodeInput}
         type="number"
-        placeholder="Registration code"
+        placeholder={register_code_modal.placeholder[language]}
         maxLength={6}
         autoComplete="off"
         disabled={formDisabled}
@@ -99,7 +100,7 @@ export default function RegisterCodeForm({
         {formDisabled ? (
           <ImSpinner4 size={20} className="animate-spin" />
         ) : (
-          "Next"
+          register_code_modal.next_button[language]
         )}
       </Button>
       <div className="text-center">
@@ -117,3 +118,39 @@ export default function RegisterCodeForm({
     </Stack>
   );
 }
+
+const register_code_modal = {
+  title: {
+    uz: "Ro'yxatdan o'tish",
+    en: "Password reset",
+    ru: "Password reset",
+  },
+  text_before_code: {
+    uz: `Ro'yxatdan o'tish uchun @DiagonalAuthBot Telegram botini oching va
+        registratsiya kodini oling.`,
+    en: `To create your account, please open @DiagonalAuthBot on Telegram and
+        request a registration code.`,
+    ru: `To create your account, please open @DiagonalAuthBot on Telegram and
+        request a registration code.`,
+  },
+  open_bot: {
+    uz: "Botni ochish",
+    en: "Open bot",
+    ru: "Open bot",
+  },
+  text_after_code: {
+    uz: "Kodni olgach, uni bu yerga kiriting:",
+    en: "Once received, enter the code below:",
+    ru: "Once received, enter the code below:",
+  },
+  placeholder: {
+    uz: "Registratsiya kodi",
+    en: "Registration code",
+    ru: "Registration code",
+  },
+  next_button: {
+    uz: "Davom etish",
+    en: "Next",
+    ru: "Next",
+  },
+};

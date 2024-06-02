@@ -24,7 +24,7 @@ export default function CommunitySettings({ community }: Props) {
   const navigate = useNavigate();
 
   const notifyCommunitySettingsSavedSuccess = () =>
-    toast.success("Changes were saved successfully", {
+    toast.success(community_settings.toast[language], {
       position: "top-center",
       autoClose: 2000,
       hideProgressBar: false,
@@ -110,7 +110,7 @@ export default function CommunitySettings({ community }: Props) {
           }}
           disabled={!itemChanged() || formDisabled}
         >
-          {buttons.discard[language]}
+          {community_settings.buttons.discard[language]}
         </Button>
         <Button
           size={isExtraSmall ? "sm" : "md"}
@@ -125,7 +125,7 @@ export default function CommunitySettings({ community }: Props) {
               : "button-primary-disabled"
           }`}
         >
-          {buttons.save[language]}
+          {community_settings.buttons.save[language]}
           {formDisabled && <ImSpinner4 className="ml-2 animate-spin" />}
         </Button>
       </div>
@@ -149,15 +149,22 @@ export default function CommunitySettings({ community }: Props) {
   );
 }
 
-const buttons = {
-  discard: {
-    uz: "Bekor qilish",
-    en: "Discard changes",
-    ru: "Discard changes",
+const community_settings = {
+  toast: {
+    uz: "O'zgartirishlar saqlandi",
+    en: "Changes were saved successfully",
+    ru: "Changes were saved successfully",
   },
-  save: {
-    uz: "O'zgarishlarni saqlash",
-    en: "Save changes",
-    ru: "Save changes",
+  buttons: {
+    discard: {
+      uz: "Bekor qilish",
+      en: "Discard changes",
+      ru: "Discard changes",
+    },
+    save: {
+      uz: "O'zgarishlarni saqlash",
+      en: "Save changes",
+      ru: "Save changes",
+    },
   },
 };

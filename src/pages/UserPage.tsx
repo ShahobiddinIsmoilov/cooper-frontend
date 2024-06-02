@@ -34,7 +34,7 @@ export default function UserPage() {
   const pattern_disliked = /^\/user\/[^\/]+\/disliked$/;
 
   useEffect(() => {
-    if (username === user?.username) {
+    if (username?.toLocaleLowerCase() === user?.username.toLocaleLowerCase()) {
       if (pattern_posts.test(path)) navigate("/profile/posts");
       else if (pattern_comments.test(path)) navigate("/profile/comments");
       else if (pattern_saved.test(path)) navigate("/profile/saved");
@@ -61,6 +61,14 @@ export default function UserPage() {
   if (error) return <FetchError mt={8} />;
 
   const userdetail: UserDetailProps = data.data;
+
+  if (username !== userdetail.username) {
+    if (pattern_posts.test(path))
+      history.replaceState(null, "", `/user/${userdetail.username}/posts`);
+    else if (pattern_comments.test(path))
+      history.replaceState(null, "", `/user/${userdetail.username}/comments`);
+    else history.replaceState(null, "", `/user/${userdetail.username}`);
+  }
 
   return (
     <Stack gap={8} className="xs:mx-4">
