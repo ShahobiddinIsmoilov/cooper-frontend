@@ -25,7 +25,7 @@ export default function Header() {
   return (
     <div className="flex justify-between bg-dark-900 h-full text-white px-4 xs:px-8 py-2 z-50">
       {showLogo && <Portal>{logo}</Portal>}
-      <Link to="/home" className="flex items-center gap-3">
+      <Link to="/all" className="flex items-center gap-3">
         <IoCube size={32} />
         {screenWidth >= 576 && (
           <span className="text-xl font-bold">Diagonal.uz</span>

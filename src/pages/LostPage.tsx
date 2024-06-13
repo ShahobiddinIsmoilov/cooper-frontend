@@ -11,7 +11,7 @@ export default function LostPage() {
         <TbMapPinQuestion size={75} opacity={0.8} />
         <p>Looks like you're lost. Let's take you home.</p>
         <button
-          onClick={() => navigate("/home")}
+          onClick={() => navigate("/all")}
           className="font-bold text-xl px-4 py-2 rounded-xl w-fit bg-cyan-700 hover:bg-cyan-600"
         >
           Go Home
