@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default function PostFeed({ filter, community }: Props) {
-  const [sortOption, setSortOption] = useState("hot");
+  const [sortOption, setSortOption] = useState("new");
   const isInfobarHidden = useWindowSize().screenWidth < 820;
 
   return (

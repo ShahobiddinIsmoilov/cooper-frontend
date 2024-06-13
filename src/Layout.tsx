@@ -100,7 +100,7 @@ export default function Layout() {
         <AppShell.Main>
           <Container className="max-w-[1056px] p-0">
             <Routes>
-              <Route path="/" element={<HomePage />} />
+              <Route path="/" element={<AllPage />} />
               <Route path="/home" element={<HomePage />} />
               <Route path="/explore" element={<ExplorePage />} />
               <Route path="/all" element={<AllPage />} />
